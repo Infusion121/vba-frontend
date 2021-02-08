@@ -1,0 +1,9 @@
+<div>
+  <a href="javascript:void(0)" (click)="addItemPage()">Add Item Page(+)</a>
+  <ul>
+    <li *ngFor="let itempage of itempages">
+      <p>{{ itempage.pageTitle }}</p>
+      <p><a href="javascript:void(0)" (click)="editItemPage(itempage._id)">Edit</a></p>
+    </li>
+  </ul>
+</div>
