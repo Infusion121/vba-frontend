@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ng-x-rocket": {
+    "vba": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -80,13 +80,13 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ng-x-rocket:build",
+            "browserTarget": "vba:build",
             "hmr": true,
             "hmrWarning": false
           },
           "configurations": {
             "production": {
-              "browserTarget": "ng-x-rocket:build:production",
+              "browserTarget": "vba:build:production",
               "hmr": false
             },
             "ci": {
@@ -97,7 +97,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng-x-rocket:build"
+            "browserTarget": "vba:build"
           }
         },
         "test": {
@@ -125,16 +125,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ng-x-rocket:serve"
+            "devServerTarget": "vba:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ng-x-rocket:serve:production"
+              "devServerTarget": "vba:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "ng-x-rocket"
+  "defaultProject": "vba"
 }
