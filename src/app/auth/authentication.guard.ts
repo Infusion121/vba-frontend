@@ -16,14 +16,13 @@ export class AuthenticationGuard implements CanActivate {
   constructor(private auth: AuthenticationService, private router: Router) {}
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
     if (this.auth.authenticated) {
-      console.log('I am from auth guard');
+      // console.log('I am from auth guard');
       return true;
     }
-
     return this.auth.currentUserObservable.pipe(
       take(1),
       map((user) => {
-        console.log('I am from auth guardsssss');
+        // console.log('I am from auth guardsssss');
         return !!user;
       }),
       tap((loggedIn) => {

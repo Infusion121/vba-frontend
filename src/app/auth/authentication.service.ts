@@ -83,6 +83,7 @@ export class AuthenticationService {
     return this.afAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then((result: any) => {
+        console.log('This is the login user ' + JSON.stringify(result));
         this.errorMessage = '';
         this.router.navigate(['/admin/dashboard']);
       })

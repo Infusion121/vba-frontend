@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { finalize, take } from 'rxjs/operators';
 import { DataService } from '@app/services/data.service';
 import { Router } from '@angular/router';
-import { ItemPage } from '@app/model/itemPage.modal';
 
 @Component({
   selector: 'app-home',
@@ -12,8 +11,6 @@ import { ItemPage } from '@app/model/itemPage.modal';
 export class HomeComponent implements OnInit {
   quote: string | undefined;
   isLoading = false;
-
-  itemPageList: ItemPage[] = [];
 
   slides = [
     { img: 'http://placehold.it/350x150/000000.jpg' },
@@ -26,13 +23,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private dataservice: DataService, private router: Router) {}
 
-  ngOnInit() {
-    this.dataservice.getAllCategoryPages();
-    this.dataservice.itemPageListUpdated.pipe(take(1)).subscribe((categoryPageList) => {
-      let categoryPages = categoryPageList;
-      this.itemPageList = categoryPages;
-    });
-  }
+  ngOnInit() {}
 
   gotoItemPage(pageUrl: string) {
     this.router.navigateByUrl(pageUrl);
@@ -40,21 +31,21 @@ export class HomeComponent implements OnInit {
 
   //Function to get all category pages by category id
   getCategoryPages(catId: string, numberofItems: number, sortBy: string, ascending: boolean) {
-    let categoryPages = this.itemPageList.filter((x) => x.categories.includes(catId)).slice(0, numberofItems);
-    if (sortBy != '') {
-      categoryPages = categoryPages.sort((a: any, b: any) => {
-        if (a[sortBy] < b[sortBy]) {
-          return -1;
-        } else if (a[sortBy] > b[sortBy]) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-    }
-    if (!ascending) {
-      return categoryPages.reverse();
-    }
-    return categoryPages;
+    // let categoryPages = this.itemPageList.filter((x) => x.categories.includes(catId)).slice(0, numberofItems);
+    // if (sortBy != '') {
+    //   categoryPages = categoryPages.sort((a: any, b: any) => {
+    //     if (a[sortBy] < b[sortBy]) {
+    //       return -1;
+    //     } else if (a[sortBy] > b[sortBy]) {
+    //       return 1;
+    //     } else {
+    //       return 0;
+    //     }
+    //   });
+    // }
+    // if (!ascending) {
+    //   return categoryPages.reverse();
+    // }
+    // return categoryPages;
   }
 }

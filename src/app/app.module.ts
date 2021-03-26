@@ -18,21 +18,27 @@ import { AboutModule } from './about/about.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ContactModule } from './contactus/contactus.module';
-import { ItemPageModule } from './item-page/item-page.module';
 import { DataService } from './services/data.service';
-import { CategoryModule } from './admin/category/category.module';
-import { ItemPageAdminModule } from './admin/item-page-admin/item-page-admin.module';
+import { DashboardModule } from './admin/dashboard/dashboard.module';
+import { BookmakersModule } from './admin/bookmakers/bookmakers.module';
+import { MembersInfoModule } from './admin/members-info/members-info.module';
+import { RingLayoutModule } from './admin/ring-layout/ring-layout.module';
+import { RVLInfoModule } from './admin/rvl-info-sheet/rvl-info.module';
+import { VBANewsletterModule } from './admin/vba-newsletter/vba-newsletter.module';
+import { StoreModule } from '@ngrx/store';
+import * as fromApp from './store/app.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './store/effects/auth.effects';
 
 /* Use username: development@infusion121.com  password:test123456 */
 var firebaseConfig = {
-  apiKey: 'AIzaSyCs9KTFWpCC5nnloYP12hYP1k0wtKfB46Q',
-  authDomain: 'thoroughclean-firebase.firebaseapp.com',
-  databaseURL: 'https://thoroughclean-firebase.firebaseio.com',
-  projectId: 'thoroughclean-firebase',
-  storageBucket: 'thoroughclean-firebase.appspot.com',
-  messagingSenderId: '96007495732',
-  appId: '1:96007495732:web:338133250eadad31a2aa61',
-  measurementId: 'G-E8P9DFHTSF',
+  apiKey: 'AIzaSyDeq0TD5Xgx23NI41qcUsYQxrlpDtuBMBA',
+  authDomain: 'vba-website.firebaseapp.com',
+  projectId: 'vba-website',
+  storageBucket: 'vba-website.appspot.com',
+  messagingSenderId: '497609096946',
+  appId: '1:497609096946:web:6350d47ac4bc5d6421da6b',
 };
 
 @NgModule({
@@ -51,10 +57,20 @@ var firebaseConfig = {
     HomeModule,
     AboutModule,
     ContactModule,
-    ItemPageModule,
-    CategoryModule,
-    ItemPageAdminModule,
+    DashboardModule,
+    BookmakersModule,
+    MembersInfoModule,
+    RingLayoutModule,
+    RVLInfoModule,
+    VBANewsletterModule,
     AuthModule,
+    //Store Modules Import
+    StoreModule.forRoot(fromApp.appReducer),
+    StoreDevtoolsModule.instrument({
+      maxAge: 100,
+      logOnly: environment.production,
+    }),
+    EffectsModule.forRoot([AuthEffects]),
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],
