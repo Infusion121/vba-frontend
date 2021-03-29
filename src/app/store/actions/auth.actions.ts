@@ -4,6 +4,8 @@ import { Action } from '@ngrx/store';
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGOUT_START = 'LOGOUT_START';
+export const LOGOUT_END = 'LOGOUT_END';
 
 export class LoginStart implements Action {
   readonly type = LOGIN_START;
@@ -20,4 +22,15 @@ export class LoginFail implements Action {
   constructor(public payload: any) {}
 }
 
-export type AuthActions = LoginStart | LoginSuccess | LoginFail;
+// logout user
+export class LogoutStart implements Action {
+  readonly type = LOGOUT_START;
+  constructor() {}
+}
+
+export class LogoutEnd implements Action {
+  readonly type = LOGOUT_END;
+  constructor() {}
+}
+
+export type AuthActions = LoginStart | LoginSuccess | LoginFail | LogoutStart | LogoutEnd;

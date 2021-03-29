@@ -81,6 +81,24 @@ export function authReducer(state: State = initialState, action: AuthActions.Aut
         },
       };
 
+    case AuthActions.LOGOUT_START:
+      return {
+        ...state,
+        logout: {
+          ...state.logout,
+          loading: true,
+        },
+      };
+
+    case AuthActions.LOGOUT_END:
+      return {
+        ...state,
+        logout: {
+          ...state.logout,
+          loading: false,
+        },
+      };
+
     default:
       return state;
   }
