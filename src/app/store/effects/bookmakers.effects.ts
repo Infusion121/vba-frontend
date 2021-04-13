@@ -12,8 +12,6 @@ import { Bookmaker } from '@app/model/bookmaker.model';
 export class BookmakersEffects {
   rootUrl = 'http://localhost:3000/api/bookmakers';
 
-  constructor(private actions$: Actions, private http: HttpClient) {}
-
   // get all jobs
   @Effect()
   getJobsStart = this.actions$.pipe(
@@ -33,4 +31,70 @@ export class BookmakersEffects {
       );
     })
   );
+
+  // create new bookmaker
+  @Effect()
+  postBookmakerStart = this.actions$.pipe(
+    ofType(BookmakersActions.POST_BOOKMAKER_START),
+    switchMap((postBookmakerNewAction: BookmakersActions.PostBookmakerStart) => {
+      return this.http.post(this.rootUrl + '/new', postBookmakerNewAction.payload).pipe(
+        map((response) => {
+          return new BookmakersActions.PostBookmakerSuccess(response);
+        }),
+        catchError((error) => {
+          return of(new BookmakersActions.PostBookmakerFail(error));
+        })
+      );
+    })
+  );
+
+  // update bookmaker by id
+  @Effect()
+  updateBookmakerStart = this.actions$.pipe(
+    ofType(BookmakersActions.PUT_BOOKMAKER_BY_ID_START),
+    switchMap((putBookmakerByIdAction: BookmakersActions.PutBookmakerByIdStart) => {
+      return this.http.put(this.rootUrl + '/' + putBookmakerByIdAction.id, putBookmakerByIdAction.payload).pipe(
+        map((response) => {
+          return new BookmakersActions.PutBookmakerByIdSuccess(response as Bookmaker);
+        }),
+        catchError((error) => {
+          return of(new BookmakersActions.PutBookmakerByIdFail(error));
+        })
+      );
+    })
+  );
+
+  // get bookmaker by id
+  @Effect()
+  getBookmakerByIdStart = this.actions$.pipe(
+    ofType(BookmakersActions.GET_BOOKMAKER_BY_ID_START),
+    switchMap((getBookmakerByIdAction: BookmakersActions.GetBookmakerByIdStart) => {
+      return this.http.get(this.rootUrl + '/' + getBookmakerByIdAction.payload).pipe(
+        map((response) => {
+          return new BookmakersActions.GetBookmakerByIdSuccess(response as Bookmaker);
+        }),
+        catchError((error) => {
+          return of(new BookmakersActions.GetBookmakerByIdFail(error));
+        })
+      );
+    })
+  );
+
+  // delete bookmaker by id
+  @Effect()
+  deleteBookmakerByIdStart = this.actions$.pipe(
+    ofType(BookmakersActions.DELETE_BOOKMAKER_BY_ID_START),
+    switchMap((deleteBookmakerByIdAction: BookmakersActions.DeleteBookmakerByIdStart) => {
+      return this.http.delete(this.rootUrl + '/' + deleteBookmakerByIdAction.payload).pipe(
+        map((response) => {
+          return new BookmakersActions.DeleteBookmakerByIdSuccess(response as Bookmaker);
+        }),
+        catchError((error) => {
+          return of(new BookmakersActions.DeleteBookmakerByIdFail(error));
+        })
+      );
+    })
+  );
+
+  constructor(private actions$: Actions, private http: HttpClient) {}
 }
