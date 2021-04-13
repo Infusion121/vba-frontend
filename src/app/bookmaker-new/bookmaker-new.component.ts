@@ -7,6 +7,8 @@ import { Subject } from 'rxjs';
 import * as _ from 'lodash';
 
 import * as fromApp from '../store/app.reducer';
+import * as BookmakersActions from '../store/actions/bookmakers.actions';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-bookmaker-new',
@@ -37,20 +39,20 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
     //     }
     //   });
 
-    // this.store
-    //   .select('users', 'userNew')
-    //   .pipe(takeUntil(this.componentDestroyed$))
-    //   .subscribe((state) => {
-    //     if (state.error !== null) {
-    //       this.messageService.showError(state.error);
-    //     }
+    this.store
+      .select('bookmakers', 'bookmakerNew')
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((state) => {
+        // if (state.error !== null) {
+        //   this.messageService.showError(state.error);
+        // }
 
-    //     if (state.item !== null && state.loading === false && state.error === null) {
-    //       this.messageService.showSuccess('', 'User has been created');
-    //       this.store.dispatch(new UsersActions.ResetPostUserState());
-    //       this.router.navigateByUrl('/users/list');
-    //     }
-    //   });
+        if (state.item !== null && state.loading === false && state.error === null) {
+          // this.messageService.showSuccess('', 'User has been created');
+          this.store.dispatch(new BookmakersActions.ResetPostBookmakerState());
+          this.router.navigateByUrl('/users/list');
+        }
+      });
   }
 
   populateForm() {
@@ -87,7 +89,7 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
       const postObj = { ...formValue };
 
       console.log(postObj);
-      // this.store.dispatch(new UsersActions.PostUserStart(postObj));
+      this.store.dispatch(new BookmakersActions.PostBookmakerStart(postObj));
     }
   }
 
