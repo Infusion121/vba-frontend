@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BookmakersFormComponent } from './bookmakers-form.component';
+import { BookmakerNewComponent } from './bookmaker-new.component';
 
-describe('BookmakersFormComponent', () => {
-  let component: BookmakersFormComponent;
-  let fixture: ComponentFixture<BookmakersFormComponent>;
+describe('BookmakerNewComponent', () => {
+  let component: BookmakerNewComponent;
+  let fixture: ComponentFixture<BookmakerNewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BookmakersFormComponent ]
+      declarations: [ BookmakerNewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BookmakersFormComponent);
+    fixture = TestBed.createComponent(BookmakerNewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

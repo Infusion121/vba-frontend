@@ -31,7 +31,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/effects/auth.effects';
 import { BookmakersEffects } from './store/effects/bookmakers.effects';
-import { BookmakersFormModule } from './bookmakers-form/bookmakers-form.module';
+import { BookmakerNewModule } from './bookmaker-new/bookmaker-new.module';
 
 /* Use username: development@infusion121.com  password:test123456 */
 var firebaseConfig = {
@@ -66,7 +66,7 @@ var firebaseConfig = {
     RVLInfoModule,
     VBANewsletterModule,
     AuthModule,
-    BookmakersFormModule,
+    BookmakerNewModule,
     //Store Modules Import
     StoreModule.forRoot(fromApp.appReducer),
     StoreDevtoolsModule.instrument({
