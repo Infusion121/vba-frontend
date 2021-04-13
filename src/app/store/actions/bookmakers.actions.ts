@@ -9,7 +9,6 @@ export const RESET_POST_BOOKMAKER_STATE = 'RESET_POST_BOOKMAKER_STATE';
 export const PUT_BOOKMAKER_BY_ID_START = 'PUT_BOOKMAKER_BY_ID_START';
 export const PUT_BOOKMAKER_BY_ID_SUCCESS = 'PUT_BOOKMAKER_BY_ID_SUCCESS';
 export const PUT_BOOKMAKER_BY_ID_FAIL = 'PUT_BOOKMAKER_BY_ID_FAIL';
-
 export const RESET_BOOKMAKER_CURRENT_STATE = 'RESET_BOOKMAKER_CURRENT_STATE';
 
 export const GET_BOOKMAKERS_START = 'GET_BOOKMAKERS_START';
@@ -24,6 +23,50 @@ export const DELETE_BOOKMAKER_BY_ID_START = 'DELETE_BOOKMAKER_BY_ID_START';
 export const DELETE_BOOKMAKER_BY_ID_SUCCESS = 'DELETE_BOOKMAKER_BY_ID_SUCCESS';
 export const DELETE_BOOKMAKER_BY_ID_FAIL = 'DELETE_BOOKMAKER_BY_ID_FAIL';
 export const RESET_DELETE_BOOKMAKER_STATE = 'RESET_DELETE_BOOKMAKER_STATE';
+
+
+// create new bookmaker
+export class PostBookmakerStart implements Action {
+  readonly type = POST_BOOKMAKER_START;
+  constructor(public payload: Bookmaker) {}
+}
+
+export class PostBookmakerSuccess implements Action {
+  readonly type = POST_BOOKMAKER_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class PostBookmakerFail implements Action {
+  readonly type = POST_BOOKMAKER_FAIL;
+  constructor(public payload: any) {}
+}
+
+export class ResetPostBookmakerState implements Action {
+  readonly type = RESET_POST_BOOKMAKER_STATE;
+  constructor() {}
+}
+
+// update bookmaker by id
+export class PutBookmakerByIdStart implements Action {
+  readonly type = PUT_BOOKMAKER_BY_ID_START;
+  constructor(public payload: Bookmaker, public id: string) {}
+}
+
+export class PutBookmakerByIdSuccess implements Action {
+  readonly type = PUT_BOOKMAKER_BY_ID_SUCCESS;
+  constructor(public payload: Bookmaker) {}
+}
+
+export class PutBookmakerByIdFail implements Action {
+  readonly type = PUT_BOOKMAKER_BY_ID_FAIL;
+  constructor(public payload: any) {}
+}
+
+// reset state on bookmakerCurrent
+export class ResetBookmakerCurrentState implements Action {
+  readonly type = RESET_BOOKMAKER_CURRENT_STATE;
+  constructor() {}
+}
 
 // get all bookmakers
 export class GetBookmakersStart implements Action {
@@ -40,5 +83,51 @@ export class GetBookmakersFail implements Action {
   constructor(public payload: string) {}
 }
 
+// get bookmaker by id
+export class GetBookmakerByIdStart implements Action {
+  readonly type = GET_BOOKMAKER_BY_ID_START;
+  constructor(public payload: string) {}
+}
+
+export class GetBookmakerByIdSuccess implements Action {
+  readonly type = GET_BOOKMAKER_BY_ID_SUCCESS;
+  constructor(public payload: Bookmaker) {}
+}
+
+export class GetBookmakerByIdFail implements Action {
+  readonly type = GET_BOOKMAKER_BY_ID_FAIL;
+  constructor(public payload: any) {}
+}
+
+// delete bookmaker by id
+export class DeleteBookmakerByIdStart implements Action {
+  readonly type = DELETE_BOOKMAKER_BY_ID_START;
+  constructor(public payload: string) {}
+}
+
+export class DeleteBookmakerByIdSuccess implements Action {
+  readonly type = DELETE_BOOKMAKER_BY_ID_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class DeleteBookmakerByIdFail implements Action {
+  readonly type = DELETE_BOOKMAKER_BY_ID_FAIL;
+  constructor(public payload: any) {}
+}
+
+export class ResetDeleteBookmakerByIdState implements Action {
+  readonly type = RESET_DELETE_BOOKMAKER_STATE;
+  constructor() {}
+}
+
 // union export
-export type BookmakersActions = GetBookmakersStart | GetBookmakersSuccess | GetBookmakersFail;
+export type BookmakersActions = 
+PostBookmakerStart | PostBookmakerSuccess | PostBookmakerFail |
+ResetPostBookmakerState |
+PutBookmakerByIdStart | PutBookmakerByIdSuccess | PutBookmakerByIdFail |
+ResetBookmakerCurrentState |
+GetBookmakersStart | GetBookmakersSuccess | GetBookmakersFail |
+GetBookmakerByIdStart | GetBookmakerByIdSuccess | GetBookmakerByIdFail |
+DeleteBookmakerByIdStart | DeleteBookmakerByIdSuccess | DeleteBookmakerByIdFail | 
+ResetDeleteBookmakerByIdState
+;
