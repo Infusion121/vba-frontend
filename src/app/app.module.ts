@@ -30,6 +30,7 @@ import * as fromApp from './store/app.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/effects/auth.effects';
+import { BookmakersEffects } from './store/effects/bookmakers.effects';
 
 /* Use username: development@infusion121.com  password:test123456 */
 var firebaseConfig = {
@@ -70,7 +71,7 @@ var firebaseConfig = {
       maxAge: 100,
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, BookmakersEffects]),
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],

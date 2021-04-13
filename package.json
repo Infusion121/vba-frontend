@@ -45,6 +45,7 @@
     "zone.js": "^0.10.3",
     "firebase": "^7.7.0",
     "@angular/fire": "^5.3.0",
+    "@types/lodash": "^4.14.167",
     "lodash": "^4.17.20"
   },
   "devDependencies": {

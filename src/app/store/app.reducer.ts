@@ -1,7 +1,7 @@
 import { ActionReducerMap } from '@ngrx/store';
 
 import * as fromAuth from './reducers/auth.reducer';
-// import * as fromJobs from './reducers/jobs.reducer';
+import * as fromBookmakers from './reducers/bookmakers.reducer';
 // import * as fromUsers from './reducers/users.reducer';
 // import * as fromNotifications from './reducers/notifications.reducer';
 // import * as fromModals from './reducers/modals.reducer';
@@ -9,7 +9,7 @@ import * as fromAuth from './reducers/auth.reducer';
 
 export interface AppState {
   auth: fromAuth.State;
-  //   jobs: fromJobs.State;
+  bookmakers: fromBookmakers.State;
   //   users: fromUsers.State;
   //   notifications: fromNotifications.State;
   //   modals: fromModals.State;
@@ -18,7 +18,7 @@ export interface AppState {
 
 export const appReducer: ActionReducerMap<AppState> = {
   auth: fromAuth.authReducer,
-  //   jobs: fromJobs.jobsReducer,
+  bookmakers: fromBookmakers.bookmakersReducer,
   //   users: fromUsers.usersReducer,
   //   notifications: fromNotifications.notificationsReducer,
   //   modals: fromModals.modalsReducer,

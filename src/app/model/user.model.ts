@@ -4,10 +4,8 @@ export class User {
     // public username: string,
     // public name: string,
     // public phone: string,
-    public email: string
-  ) // public address: string,
-  // public role: string,
-  // public isActive: boolean,
+    public email: string // public address: string, // public role: string,
+  ) // public isActive: boolean,
   // public additionalInfo: string,
   // public createdBy: User,
   // public createdOn: string,
