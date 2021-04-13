@@ -1,1 +1,153 @@
-<p>bookmaker-new works!</p>
+<!-- New user form -->
+<form [formGroup]="bookmakerNewForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="entityName">Entity Name *</label>
+              <input
+                id="entityName"
+                class="form-control form-control-sm"
+                placeholder="Entity Name"
+                [ngClass]="{
+                  'is-invalid': !!submitted && bookmakerNewForm.get('entityName').errors?.required
+                }"
+                formControlName="entityName"
+              />
+              <div class="invalid-feedback">Please enter Entity Name.</div>
+            </div>
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="about">About</label>
+              <input
+                id="about"
+                class="form-control form-control-sm"
+                placeholder="About"
+                formControlName="about"
+              />
+            </div>
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="contactName">Contact Name *</label>
+              <input
+                id="contactName"
+                class="form-control form-control-sm"
+                placeholder="contact name"
+                [ngClass]="{
+                  'is-invalid': !!submitted && bookmakerNewForm.get('contactName').errors?.required
+                }"
+                formControlName="contactName"
+              />
+              <div class="invalid-feedback">Please enter Contact Name.</div>
+            </div>
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="contactemail">Contact Email *</label>
+              <input
+                id="contactemail"
+                class="form-control form-control-sm"
+                placeholder="johnDoe@mail.com"
+                [ngClass]="{
+                  'is-invalid':
+                    !!submitted && (bookmakerNewForm.get('contactemail').errors?.required || bookmakerNewForm.get('contactemail').errors?.email)
+                }"
+                formControlName="contactemail"
+              />
+              <div class="invalid-feedback">Please enter valid email.</div>
+            </div>
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="contactNumber">Contact Number</label>
+              <input
+                id="contactNumber"
+                class="form-control form-control-sm"
+                placeholder="Contact Number"
+                formControlName="contactNumber"
+              />
+            </div>
+
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+							<label for="serviceTypes">Service Types</label>
+							<div *ngFor="let option of serviceOptions; let i = index" class="d-inline-block mr-5">
+								<input type="checkbox" id="{{'service' + i}}" (change)="onServiceTypeChange(i, $event)" value="{{option}}" [checked]="(bookmaker && bookmaker !== null && bookmaker.serviceTypes && bookmaker.serviceTypes.includes(option)) ? true : null"/>
+								<label for="{{'service' + i}}">{{ option }}</label>
+							</div>
+						</div>
+
+						<div class="form-group col-6 col-lg-3 col-xl-2">
+							<label for="betTypes">Bet Types</label>
+							<div *ngFor="let option of betOptions; let i = index" class="d-inline-block mr-5">
+								<input type="checkbox" id="{{'bet' + i}}" (change)="onBetTypeChange(i, $event)" value="{{option}}" [checked]="(bookmaker && bookmaker !== null && bookmaker.betTypes && bookmaker.betTypes.includes(option)) ? true : null"/>
+								<label for="{{'bet' + i}}">{{ option }}</label>
+							</div>
+						</div>
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="website">Website</label>
+              <input
+                id="website"
+                class="form-control form-control-sm"
+                placeholder="Website"
+                formControlName="website"
+              />
+            </div>
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="licenseNumber">License Number</label>
+              <input
+                id="licenseNumber"
+                class="form-control form-control-sm"
+                placeholder="License Number"
+                formControlName="licenseNumber"
+								[ngClass]="{
+                  'is-invalid':
+                    !!submitted && (bookmakerNewForm.get('licenseNumber').errors?.required)
+                }"
+              />
+							<div class="invalid-feedback">Please Enter License Number.</div>
+            </div>
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="establishedYear">Year Established</label>
+              <input
+                id="establishedYear"
+                class="form-control form-control-sm"
+                placeholder="Year Established"
+                formControlName="establishedYear"
+              />
+            </div>
+
+						<div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="bettingPhoneLine">Betting Phone Line</label>
+              <input
+                id="bettingPhoneLine"
+                class="form-control form-control-sm"
+                placeholder="Betting Phone Line"
+                formControlName="bettingPhoneLine"
+              />
+            </div>
+
+            <!-- honey pot !!! -->
+            <input type="text" formControlName="blockIt" class="hp-block-it" />
+
+            <!-- actions -->
+            <div class="form-group col-12">
+              <!-- Save actions -->
+              <div class="save-actions text-right">
+                <button type="submit" class="btn btn-outline-success waves-effect waves-light">Save</button>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger waves-effect waves-light"
+                  (click)="resetForm()"
+                  [disabled]="!bookmakerNewForm.dirty"
+                >
+                  Clear
+                </button>
+              </div>
+              <!-- end save actions -->
+            </div>
+          </div>
+        </div>
+        <!-- end card body -->
+      </div>
+      <!-- end card -->
+    </div>
+    <!-- end col -->
+  </div>
+  <!-- end row -->
+</form>
