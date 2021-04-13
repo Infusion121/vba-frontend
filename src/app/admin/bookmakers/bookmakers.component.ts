@@ -32,6 +32,8 @@ export class BookmakersComponent implements OnInit {
         this.loading = state.loading;
 
         if (state.error !== null) {
+          // don't have messsageservice set up for this project.
+          // if you want, have a look at exe valet
           // this.messageService.showError(state.error);
           console.log(state.error);
         } else if (state.itemsObject !== null && state.loading === false && state.error === null) {

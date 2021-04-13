@@ -6,6 +6,7 @@ import { Shell } from '@app/shell/shell.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationGuard } from '@app/auth';
 import { BookmakersComponent } from './bookmakers.component';
+import { BookmakerComponent } from './bookmaker/bookmaker.component';
 
 const routes: Routes = [
   Shell.childRoutes([
@@ -13,6 +14,12 @@ const routes: Routes = [
       path: 'admin/bookmakers',
       component: BookmakersComponent,
       data: { title: extract('Bookmakers') },
+      canActivate: [AuthenticationGuard],
+    },
+    {
+      path: 'admin/bookmakers/:bid',
+      component: BookmakerComponent,
+      data: { title: extract('Bookmaker') },
       canActivate: [AuthenticationGuard],
     },
   ]),

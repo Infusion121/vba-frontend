@@ -68,7 +68,7 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
       licenseNumber: ['', [Validators.required]],
       yearEstablished: [''],
       profilePicCompanyLogo: [''],
-      bettingPhoneLine: [''],
+      telephoneBetting: [''],
       blockIt: ['', [this.validatorHoneyPot]],
     });
   }
