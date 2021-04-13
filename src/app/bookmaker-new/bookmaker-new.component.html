@@ -6,25 +6,25 @@
         <div class="card-body">
           <div class="form-row">
             <div class="form-group col-6 col-lg-3 col-xl-2">
-              <label for="entityName">Entity Name *</label>
+              <label for="bookmakingEntityName">Entity Name *</label>
               <input
-                id="entityName"
+                id="bookmakingEntityName"
                 class="form-control form-control-sm"
                 placeholder="Entity Name"
                 [ngClass]="{
-                  'is-invalid': !!submitted && bookmakerNewForm.get('entityName').errors?.required
+                  'is-invalid': !!submitted && bookmakerNewForm.get('bookmakingEntityName').errors?.required
                 }"
-                formControlName="entityName"
+                formControlName="bookmakingEntityName"
               />
               <div class="invalid-feedback">Please enter Entity Name.</div>
             </div>
             <div class="form-group col-6 col-lg-3 col-xl-2">
-              <label for="about">About</label>
+              <label for="aboutUs">About</label>
               <input
-                id="about"
+                id="aboutUs"
                 class="form-control form-control-sm"
                 placeholder="About"
-                formControlName="about"
+                formControlName="aboutUs"
               />
             </div>
             <div class="form-group col-6 col-lg-3 col-xl-2">
@@ -65,9 +65,9 @@
             </div>
 
             <div class="form-group col-6 col-lg-3 col-xl-2">
-							<label for="serviceTypes">Service Types</label>
+							<label for="bookmakingServices">Service Types</label>
 							<div *ngFor="let option of serviceOptions; let i = index" class="d-inline-block mr-5">
-								<input type="checkbox" id="{{'service' + i}}" (change)="onServiceTypeChange(i, $event)" value="{{option}}" [checked]="(bookmaker && bookmaker !== null && bookmaker.serviceTypes && bookmaker.serviceTypes.includes(option)) ? true : null"/>
+								<input type="checkbox" id="{{'service' + i}}" (change)="onServiceTypeChange(i, $event)" value="{{option}}" [checked]="(bookmaker && bookmaker !== null && bookmaker.bookmakingServices && bookmaker.bookmakingServices.includes(option)) ? true : null"/>
 								<label for="{{'service' + i}}">{{ option }}</label>
 							</div>
 						</div>
@@ -80,12 +80,12 @@
 							</div>
 						</div>
             <div class="form-group col-6 col-lg-3 col-xl-2">
-              <label for="website">Website</label>
+              <label for="websiteAddress">Website</label>
               <input
-                id="website"
+                id="websiteAddress"
                 class="form-control form-control-sm"
                 placeholder="Website"
-                formControlName="website"
+                formControlName="websiteAddress"
               />
             </div>
             <div class="form-group col-6 col-lg-3 col-xl-2">
@@ -103,14 +103,17 @@
 							<div class="invalid-feedback">Please Enter License Number.</div>
             </div>
             <div class="form-group col-6 col-lg-3 col-xl-2">
-              <label for="establishedYear">Year Established</label>
+              <label for="yearEstablished">Year Established</label>
               <input
-                id="establishedYear"
+                id="yearEstablished"
                 class="form-control form-control-sm"
                 placeholder="Year Established"
-                formControlName="establishedYear"
+                formControlName="yearEstablished"
               />
             </div>
+
+						<!-- still missing profile company logo upload -->
+						<!-- TODO: work on this please -->
 
 						<div class="form-group col-6 col-lg-3 col-xl-2">
               <label for="bettingPhoneLine">Betting Phone Line</label>

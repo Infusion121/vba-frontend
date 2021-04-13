@@ -55,17 +55,17 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
 
   populateForm() {
     this.bookmakerNewForm = this._fb.group({
-      entityName: ['', [Validators.required]],
-      about: [''],
+      bookmakingEntityName: ['', [Validators.required]],
+      aboutUs: [''],
       contactName: ['', [Validators.required]],
       contactemail: ['', [Validators.required, Validators.email]],
       contactNumber: [''],
-      serviceTypes: [[]],
+      bookmakingServices: [[]],
       betTypes: [[]],
-      website: [''],
+      websiteAddress: [''],
       licenseNumber: ['', [Validators.required]],
-      establishedYear: [''],
-      profilePicture: [''],
+      yearEstablished: [''],
+      profilePicCompanyLogo: [''],
       bettingPhoneLine: [''],
       blockIt: ['', [this.validatorHoneyPot]],
     });
@@ -92,8 +92,8 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
   }
 
   onServiceTypeChange(index: number, event: any) {
-    const currentServiceTypes = this.bookmakerNewForm.value.serviceTypes
-      ? this.bookmakerNewForm.value.serviceTypes
+    const currentServiceTypes = this.bookmakerNewForm.value.bookmakingServices
+      ? this.bookmakerNewForm.value.bookmakingServices
       : [];
 
     if (!!event.target.checked) {
@@ -105,7 +105,7 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
     }
 
     this.bookmakerNewForm.patchValue({
-      serviceTypes: currentServiceTypes,
+      bookmakingServices: currentServiceTypes,
     });
   }
 

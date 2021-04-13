@@ -6,7 +6,7 @@ export class Bookmaker {
     public contactName: string,
     public contactEmail: string,
     public contactNumber: string,
-    public serviceTypes: string[],
+    public bookmakingServices: string[],
     public betTypes: string[],
     public websiteAddress: string,
     public licenseNumber: string,
