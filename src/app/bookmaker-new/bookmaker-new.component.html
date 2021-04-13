@@ -41,16 +41,16 @@
               <div class="invalid-feedback">Please enter Contact Name.</div>
             </div>
             <div class="form-group col-6 col-lg-3 col-xl-2">
-              <label for="contactemail">Contact Email *</label>
+              <label for="contactEmail">Contact Email *</label>
               <input
-                id="contactemail"
+                id="contactEmail"
                 class="form-control form-control-sm"
                 placeholder="johnDoe@mail.com"
                 [ngClass]="{
                   'is-invalid':
-                    !!submitted && (bookmakerNewForm.get('contactemail').errors?.required || bookmakerNewForm.get('contactemail').errors?.email)
+                    !!submitted && (bookmakerNewForm.get('contactEmail').errors?.required || bookmakerNewForm.get('contactEmail').errors?.email)
                 }"
-                formControlName="contactemail"
+                formControlName="contactEmail"
               />
               <div class="invalid-feedback">Please enter valid email.</div>
             </div>
@@ -89,7 +89,7 @@
               />
             </div>
             <div class="form-group col-6 col-lg-3 col-xl-2">
-              <label for="licenseNumber">License Number</label>
+              <label for="licenseNumber">License Number *</label>
               <input
                 id="licenseNumber"
                 class="form-control form-control-sm"

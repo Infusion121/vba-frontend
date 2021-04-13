@@ -26,6 +26,9 @@ export class BookmakerComponent implements OnInit, OnDestroy {
   loading = false;
   submitted = false;
   submittedSuccess = false;
+  
+  serviceOptions = ['Internet', 'Phone', 'On Course'];
+  betOptions = ['Sports', 'Thoroughbred', 'Harness', 'Greyhounds', 'Futures'];
 
   constructor(
     private currentRoute: ActivatedRoute,
@@ -40,7 +43,7 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       bookmakingEntityName: ['', [Validators.required]],
       aboutUs: [''],
       contactName: ['', [Validators.required]],
-      contactemail: ['', [Validators.required, Validators.email]],
+      contactEmail: ['', [Validators.required, Validators.email]],
       contactNumber: [''],
       bookmakingServices: [[]],
       betTypes: [[]],
@@ -48,7 +51,7 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       licenseNumber: ['', [Validators.required]],
       yearEstablished: [''],
       profilePicCompanyLogo: [''],
-      bettingPhoneLine: [''],
+      telephoneBetting: [''],
       blockIt: ['', [this.validatorHoneyPot]],
     });
 
@@ -82,7 +85,6 @@ export class BookmakerComponent implements OnInit, OnDestroy {
         if (state.item !== null && state.loading === false && state.error === null && state.update.loading === false) {
           this.bookmaker = state.item;
           this.titleService.setTitle('Bookmaker - ' + state.item.bookmakingEntityName);
-
           this.populateForm(state.item);
           if (state.update.item === null) {
             // this.messageService.showSuccess('', 'User (' + state.item.username + ') has been loaded');
@@ -105,11 +107,12 @@ export class BookmakerComponent implements OnInit, OnDestroy {
   }
 
   populateForm(bookmaker: Bookmaker) {
-    this.bookmakerForm = this._fb.group({
+    console.log(bookmaker);
+    this.bookmakerForm.patchValue({
       bookmakingEntityName: bookmaker.bookmakingEntityName,
       aboutUs: bookmaker.aboutUs,
       contactName: bookmaker.contactName,
-      contactemail: bookmaker.contactEmail,
+      contactEmail: bookmaker.contactEmail,
       contactNumber: bookmaker.contactNumber,
       bookmakingServices: bookmaker.bookmakingServices,
       betTypes: bookmaker.betTypes,
@@ -134,6 +137,48 @@ export class BookmakerComponent implements OnInit, OnDestroy {
     }
   }
 
+  onServiceTypeChange(index: number, event: any) {
+    // TODO fix this
+    // having a bug here
+    // Cannot add property 0, object is not extensible
+    const currentServiceTypes = this.bookmakerForm.value.bookmakingServices
+      ? this.bookmakerForm.value.bookmakingServices
+      : [];
+
+    if (!!event.target.checked) {
+      currentServiceTypes.push(event.target.value);
+    } else {
+      _.remove(currentServiceTypes, (value) => {
+        return value === event.target.value;
+      });
+    }
+
+    this.bookmakerForm.patchValue({
+      bookmakingServices: currentServiceTypes,
+    });
+  }
+
+  onBetTypeChange(index: number, event: any) {
+    // TODO fix this
+    // having a bug here
+    // Cannot add property 0, object is not extensible
+    const currentBetTypes = this.bookmakerForm.value.betTypes
+      ? this.bookmakerForm.value.betTypes
+      : [];
+
+    if (!!event.target.checked) {
+      currentBetTypes.push(event.target.value);
+    } else {
+      _.remove(currentBetTypes, (value) => {
+        return value === event.target.value;
+      });
+    }
+
+    this.bookmakerForm.patchValue({
+      betTypes: currentBetTypes,
+    });
+  }
+
   resetForm() {
     this.submittedSuccess = false;
     this.submitted = false;
@@ -141,7 +186,7 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       bookmakingEntityName: this.bookmaker.bookmakingEntityName,
       aboutUs: this.bookmaker.aboutUs,
       contactName: this.bookmaker.contactName,
-      contactemail: this.bookmaker.contactEmail,
+      contactEmail: this.bookmaker.contactEmail,
       contactNumber: this.bookmaker.contactNumber,
       bookmakingServices: this.bookmaker.bookmakingServices,
       betTypes: this.bookmaker.betTypes,

@@ -60,7 +60,7 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
       bookmakingEntityName: ['', [Validators.required]],
       aboutUs: [''],
       contactName: ['', [Validators.required]],
-      contactemail: ['', [Validators.required, Validators.email]],
+      contactEmail: ['', [Validators.required, Validators.email]],
       contactNumber: [''],
       bookmakingServices: [[]],
       betTypes: [[]],
@@ -82,6 +82,7 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.submitted = true;
+    console.log(this.bookmakerNewForm);
     if (this.bookmakerNewForm.invalid) {
       return;
     } else {

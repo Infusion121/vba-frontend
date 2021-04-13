@@ -1,1 +1,156 @@
-<p>bookmaker works!</p>
+<form *ngIf="bookmaker && bookmaker !== null" [formGroup]="bookmakerForm" (ngSubmit)="onSubmit()">
+	{{bookmaker.bookmakingEntityName}}
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="bookmakingEntityName">Entity Name *</label>
+              <input
+                id="bookmakingEntityName"
+                class="form-control form-control-sm"
+                placeholder="Entity Name"
+                [ngClass]="{
+                  'is-invalid': !!submitted && bookmakerForm.get('bookmakingEntityName').errors?.required
+                }"
+                formControlName="bookmakingEntityName"
+              />
+              <div class="invalid-feedback">Please enter Entity Name.</div>
+            </div>
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="aboutUs">About</label>
+              <input
+                id="aboutUs"
+                class="form-control form-control-sm"
+                placeholder="About"
+                formControlName="aboutUs"
+              />
+            </div>
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="contactName">Contact Name *</label>
+              <input
+                id="contactName"
+                class="form-control form-control-sm"
+                placeholder="contact name"
+                [ngClass]="{
+                  'is-invalid': !!submitted && bookmakerForm.get('contactName').errors?.required
+                }"
+                formControlName="contactName"
+              />
+              <div class="invalid-feedback">Please enter Contact Name.</div>
+            </div>
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="contactEmail">Contact Email *</label>
+              <input
+                id="contactEmail"
+                class="form-control form-control-sm"
+                placeholder="johnDoe@mail.com"
+                [ngClass]="{
+                  'is-invalid':
+                    !!submitted && (bookmakerForm.get('contactEmail').errors?.required || bookmakerForm.get('contactEmail').errors?.email)
+                }"
+                formControlName="contactEmail"
+              />
+              <div class="invalid-feedback">Please enter valid email.</div>
+            </div>
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="contactNumber">Contact Number</label>
+              <input
+                id="contactNumber"
+                class="form-control form-control-sm"
+                placeholder="Contact Number"
+                formControlName="contactNumber"
+              />
+            </div>
+
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+							<label for="bookmakingServices">Service Types</label>
+							<div *ngFor="let option of serviceOptions; let i = index" class="d-inline-block mr-5">
+								<input type="checkbox" id="{{'service' + i}}" (change)="onServiceTypeChange(i, $event)" value="{{option}}" [checked]="(bookmaker && bookmaker !== null && bookmaker.bookmakingServices && bookmaker.bookmakingServices.includes(option)) ? true : null"/>
+								<label for="{{'service' + i}}">{{ option }}</label>
+							</div>
+						</div>
+
+						<div class="form-group col-6 col-lg-3 col-xl-2">
+							<label for="betTypes">Bet Types</label>
+							<div *ngFor="let option of betOptions; let i = index" class="d-inline-block mr-5">
+								<input type="checkbox" id="{{'bet' + i}}" (change)="onBetTypeChange(i, $event)" value="{{option}}" [checked]="(bookmaker && bookmaker !== null && bookmaker.betTypes && bookmaker.betTypes.includes(option)) ? true : null"/>
+								<label for="{{'bet' + i}}">{{ option }}</label>
+							</div>
+						</div>
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="websiteAddress">Website</label>
+              <input
+                id="websiteAddress"
+                class="form-control form-control-sm"
+                placeholder="Website"
+                formControlName="websiteAddress"
+              />
+            </div>
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="licenseNumber">License Number *</label>
+              <input
+                id="licenseNumber"
+                class="form-control form-control-sm"
+                placeholder="License Number"
+                formControlName="licenseNumber"
+								[ngClass]="{
+                  'is-invalid':
+                    !!submitted && (bookmakerForm.get('licenseNumber').errors?.required)
+                }"
+              />
+							<div class="invalid-feedback">Please Enter License Number.</div>
+            </div>
+            <div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="yearEstablished">Year Established</label>
+              <input
+                id="yearEstablished"
+                class="form-control form-control-sm"
+                placeholder="Year Established"
+                formControlName="yearEstablished"
+              />
+            </div>
+
+						<!-- still missing profile company logo upload -->
+						<!-- TODO: work on this please -->
+
+						<div class="form-group col-6 col-lg-3 col-xl-2">
+              <label for="telephoneBetting">Betting Phone Line</label>
+              <input
+                id="telephoneBetting"
+                class="form-control form-control-sm"
+                placeholder="Betting Phone Line"
+                formControlName="telephoneBetting"
+              />
+            </div>
+
+            <!-- honey pot !!! -->
+            <input type="text" formControlName="blockIt" class="hp-block-it" />
+
+            <!-- actions -->
+            <div class="form-group col-12">
+              <!-- Save actions -->
+              <div class="save-actions text-right">
+                <button type="submit" class="btn btn-outline-success waves-effect waves-light">Save</button>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger waves-effect waves-light"
+                  (click)="resetForm()"
+                  [disabled]="!bookmakerForm.dirty"
+                >
+                  Clear
+                </button>
+              </div>
+              <!-- end save actions -->
+            </div>
+          </div>
+        </div>
+        <!-- end card body -->
+      </div>
+      <!-- end card -->
+    </div>
+    <!-- end col -->
+  </div>
+  <!-- end row -->
+</form>
