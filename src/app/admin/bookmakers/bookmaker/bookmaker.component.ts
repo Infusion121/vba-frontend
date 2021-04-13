@@ -141,6 +141,7 @@ export class BookmakerComponent implements OnInit, OnDestroy {
     // TODO fix this
     // having a bug here
     // Cannot add property 0, object is not extensible
+    //
     const currentServiceTypes = this.bookmakerForm.value.bookmakingServices
       ? this.bookmakerForm.value.bookmakingServices
       : [];
