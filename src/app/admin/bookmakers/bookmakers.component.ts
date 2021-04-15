@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import * as fromApp from '../../store/app.reducer';
 import * as BookmakersActions from '../../store/actions/bookmakers.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bookmakers',
@@ -17,8 +18,9 @@ export class BookmakersComponent implements OnInit {
   bookmakersObject: { [key: string]: Bookmaker } = null;
   bookmakersCount: number = null;
   loading = true;
+  rootUrl = 'http://localhost:3000/';
 
-  constructor(private store: Store<fromApp.AppState>) {}
+  constructor(private store: Store<fromApp.AppState>, private router: Router) {}
 
   ngOnInit(): void {
     // dispatch action to get all jobs
@@ -42,5 +44,13 @@ export class BookmakersComponent implements OnInit {
           //this.messageService.showSuccess('', 'Jobs has been loaded');
         }
       });
+  }
+
+  editItemPage(bookermakerId: any) {
+    this.router.navigateByUrl('/admin/bookmakers/' + bookermakerId);
+  }
+
+  asIsOrder(a: any, b: any) {
+    return 1;
   }
 }

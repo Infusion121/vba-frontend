@@ -24,6 +24,11 @@ export const DELETE_BOOKMAKER_BY_ID_SUCCESS = 'DELETE_BOOKMAKER_BY_ID_SUCCESS';
 export const DELETE_BOOKMAKER_BY_ID_FAIL = 'DELETE_BOOKMAKER_BY_ID_FAIL';
 export const RESET_DELETE_BOOKMAKER_STATE = 'RESET_DELETE_BOOKMAKER_STATE';
 
+export const UPLOAD_PHOTOS_START = 'UPLOAD_PHOTOS_START';
+export const UPLOAD_PHOTOS_SUCCESS = 'UPLOAD_PHOTOS_SUCCESS';
+export const UPLOAD_PHOTOS_FAIL = 'UPLOAD_PHOTOS_FAIL';
+
+export const RESET_UPLOAD_PHOTOS_STATE = 'RESET_UPLOAD_PHOTOS_STATE';
 
 // create new bookmaker
 export class PostBookmakerStart implements Action {
@@ -120,14 +125,47 @@ export class ResetDeleteBookmakerByIdState implements Action {
   constructor() {}
 }
 
+export class UploadPhotosStart implements Action {
+  readonly type = UPLOAD_PHOTOS_START;
+  constructor(public files: File[]) {}
+}
+
+export class UploadPhotosSuccess implements Action {
+  readonly type = UPLOAD_PHOTOS_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class UploadPhotosFail implements Action {
+  readonly type = UPLOAD_PHOTOS_FAIL;
+  constructor(public payload: any) {}
+}
+
+export class ResetUploadPhotosState implements Action {
+  readonly type = RESET_UPLOAD_PHOTOS_STATE;
+  constructor() {}
+}
+
 // union export
-export type BookmakersActions = 
-PostBookmakerStart | PostBookmakerSuccess | PostBookmakerFail |
-ResetPostBookmakerState |
-PutBookmakerByIdStart | PutBookmakerByIdSuccess | PutBookmakerByIdFail |
-ResetBookmakerCurrentState |
-GetBookmakersStart | GetBookmakersSuccess | GetBookmakersFail |
-GetBookmakerByIdStart | GetBookmakerByIdSuccess | GetBookmakerByIdFail |
-DeleteBookmakerByIdStart | DeleteBookmakerByIdSuccess | DeleteBookmakerByIdFail | 
-ResetDeleteBookmakerByIdState
-;
+export type BookmakersActions =
+  | PostBookmakerStart
+  | PostBookmakerSuccess
+  | PostBookmakerFail
+  | ResetPostBookmakerState
+  | PutBookmakerByIdStart
+  | PutBookmakerByIdSuccess
+  | PutBookmakerByIdFail
+  | ResetBookmakerCurrentState
+  | GetBookmakersStart
+  | GetBookmakersSuccess
+  | GetBookmakersFail
+  | GetBookmakerByIdStart
+  | GetBookmakerByIdSuccess
+  | GetBookmakerByIdFail
+  | DeleteBookmakerByIdStart
+  | DeleteBookmakerByIdSuccess
+  | DeleteBookmakerByIdFail
+  | ResetDeleteBookmakerByIdState
+  | UploadPhotosStart
+  | UploadPhotosSuccess
+  | UploadPhotosFail
+  | ResetUploadPhotosState;

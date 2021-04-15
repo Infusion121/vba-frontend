@@ -29,6 +29,13 @@ export interface State {
     loading: boolean;
     error: any;
   };
+
+  uploadBookmakerPhotoFiles: {
+    files: File[];
+    items: any;
+    loading: boolean;
+    error: any;
+  };
 }
 
 const initialState: State = {
@@ -56,6 +63,12 @@ const initialState: State = {
   },
   bookmakerDelete: {
     item: null,
+    loading: false,
+    error: null,
+  },
+  uploadBookmakerPhotoFiles: {
+    files: null,
+    items: null,
     loading: false,
     error: null,
   },
@@ -233,7 +246,7 @@ export function bookmakersReducer(state: State = initialState, action: Bookmaker
           item: null,
           loading: true,
           error: null,
-        }
+        },
       };
     case BookmakersActions.DELETE_BOOKMAKER_BY_ID_SUCCESS:
       return {
@@ -242,7 +255,7 @@ export function bookmakersReducer(state: State = initialState, action: Bookmaker
           item: action.payload,
           loading: false,
           error: null as null,
-        }
+        },
       };
     case BookmakersActions.DELETE_BOOKMAKER_BY_ID_FAIL:
       return {
@@ -251,7 +264,7 @@ export function bookmakersReducer(state: State = initialState, action: Bookmaker
           item: null,
           loading: false,
           error: action.payload,
-        }
+        },
       };
 
     // reset Bookmaker Delete state
@@ -260,6 +273,51 @@ export function bookmakersReducer(state: State = initialState, action: Bookmaker
         ...state,
         bookmakerDelete: {
           ...initialState.bookmakerDelete,
+        },
+      };
+
+    // upload photo files
+    case BookmakersActions.UPLOAD_PHOTOS_START:
+      return {
+        ...state,
+        uploadBookmakerPhotoFiles: {
+          ...state.uploadBookmakerPhotoFiles,
+          files: action.files,
+          items: null as null,
+          loading: true,
+          error: null as null,
+        },
+      };
+
+    case BookmakersActions.UPLOAD_PHOTOS_SUCCESS:
+      return {
+        ...state,
+        uploadBookmakerPhotoFiles: {
+          ...state.uploadBookmakerPhotoFiles,
+          files: null as null,
+          loading: false,
+          items: action.payload.images,
+          error: null as null,
+        },
+      };
+
+    case BookmakersActions.UPLOAD_PHOTOS_FAIL:
+      return {
+        ...state,
+        uploadBookmakerPhotoFiles: {
+          ...state.uploadBookmakerPhotoFiles,
+          jobId: null as null,
+          files: null as null,
+          loading: false,
+          item: null as null,
+          error: action.payload,
+        },
+      };
+    case BookmakersActions.RESET_UPLOAD_PHOTOS_STATE:
+      return {
+        ...state,
+        uploadBookmakerPhotoFiles: {
+          ...initialState.uploadBookmakerPhotoFiles,
         },
       };
 

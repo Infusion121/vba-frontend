@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Bookmaker } from '@app/model/bookmaker.model';
 import { Store } from '@ngrx/store';
@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import * as fromApp from '../store/app.reducer';
 import * as BookmakersActions from '../store/actions/bookmakers.actions';
 import { takeUntil } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-bookmaker-new',
@@ -25,7 +26,12 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
   serviceOptions = ['Internet', 'Phone', 'On Course'];
   betOptions = ['Sports', 'Thoroughbred', 'Harness', 'Greyhounds', 'Futures'];
 
-  constructor(private _fb: FormBuilder, private store: Store<fromApp.AppState>, private router: Router) {}
+  constructor(
+    private _fb: FormBuilder,
+    private store: Store<fromApp.AppState>,
+    private router: Router,
+    private sanitizer: DomSanitizer
+  ) {}
 
   ngOnInit(): void {
     this.populateForm();
@@ -53,6 +59,29 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl('/users/list');
         }
       });
+
+    this.store
+      .select('bookmakers', 'uploadBookmakerPhotoFiles')
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((state) => {
+        if (state.items !== null && state.loading === false && state.error === null) {
+          const formValues = { ...this.bookmakerNewForm.value };
+
+          _.each(state.items, (stateItem) => {
+            _.each(formValues.profilePicCompanyLogo, (formItem) => {
+              // TODO: Nice to have - find another way to add url
+              // because might be chances that images with same name can be uploaded.
+              if (stateItem.originalname === formItem.name) {
+                formItem.url = stateItem.path;
+              }
+            });
+          });
+
+          const postObj = formValues;
+          console.log(postObj);
+          this.store.dispatch(new BookmakersActions.PostBookmakerStart(postObj));
+        }
+      });
   }
 
   populateForm() {
@@ -67,7 +96,7 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
       websiteAddress: [''],
       licenseNumber: ['', [Validators.required]],
       yearEstablished: [''],
-      profilePicCompanyLogo: [''],
+      profilePicCompanyLogo: this._fb.array([]),
       telephoneBetting: [''],
       blockIt: ['', [this.validatorHoneyPot]],
     });
@@ -86,12 +115,39 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
     if (this.bookmakerNewForm.invalid) {
       return;
     } else {
-      const formValue = this.bookmakerNewForm.value;
-      const postObj = { ...formValue };
+      // const formValue = this.bookmakerNewForm.value;
+      // const postObj = { ...formValue };
 
-      console.log(postObj);
-      this.store.dispatch(new BookmakersActions.PostBookmakerStart(postObj));
+      // console.log(postObj);
+      // this.store.dispatch(new BookmakersActions.PostBookmakerStart(postObj));
+
+      const postObj: any[] = [];
+      _.each(this.bookmakerNewForm.value.profilePicCompanyLogo, (item) => {
+        postObj.push(item.file);
+      });
+
+      //upload the images first
+      this.store.dispatch(new BookmakersActions.UploadPhotosStart(postObj));
     }
+  }
+
+  onFilesChange(event: any) {
+    const files = (event.target as HTMLInputElement).files;
+    const control = this.bookmakerNewForm.get('profilePicCompanyLogo') as FormArray;
+    _.each(files, (file) => {
+      control.push(
+        this._fb.group({
+          name: [file.name, Validators.required],
+          url: [this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(file))],
+          file: [file],
+        })
+      );
+    });
+  }
+
+  removeFile(index: number) {
+    const control = this.bookmakerNewForm.get('profilePicCompanyLogo') as FormArray;
+    control.removeAt(index);
   }
 
   onServiceTypeChange(index: number, event: any) {
@@ -113,9 +169,7 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
   }
 
   onBetTypeChange(index: number, event: any) {
-    const currentBetTypes = this.bookmakerNewForm.value.betTypes
-      ? this.bookmakerNewForm.value.betTypes
-      : [];
+    const currentBetTypes = this.bookmakerNewForm.value.betTypes ? this.bookmakerNewForm.value.betTypes : [];
 
     if (!!event.target.checked) {
       currentBetTypes.push(event.target.value);

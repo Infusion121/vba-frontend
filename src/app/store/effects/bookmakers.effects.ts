@@ -96,5 +96,28 @@ export class BookmakersEffects {
     })
   );
 
+  // upload photo files
+  @Effect()
+  uploadPhotoFiles = this.actions$.pipe(
+    ofType(BookmakersActions.UPLOAD_PHOTOS_START),
+    switchMap((uploadPhotoFilesAction: BookmakersActions.UploadPhotosStart) => {
+      const headers = new HttpHeaders();
+      headers.append('Content-Type', 'multipart/form-data');
+      const formData = new FormData();
+      _.each(uploadPhotoFilesAction.files, (file) => {
+        formData.append('photo', file);
+      });
+
+      return this.http.post(this.rootUrl + '/upload/upload-bookmaker-photos', formData, { headers }).pipe(
+        map((response) => {
+          return new BookmakersActions.UploadPhotosSuccess(response);
+        }),
+        catchError((error) => {
+          return of(new BookmakersActions.UploadPhotosFail(error));
+        })
+      );
+    })
+  );
+
   constructor(private actions$: Actions, private http: HttpClient) {}
 }
