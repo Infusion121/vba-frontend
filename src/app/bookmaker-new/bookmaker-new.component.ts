@@ -27,6 +27,7 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
   betOptions = ['Sports', 'Thoroughbred', 'Harness', 'Greyhounds', 'Futures'];
 
   showThankyouMessage: boolean = false;
+  bookmakingEntityName: string;
 
   constructor(
     private _fb: FormBuilder,
@@ -122,6 +123,7 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
     if (this.bookmakerNewForm.invalid) {
       return;
     } else {
+      this.bookmakingEntityName = this.bookmakerNewForm.value.bookmakingEntityName;
       const postObj: any[] = [];
       _.each(this.bookmakerNewForm.value.profilePicCompanyLogo, (item) => {
         postObj.push(item.file);
@@ -197,10 +199,6 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
     this.bookmakerNewForm.patchValue({
       betTypes: currentBetTypes,
     });
-  }
-
-  get bookmakerTelephoneControlsArray(): FormArray {
-    return <FormArray>this.bookmakerNewForm.get('telephoneBetting');
   }
 
   resetForm() {

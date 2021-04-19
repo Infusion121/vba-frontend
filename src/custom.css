@@ -40,7 +40,8 @@ a {
   color: #00326d;
 }
 
-form {
+form,
+.confirmationMessage {
   display: block;
   border-radius: 10px;
   -webkit-border-radius: 10;
@@ -99,4 +100,11 @@ form .addPhoneLine {
 footer div,
 footer p {
   font-size: 12px;
+}
+
+.confirmationMessage {
+  max-width: 590px;
+  margin: 0 auto 35px;
+  font-size: 20px;
+  min-height: 200px;
 }

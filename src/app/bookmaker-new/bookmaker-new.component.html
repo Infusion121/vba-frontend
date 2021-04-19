@@ -186,7 +186,6 @@
                   'is-invalid': !!submitted && item.get('telephone').errors
                 }"
               />
-              <div class="invalid-feedback">Please enter a 4 digit number</div>
               <button
                 type="button"
                 class="btn btn-outline-danger waves-effect waves-light removeBtn"
@@ -194,6 +193,8 @@
               >
                 Remove
               </button>
+
+              <div class="invalid-feedback">Please enter a 4 digit number</div>
             </div>
           </div>
           <button
@@ -227,8 +228,14 @@
         </div>
       </form>
     </div>
-    <div class="col-12" [ngClass]="{ hide: !showThankyouMessage }">
-      Thank you for submitting your registration. We will contact you soon.
+    <div class="col-12 confirmationMessage" [ngClass]="{ hide: !showThankyouMessage }">
+      <p>Thank you {{ bookmakingEntityName }},</p>
+      <p>Your VBA registration has been submitted successfully.</p>
+      <p>We will contact you if we need any further details from you.</p>
+      <p>
+        Best Regards<br />
+        Victorian Bookmakers Association
+      </p>
     </div>
   </div>
 </div>
