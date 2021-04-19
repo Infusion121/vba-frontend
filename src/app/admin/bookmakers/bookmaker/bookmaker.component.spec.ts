@@ -8,9 +8,8 @@ describe('BookmakerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BookmakerComponent ]
-    })
-    .compileComponents();
+      declarations: [BookmakerComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

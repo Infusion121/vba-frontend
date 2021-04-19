@@ -11,7 +11,7 @@ const routes: Routes = [
     {
       path: 'bookmakers/new',
       component: BookmakerNewComponent,
-      data: { title: extract('New Bookmaker') }
+      data: { title: extract('New Bookmaker') },
     },
   ]),
 ];

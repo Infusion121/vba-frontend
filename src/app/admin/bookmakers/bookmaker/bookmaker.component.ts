@@ -26,7 +26,7 @@ export class BookmakerComponent implements OnInit, OnDestroy {
   loading = false;
   submitted = false;
   submittedSuccess = false;
-  
+
   serviceOptions = ['Internet', 'Phone', 'On Course'];
   betOptions = ['Sports', 'Thoroughbred', 'Harness', 'Greyhounds', 'Futures'];
 
@@ -163,9 +163,7 @@ export class BookmakerComponent implements OnInit, OnDestroy {
     // TODO fix this
     // having a bug here
     // Cannot add property 0, object is not extensible
-    const currentBetTypes = this.bookmakerForm.value.betTypes
-      ? this.bookmakerForm.value.betTypes
-      : [];
+    const currentBetTypes = this.bookmakerForm.value.betTypes ? this.bookmakerForm.value.betTypes : [];
 
     if (!!event.target.checked) {
       currentBetTypes.push(event.target.value);

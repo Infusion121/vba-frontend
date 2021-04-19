@@ -6,3 +6,97 @@
   z-index: -999999;
   display: none;
 }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #f4f5f6;
+}
+img {
+  max-width: 100%;
+}
+div,
+span,
+p,
+input,
+select,
+label {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  line-height: 150%;
+  font-weight: 400;
+  color: #444;
+}
+
+header {
+  background: #00326d;
+}
+.mainHeading {
+  color: #fff;
+  font-weight: 700;
+  font-size: 26px;
+}
+
+a {
+  color: #00326d;
+}
+
+form {
+  display: block;
+  border-radius: 10px;
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border: 2px solid #c6c6c6;
+  background: #fff;
+  padding: 20px;
+}
+form label {
+  margin: 0 0 5px;
+  display: block;
+  font-weight: 700;
+}
+form textarea.form-control {
+  height: 80px;
+}
+form .form-group div label {
+  display: inline-block;
+  font-weight: 40;
+}
+form .phoneLeft {
+  display: inline-block;
+  width: 85px;
+}
+form .phoneLeft span {
+  height: 31px;
+  max-width: 85px;
+  padding: 0 10px;
+}
+form .phoneRight {
+  display: inline-block;
+  width: calc(100% - 160px);
+  max-width: 220px;
+}
+form .removeBtn {
+  height: 30px;
+  padding: 0 10px;
+  margin: 0;
+  font-size: 12px;
+}
+form .addPhoneLine {
+  font-size: 14px;
+  color: #00326d;
+  border: 1px solid #00326d;
+}
+.save-actions {
+  border-top: 2px solid #c6c6c6;
+  padding: 20px 0 0;
+  margin-top: 40px;
+}
+.save-actions button {
+  display: block;
+  width: 100%;
+}
+
+footer div,
+footer p {
+  font-size: 12px;
+}
