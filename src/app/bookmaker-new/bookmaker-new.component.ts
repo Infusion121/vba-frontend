@@ -97,7 +97,11 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
       licenseNumber: ['', [Validators.required]],
       yearEstablished: [''],
       profilePicCompanyLogo: this._fb.array([]),
-      telephoneBetting: [''],
+      telephoneBetting: this._fb.array([
+        this._fb.group({
+          telephone: '',
+        }),
+      ]),
       blockIt: ['', [this.validatorHoneyPot]],
     });
   }
@@ -115,12 +119,6 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
     if (this.bookmakerNewForm.invalid) {
       return;
     } else {
-      // const formValue = this.bookmakerNewForm.value;
-      // const postObj = { ...formValue };
-
-      // console.log(postObj);
-      // this.store.dispatch(new BookmakersActions.PostBookmakerStart(postObj));
-
       const postObj: any[] = [];
       _.each(this.bookmakerNewForm.value.profilePicCompanyLogo, (item) => {
         postObj.push(item.file);
@@ -147,6 +145,20 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
 
   removeFile(index: number) {
     const control = this.bookmakerNewForm.get('profilePicCompanyLogo') as FormArray;
+    control.removeAt(index);
+  }
+
+  addBettingPhone() {
+    const control = this.bookmakerNewForm.get('telephoneBetting') as FormArray;
+    control.push(
+      this._fb.group({
+        telephone: '',
+      })
+    );
+  }
+
+  removeBettingPhone(index: number) {
+    const control = this.bookmakerNewForm.get('telephoneBetting') as FormArray;
     control.removeAt(index);
   }
 

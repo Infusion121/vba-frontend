@@ -161,14 +161,47 @@
               />
             </div>
 
-            <div class="form-group col-6 col-lg-3 col-xl-2">
+            <div class="form-group col-6 col-lg-3 col-xl-2" formArrayName="telephoneBetting">
               <label for="telephoneBetting">Betting Phone Line</label>
-              <input
-                id="telephoneBetting"
-                class="form-control form-control-sm"
-                placeholder="Betting Phone Line"
-                formControlName="telephoneBetting"
-              />
+
+              <div
+                class="input-group mb-3"
+                *ngFor="let item of bookmakerNewForm.get('telephoneBetting')['controls']; let i = index"
+              >
+                <div [formGroupName]="i">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">03 9214</span>
+                  </div>
+                  <input
+                    id="telephoneBetting_{{ i }}"
+                    class="form-control form-control-sm"
+                    placeholder="XXXX"
+                    formControlName="telephone"
+                    aria-describedby="basic-addon3"
+                    maxlength="4"
+                    pattern="\d{4}"
+                    [ngClass]="{
+                      'is-invalid': !!submitted
+                    }"
+                  />
+                  <div class="invalid-feedback">Please enter a 4 digit number</div>
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger waves-effect waves-light mt-2"
+                    (click)="removeBettingPhone(i)"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+              <button
+                type="button"
+                *ngIf="bookmakerNewForm.get('telephoneBetting')['controls'].length != 4"
+                class="btn btn-outline-danger waves-effect waves-light mt-2"
+                (click)="addBettingPhone()"
+              >
+                Add
+              </button>
             </div>
 
             <!-- honey pot !!! -->
@@ -179,14 +212,14 @@
               <!-- Save actions -->
               <div class="save-actions text-right">
                 <button type="submit" class="btn btn-outline-success waves-effect waves-light">Save</button>
-                <button
+                <!-- <button
                   type="button"
                   class="btn btn-outline-danger waves-effect waves-light"
                   (click)="resetForm()"
                   [disabled]="!bookmakerNewForm.dirty"
                 >
                   Clear
-                </button>
+                </button> -->
               </div>
               <!-- end save actions -->
             </div>
