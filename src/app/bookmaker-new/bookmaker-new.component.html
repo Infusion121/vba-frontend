@@ -4,7 +4,7 @@
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut suscipit sed ex at consequat. Donec non scelerisque
       mi. Integer congue gravida ante in placerat. Quisque felis dui, gravida semper posuere sed, laoreet eget ex.
     </div>
-    <div class="col-12">
+    <div class="col-12" [ngClass]="{ hide: showThankyouMessage }">
       <form [formGroup]="bookmakerNewForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="bookmakingEntityName">Entity Name *</label>
@@ -183,7 +183,7 @@
                 maxlength="4"
                 pattern="\d{4}"
                 [ngClass]="{
-                  'is-invalid': !!submitted
+                  'is-invalid': !!submitted && item.get('telephone').errors
                 }"
               />
               <div class="invalid-feedback">Please enter a 4 digit number</div>
@@ -226,6 +226,9 @@
           <!-- end save actions -->
         </div>
       </form>
+    </div>
+    <div class="col-12" [ngClass]="{ hide: !showThankyouMessage }">
+      Thank you for submitting your registration. We will contact you soon.
     </div>
   </div>
 </div>

@@ -26,6 +26,8 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
   serviceOptions = ['Internet', 'Phone', 'On Course'];
   betOptions = ['Sports', 'Thoroughbred', 'Harness', 'Greyhounds', 'Futures'];
 
+  showThankyouMessage: boolean = false;
+
   constructor(
     private _fb: FormBuilder,
     private store: Store<fromApp.AppState>,
@@ -56,7 +58,8 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
         if (state.item !== null && state.loading === false && state.error === null) {
           // this.messageService.showSuccess('', 'User has been created');
           this.store.dispatch(new BookmakersActions.ResetPostBookmakerState());
-          this.router.navigateByUrl('/users/list');
+          this.showThankyouMessage = true;
+          //this.router.navigateByUrl('/users/list');
         }
       });
 
@@ -194,6 +197,10 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
     this.bookmakerNewForm.patchValue({
       betTypes: currentBetTypes,
     });
+  }
+
+  get bookmakerTelephoneControlsArray(): FormArray {
+    return <FormArray>this.bookmakerNewForm.get('telephoneBetting');
   }
 
   resetForm() {
