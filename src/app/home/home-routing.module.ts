@@ -6,11 +6,7 @@ import { HomeComponent } from './home.component';
 import { Shell } from '@app/shell/shell.service';
 import { AuthenticationGuard } from '@app/auth';
 
-const routes: Routes = [
-  Shell.childRoutes([
-    { path: '', component: HomeComponent, data: { title: extract('Home') }, canActivate: [AuthenticationGuard] },
-  ]),
-];
+const routes: Routes = [Shell.childRoutes([{ path: '', component: HomeComponent, data: { title: extract('Home') } }])];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

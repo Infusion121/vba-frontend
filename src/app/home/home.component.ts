@@ -23,7 +23,10 @@ export class HomeComponent implements OnInit {
 
   constructor(private dataservice: DataService, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    //Redirect to the registration page
+    this.router.navigateByUrl('/register');
+  }
 
   gotoItemPage(pageUrl: string) {
     this.router.navigateByUrl(pageUrl);

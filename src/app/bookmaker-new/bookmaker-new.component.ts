@@ -82,6 +82,8 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
           });
 
           const postObj = formValues;
+          postObj.createdOn = new Date().getTime();
+          postObj.isApproved = false;
           console.log(postObj);
           this.store.dispatch(new BookmakersActions.PostBookmakerStart(postObj));
         }

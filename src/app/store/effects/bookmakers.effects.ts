@@ -10,7 +10,8 @@ import { Bookmaker } from '@app/model/bookmaker.model';
 
 @Injectable()
 export class BookmakersEffects {
-  rootUrl = 'http://localhost:3000/api/bookmakers';
+  // rootUrl = 'http://localhost:3000/api/bookmakers';
+  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/bookmakers';
 
   // get all jobs
   @Effect()

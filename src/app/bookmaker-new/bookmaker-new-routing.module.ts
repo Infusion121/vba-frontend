@@ -9,7 +9,7 @@ import { BookmakerNewComponent } from './bookmaker-new.component';
 const routes: Routes = [
   Shell.childRoutes([
     {
-      path: 'bookmakers/new',
+      path: 'register',
       component: BookmakerNewComponent,
       data: { title: extract('New Bookmaker') },
     },
