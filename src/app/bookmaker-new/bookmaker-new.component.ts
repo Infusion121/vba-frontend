@@ -10,6 +10,7 @@ import * as fromApp from '../store/app.reducer';
 import * as BookmakersActions from '../store/actions/bookmakers.actions';
 import { takeUntil } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NgBlockUI, BlockUI } from 'ng-block-ui';
 
 @Component({
   selector: 'app-bookmaker-new',
@@ -28,6 +29,11 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
 
   showThankyouMessage: boolean = false;
   bookmakingEntityName: string;
+  remainingText: number = 250;
+  fileUploadError = false;
+  fileUploadErrorMessage = '';
+
+  @BlockUI() blockUI: NgBlockUI;
 
   constructor(
     private _fb: FormBuilder,
@@ -58,8 +64,9 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
 
         if (state.item !== null && state.loading === false && state.error === null) {
           // this.messageService.showSuccess('', 'User has been created');
-          this.store.dispatch(new BookmakersActions.ResetPostBookmakerState());
           this.showThankyouMessage = true;
+          this.store.dispatch(new BookmakersActions.ResetPostBookmakerState());
+          this.blockUI.stop();
           //this.router.navigateByUrl('/users/list');
         }
       });
@@ -110,6 +117,12 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
       ]),
       blockIt: ['', [this.validatorHoneyPot]],
     });
+
+    this.bookmakerNewForm.get('aboutUs').valueChanges.subscribe((x) => {
+      console.log('about us value changed');
+      console.log(x.length);
+      this.remainingText = 250 - x.length;
+    });
   }
 
   validatorHoneyPot(control: FormControl): { [s: string]: boolean } {
@@ -122,9 +135,15 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.submitted = true;
     console.log(this.bookmakerNewForm);
-    if (this.bookmakerNewForm.invalid) {
+    const photoControl = this.bookmakerNewForm.get('profilePicCompanyLogo') as FormArray;
+    if (this.bookmakerNewForm.invalid || this.fileUploadError || photoControl.length == 0) {
+      if (photoControl.length == 0) {
+        this.fileUploadError = true;
+        this.fileUploadErrorMessage = 'Please select a file.';
+      }
       return;
     } else {
+      this.blockUI.start();
       this.bookmakingEntityName = this.bookmakerNewForm.value.bookmakingEntityName;
       const postObj: any[] = [];
       _.each(this.bookmakerNewForm.value.profilePicCompanyLogo, (item) => {
@@ -140,13 +159,29 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
     const files = (event.target as HTMLInputElement).files;
     const control = this.bookmakerNewForm.get('profilePicCompanyLogo') as FormArray;
     _.each(files, (file) => {
-      control.push(
-        this._fb.group({
-          name: [file.name, Validators.required],
-          url: [this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(file))],
-          file: [file],
-        })
-      );
+      let fileExtension = file.name.split('.').pop().toLocaleLowerCase();
+      console.log('File Size ' + file.size);
+      if (
+        (fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png' || fileExtension === 'gif') &&
+        file.size <= 5000000
+      ) {
+        this.fileUploadError = false;
+        this.fileUploadErrorMessage = '';
+        control.push(
+          this._fb.group({
+            name: [file.name, Validators.required],
+            url: [this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(file))],
+            file: [file],
+          })
+        );
+      } else {
+        this.fileUploadError = true;
+        if (file.size > 5000000) {
+          this.fileUploadErrorMessage = 'File size must be 5MB or less.';
+        } else {
+          this.fileUploadErrorMessage = 'Invalid file selected. Please select a valid file.';
+        }
+      }
     });
   }
 
