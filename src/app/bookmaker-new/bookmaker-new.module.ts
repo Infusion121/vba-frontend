@@ -7,6 +7,7 @@ import { SharedModule } from '@shared';
 import { BookmakerNewRoutingModule } from './bookmaker-new-routing.module';
 import { BookmakerNewComponent } from './bookmaker-new.component';
 import { BlockUIModule } from 'ng-block-ui';
+import { PhoneMaskDirective } from '../phone-mask.directive';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { BlockUIModule } from 'ng-block-ui';
     BookmakerNewRoutingModule,
     BlockUIModule.forRoot(),
   ],
-  declarations: [BookmakerNewComponent],
+  declarations: [BookmakerNewComponent, PhoneMaskDirective],
 })
 export class BookmakerNewModule {}

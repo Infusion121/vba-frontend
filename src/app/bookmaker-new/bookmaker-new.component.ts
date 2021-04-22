@@ -103,7 +103,7 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
       aboutUs: [''],
       contactName: ['', [Validators.required]],
       contactEmail: ['', [Validators.required, Validators.email]],
-      contactNumber: [''],
+      contactNumber: ['', [Validators.pattern(/^\(\d{4}\)\s\d{3}-\d{3}$/), Validators.required]],
       bookmakingServices: [[]],
       betTypes: [[]],
       websiteAddress: [''],
