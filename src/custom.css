@@ -82,6 +82,19 @@ form .removeBtn {
   margin: 0;
   font-size: 12px;
 }
+form .addImage {
+  display: block;
+  border-bottom: 1px solid #ced4da;
+  padding: 0 0 15px;
+}
+form .addImage img {
+  display: block;
+  width: auto;
+  max-height: 280px;
+}
+form .removeBtn.removeImage {
+  margin-bottom: 5px;
+}
 form .addPhoneLine {
   font-size: 14px;
   color: #00326d;
@@ -107,4 +120,9 @@ footer p {
   margin: 0 auto 35px;
   font-size: 20px;
   min-height: 200px;
+}
+.smallTxt {
+  font-size: 12px;
+  display: block;
+  margin: 0 0 5px;
 }

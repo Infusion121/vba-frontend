@@ -1,4 +1,4 @@
-<div class="container" style="max-width: 620px">
+<div class="container" style="max-width: 840px">
   <div class="row">
     <div class="col-12 py-4" [ngClass]="{ hide: showThankyouMessage }">
       <p>Dear Member,</p>
@@ -15,7 +15,7 @@
         bookmaking.
       </p>
     </div>
-    <block-ui>
+    <block-ui style="max-width: 600px; margin: 0 auto">
       <div class="col-12" [ngClass]="{ hide: showThankyouMessage }">
         <form [formGroup]="bookmakerNewForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
@@ -40,7 +40,7 @@
               formControlName="aboutUs"
               maxlength="250"
             ></textarea>
-            <span>{{ remainingText }} characters left</span>
+            <span class="smallTxt" style="text-align: right">{{ remainingText }} characters left</span>
           </div>
           <div class="form-group">
             <label for="contactName">Primary Contact Name *</label>
@@ -166,7 +166,7 @@
           <!-- TODO: work on this please -->
           <div class="form-group">
             <label for="telephoneBetting">Profile Photo / Bookmaker Logo *</label>
-            <span>(Allowed Filetypes: jpg, jpeg, png, gif. Max file size : 5MB)</span>
+            <span class="smallTxt">(Allowed Filetypes: jpg, jpeg, png, gif. Max file size : 5MB)</span>
             <input
               type="file"
               (change)="onFilesChange($event)"
@@ -179,11 +179,15 @@
           </div>
 
           <div
-            class="form-group"
+            class="form-group addImage"
             *ngFor="let item of bookmakerNewForm.get('profilePicCompanyLogo')['controls']; let i = index"
           >
-            <button type="button" class="btn btn-outline-danger waves-effect waves-light mt-2" (click)="removeFile(i)">
-              Remove
+            <button
+              type="button"
+              class="btn btn-outline-danger waves-effect waves-light removeBtn removeImage"
+              (click)="removeFile(i)"
+            >
+              Remove Image
             </button>
             <img
               id="{{ 'photo' + (i + 1) + 'ImageUrl' }}"

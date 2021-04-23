@@ -119,8 +119,6 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
     });
 
     this.bookmakerNewForm.get('aboutUs').valueChanges.subscribe((x) => {
-      console.log('about us value changed');
-      console.log(x.length);
       this.remainingText = 250 - x.length;
     });
   }
