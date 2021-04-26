@@ -7,9 +7,10 @@ import { SharedModule } from '@shared';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { MembersInfoRoutingModule } from './members-info-routing.module';
 import { MembersInfoComponent } from './members-info.component';
+import { MemberInfoComponent } from './member-info/member-info.component';
 
 @NgModule({
   imports: [CommonModule, TranslateModule, CoreModule, SharedModule, MembersInfoRoutingModule, SlickCarouselModule],
-  declarations: [MembersInfoComponent],
+  declarations: [MembersInfoComponent, MemberInfoComponent],
 })
 export class MembersInfoModule {}
