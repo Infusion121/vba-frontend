@@ -31,6 +31,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/effects/auth.effects';
 import { BookmakersEffects } from './store/effects/bookmakers.effects';
+import { MemberInfosEffects } from './store/effects/memberInfos.effects';
+import { NewslettersEffects } from './store/effects/newsletters.effects';
+import { InfoSheetsEffects } from './store/effects/infoSheets.effects';
+import { RingLayoutsEffects } from './store/effects/ringLayouts.effects';
 import { BookmakerNewModule } from './bookmaker-new/bookmaker-new.module';
 
 /* Use username: development@infusion121.com  password:test123456 */
@@ -73,7 +77,14 @@ var firebaseConfig = {
       maxAge: 100,
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([AuthEffects, BookmakersEffects]),
+    EffectsModule.forRoot([
+      AuthEffects,
+      BookmakersEffects,
+      MemberInfosEffects,
+      NewslettersEffects,
+      InfoSheetsEffects,
+      RingLayoutsEffects,
+    ]),
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],

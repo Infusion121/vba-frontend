@@ -10,7 +10,7 @@ import { MemberInfo } from '@app/model/memberInfo.model';
 
 
 @Injectable()
-export class BookmakersEffects {
+export class MemberInfosEffects {
   rootUrl = 'http://localhost:3600/api/members';
   // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/bookmakers';
 

@@ -10,7 +10,7 @@ import { RingLayout } from '@app/model/ringLayout.model';
 
 
 @Injectable()
-export class BookmakersEffects {
+export class RingLayoutsEffects {
   rootUrl = 'http://localhost:3600/api/ring-layouts';
   // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/bookmakers';
 
