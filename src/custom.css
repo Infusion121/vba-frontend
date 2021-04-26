@@ -117,7 +117,7 @@ footer p {
 
 .confirmationMessage {
   max-width: 590px;
-  margin: 0 auto 35px;
+  margin: 20px auto 35px;
   font-size: 20px;
   min-height: 200px;
 }
