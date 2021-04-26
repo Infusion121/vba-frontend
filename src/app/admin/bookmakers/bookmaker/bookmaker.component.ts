@@ -72,16 +72,6 @@ export class BookmakerComponent implements OnInit, OnDestroy {
           this.loading = false;
         }
 
-        // show error when load user by id fail
-        // if (state.error !== null) {
-        //   this.messageService.showError(state.error);
-        // }
-
-        // show error when update user by id fail
-        // if (state.update.error !== null) {
-        //   this.messageService.showError(state.update.error);
-        // }
-
         if (state.item !== null && state.loading === false && state.error === null && state.update.loading === false) {
           this.bookmaker = state.item;
           this.titleService.setTitle('Bookmaker - ' + state.item.bookmakingEntityName);
@@ -138,12 +128,8 @@ export class BookmakerComponent implements OnInit, OnDestroy {
   }
 
   onServiceTypeChange(index: number, event: any) {
-    // TODO fix this
-    // having a bug here
-    // Cannot add property 0, object is not extensible
-    //
     const currentServiceTypes = this.bookmakerForm.value.bookmakingServices
-      ? this.bookmakerForm.value.bookmakingServices
+      ? _.clone(this.bookmakerForm.value.bookmakingServices)
       : [];
 
     if (!!event.target.checked) {
@@ -160,10 +146,7 @@ export class BookmakerComponent implements OnInit, OnDestroy {
   }
 
   onBetTypeChange(index: number, event: any) {
-    // TODO fix this
-    // having a bug here
-    // Cannot add property 0, object is not extensible
-    const currentBetTypes = this.bookmakerForm.value.betTypes ? this.bookmakerForm.value.betTypes : [];
+    const currentBetTypes = this.bookmakerForm.value.betTypes ? _.clone(this.bookmakerForm.value.betTypes) : [];
 
     if (!!event.target.checked) {
       currentBetTypes.push(event.target.value);
