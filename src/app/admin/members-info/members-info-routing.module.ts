@@ -15,6 +15,18 @@ const routes: Routes = [
       data: { title: extract('Dashboard') },
       canActivate: [AuthenticationGuard],
     },
+    {
+      path: 'admin/members-info/new',
+      component: MembersInfoComponent,
+      data: { title: extract('Dashboard') },
+      canActivate: [AuthenticationGuard],
+    },
+    {
+      path: 'admin/members-info/:mid',
+      component: MembersInfoComponent,
+      data: { title: extract('Dashboard') },
+      canActivate: [AuthenticationGuard],
+    },
   ]),
 ];
 
