@@ -134,7 +134,7 @@
             <!-- still missing profile company logo upload -->
             <!-- TODO: work on this please -->
 
-            <div class="form-group col-6 col-lg-3 col-xl-2">
+            <!-- <div class="form-group col-6 col-lg-3 col-xl-2">
               <label for="telephoneBetting">Betting Phone Line</label>
               <input
                 id="telephoneBetting"
@@ -142,6 +142,49 @@
                 placeholder="Betting Phone Line"
                 formControlName="telephoneBetting"
               />
+            </div> -->
+            <div class="form-group" formArrayName="telephoneBetting">
+              <label for="telephoneBetting">Approved RVL Telephone Number</label>
+  
+              <div
+                class="input-group mb-3"
+                *ngFor="let item of bookmakerForm.get('telephoneBetting')['controls']; let i = index"
+              >
+                <div [formGroupName]="i" class="w-100">
+                  <div class="input-group-prepend phoneLeft">
+                    <span class="input-group-text" id="basic-addon3">03 9214</span>
+                  </div>
+                  <input
+                    id="telephoneBetting_{{ i }}"
+                    class="form-control form-control-sm phoneRight"
+                    placeholder="XXXX"
+                    formControlName="telephone"
+                    aria-describedby="basic-addon3"
+                    maxlength="4"
+                    pattern="\d{4}"
+                    [ngClass]="{
+                      'is-invalid': !!submitted && item.get('telephone').errors
+                    }"
+                  />
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger waves-effect waves-light removeBtn"
+                    (click)="removeBettingPhone(i)"
+                  >
+                    Remove
+                  </button>
+  
+                  <div class="invalid-feedback">Please enter a 4 digit number</div>
+                </div>
+              </div>
+              <button
+                type="button"
+                *ngIf="bookmakerForm.get('telephoneBetting')['controls'].length != 4"
+                class="btn waves-effect waves-light mt-2 addPhoneLine"
+                (click)="addBettingPhone()"
+              >
+                Additional Telephone Number
+              </button>
             </div>
 
             <!-- honey pot !!! -->

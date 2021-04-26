@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Bookmaker } from '@app/model/bookmaker.model';
 import { Store } from '@ngrx/store';
@@ -51,7 +51,7 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       licenseNumber: ['', [Validators.required]],
       yearEstablished: [''],
       profilePicCompanyLogo: [''],
-      telephoneBetting: [''],
+      telephoneBetting: this._fb.array([]),
       blockIt: ['', [this.validatorHoneyPot]],
     });
 
@@ -77,13 +77,13 @@ export class BookmakerComponent implements OnInit, OnDestroy {
           this.titleService.setTitle('Bookmaker - ' + state.item.bookmakingEntityName);
           this.populateForm(state.item);
           if (state.update.item === null) {
-            // this.messageService.showSuccess('', 'User (' + state.item.username + ') has been loaded');
+            
           } else {
-            // this.messageService.showSuccess('', 'User (' + state.item.username + ') has been updated');
-
-            // this.router.navigateByUrl('/users/list');
+            
             this.store.dispatch(new BookmakersActions.ResetBookmakerCurrentState());
-            this.store.dispatch(new BookmakersActions.GetBookmakerByIdStart(this.bookmakerId));
+            this.router.navigateByUrl('/admin/bookmakers');
+            
+            // this.store.dispatch(new BookmakersActions.GetBookmakerByIdStart(this.bookmakerId));
           }
         }
       });
@@ -97,7 +97,6 @@ export class BookmakerComponent implements OnInit, OnDestroy {
   }
 
   populateForm(bookmaker: Bookmaker) {
-    console.log(bookmaker);
     this.bookmakerForm.patchValue({
       bookmakingEntityName: bookmaker.bookmakingEntityName,
       aboutUs: bookmaker.aboutUs,
@@ -110,8 +109,34 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       licenseNumber: bookmaker.licenseNumber,
       yearEstablished: bookmaker.yearEstablished,
       profilePicCompanyLogo: bookmaker.profilePicCompanyLogo,
-      telephoneBetting: bookmaker.telephoneBetting,
     });
+
+    // loop through telephonebetting and patchvalue
+    const control = this.bookmakerForm.get('telephoneBetting') as FormArray;
+    if (bookmaker.telephoneBetting && bookmaker.telephoneBetting.length > 0) {
+      _.each(bookmaker.telephoneBetting, telephoneBetting => {
+        control.push(
+          this._fb.group({
+            telephone: telephoneBetting.telephone,
+          })
+        );  
+      })
+    }
+
+  }
+
+  addBettingPhone() {
+    const control = this.bookmakerForm.get('telephoneBetting') as FormArray;
+    control.push(
+      this._fb.group({
+        telephone: '',
+      })
+    );
+  }
+  
+  removeBettingPhone(index: number) {
+    const control = this.bookmakerForm.get('telephoneBetting') as FormArray;
+    control.removeAt(index);
   }
 
   onSubmit() {

@@ -12,7 +12,7 @@ export class Bookmaker {
     public licenseNumber: string,
     public yearEstablished: string,
     public profilePicCompanyLogo: string,
-    public telephoneBetting: string,
+    public telephoneBetting: [{_id: string, telephone: string}],
     public isApproved: boolean,
     public createdOn: string
   ) {}
