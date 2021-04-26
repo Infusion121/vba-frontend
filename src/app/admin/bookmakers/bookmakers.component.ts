@@ -43,7 +43,6 @@ export class BookmakersComponent implements OnInit {
           this.bookmakersObject = state.itemsObject;
           this.bookmakersCount = state.itemsCount;
           //this.messageService.showSuccess('', 'Jobs has been loaded');
-          console.log(this.bookmakersObject);
         }
       });
   }

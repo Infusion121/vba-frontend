@@ -52,6 +52,9 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       yearEstablished: [''],
       profilePicCompanyLogo: [''],
       telephoneBetting: this._fb.array([]),
+      isApproved: [ false, Validators.required],
+      isFeatured: [ false, Validators.required],
+      isActive: [ true, Validators.required],
       blockIt: ['', [this.validatorHoneyPot]],
     });
 
@@ -109,6 +112,9 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       licenseNumber: bookmaker.licenseNumber,
       yearEstablished: bookmaker.yearEstablished,
       profilePicCompanyLogo: bookmaker.profilePicCompanyLogo,
+      isApproved: bookmaker.isApproved,
+      isFeatured: bookmaker.isFeatured,
+      isActive: bookmaker.isActive,
     });
 
     // loop through telephonebetting and patchvalue
