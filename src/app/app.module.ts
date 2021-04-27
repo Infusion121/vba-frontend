@@ -34,6 +34,8 @@ import { InfoSheetsEffects } from './store/effects/infoSheets.effects';
 import { RingLayoutsEffects } from './store/effects/ringLayouts.effects';
 import { BookmakerNewModule } from './bookmaker-new/bookmaker-new.module';
 import { NewslettersModule } from './admin/newsletters/newsletters.module';
+import { InfoSheetsComponent } from './admin/info-sheets/info-sheets.component';
+import { InfoSheetComponent } from './admin/info-sheets/info-sheet/info-sheet.component';
 
 /* Use username: development@infusion121.com  password:test123456 */
 var firebaseConfig = {
@@ -83,7 +85,7 @@ var firebaseConfig = {
     ]),
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, InfoSheetsComponent, InfoSheetComponent],
   providers: [DataService],
   bootstrap: [AppComponent],
 })

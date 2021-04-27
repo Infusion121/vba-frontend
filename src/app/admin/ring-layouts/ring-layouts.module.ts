@@ -13,4 +13,4 @@ import { RingLayoutComponent } from './ring-layout/ring-layout.component';
   imports: [CommonModule, TranslateModule, CoreModule, SharedModule, RingLayoutsRoutingModule, SlickCarouselModule],
   declarations: [RingLayoutsComponent, RingLayoutComponent],
 })
-export class NewslettersModule {}
+export class RingLayoutsModule {}
