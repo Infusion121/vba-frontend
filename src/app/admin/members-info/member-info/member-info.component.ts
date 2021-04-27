@@ -69,11 +69,10 @@ export class MemberInfoComponent implements OnInit, OnDestroy {
           this.member = state.item;
           this.titleService.setTitle('Member - ' + state.item.description);
           this.populateForm(state.item);
-          if (state.update.item === null) {
-          } else {
+          if (state.update.item !== null) {
             this.store.dispatch(new MemberInfosActions.ResetMemberInfoCurrentState());
+            this.router.navigateByUrl('/admin/members-info');
           }
-          this.router.navigateByUrl('/admin/members-info');
         }
       });
 
@@ -99,7 +98,22 @@ export class MemberInfoComponent implements OnInit, OnDestroy {
         }
       });
 
-    
+    // after creating new member info
+    this.store
+      .select('members', 'memberInfoNew')
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((state) => {
+        if (!!state.loading) {
+          this.loading = true;
+        } else {
+          this.loading = false;
+        }
+
+        if (state.item !== null && state.loading === false && state.error === null) {
+          this.store.dispatch(new MemberInfosActions.ResetPostMemberInfoState());
+          this.router.navigateByUrl('/admin/members-info');
+        }
+      });
   }
 
   populateForm(member: MemberInfo) {

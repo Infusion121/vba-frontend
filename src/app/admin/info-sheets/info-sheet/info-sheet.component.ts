@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
@@ -33,14 +33,15 @@ export class InfoSheetComponent implements OnInit, OnDestroy {
     private _fb: FormBuilder,
     private currentRoute: ActivatedRoute,
     private store: Store<fromApp.AppState>,
-    private titleService: Title
+    private titleService: Title,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
     this.infoSheetForm = this._fb.group({
       description: ['', [Validators.required]],
       subject: [''],
-      file: [''],
+      file: ['', [Validators.required]],
       fileObj: [null],
       isActive: [true, [Validators.required]],
       blockIt: ['', [this.validatorHoneyPot]],
@@ -70,11 +71,10 @@ export class InfoSheetComponent implements OnInit, OnDestroy {
           this.infoSheet = state.item;
           this.titleService.setTitle('RVL Info Sheet - ' + state.item.description);
           this.populateForm(state.item);
-          if (state.update.item === null) {
-          } else {
+          if (state.update.item !== null) {
             this.store.dispatch(new InfoSheetsActions.ResetInfoSheetCurrentState());
+            this.router.navigateByUrl('/admin/info-sheets');
           }
-          this.router.navigateByUrl('/admin/info-sheets');
         }
       });
 
@@ -98,6 +98,23 @@ export class InfoSheetComponent implements OnInit, OnDestroy {
 
           // save the rest of the form
           this.onSubmit();
+        }
+      });
+
+    // after creating new info sheet
+    this.store
+      .select('infoSheets', 'infoSheetNew')
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((state) => {
+        if (!!state.loading) {
+          this.loading = true;
+        } else {
+          this.loading = false;
+        }
+
+        if (state.item !== null && state.loading === false && state.error === null) {
+          this.store.dispatch(new InfoSheetsActions.ResetPostInfoSheetState());
+          this.router.navigateByUrl('/admin/info-sheets');
         }
       });
   }
@@ -145,7 +162,12 @@ export class InfoSheetComponent implements OnInit, OnDestroy {
 
   onFileChange(event: any) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.infoSheetForm.patchValue({ fileObj: file });
+    this.infoSheetForm.patchValue({
+      file: this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(file)),
+      fileObj: file
+    });
+
+    this.infoSheetForm.get('fileObj').markAsDirty();
   }
 
   resetForm() {
