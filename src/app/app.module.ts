@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { environment } from '@env/environment';
 import { CoreModule } from '@core';
@@ -38,6 +38,9 @@ import { InfoSheetsComponent } from './admin/info-sheets/info-sheets.component';
 import { InfoSheetComponent } from './admin/info-sheets/info-sheet/info-sheet.component';
 import { RingLayoutsModule } from './admin/ring-layouts/ring-layouts.module';
 import { InfoSheetsModule } from './admin/info-sheets/info-sheets.module';
+
+import { CustomDateParserFormatter } from './services/date.service';
+
 
 /* Use username: development@infusion121.com  password:test123456 */
 var firebaseConfig = {
@@ -90,7 +93,10 @@ var firebaseConfig = {
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],
-  providers: [DataService],
+  providers: [
+    DataService,
+    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

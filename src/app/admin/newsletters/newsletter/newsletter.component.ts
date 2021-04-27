@@ -41,6 +41,7 @@ export class NewsletterComponent implements OnInit, OnDestroy {
     this.newsletterForm = this._fb.group({
       description: ['', [Validators.required]],
       date: ['', [Validators.required]],
+      dateObj: [null, [Validators.required]],
       file: [''],
       fileObj: [null],
       isActive: [true, [Validators.required]],

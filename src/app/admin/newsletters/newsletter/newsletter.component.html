@@ -17,7 +17,7 @@
 				</div>
 
 				<div class="form-group col-12">
-					<label for="newsletterDate">Date</label>
+					<!-- <label for="newsletterDate">Date</label>
 					<input
 						type="text"
 						class="form-control"
@@ -27,7 +27,27 @@
 							'is-invalid': !!submitted && newsletterForm.get('date').errors?.required
 						}"
 					/>
-					<div class="invalid-feedback">Please enter Newsletter's date.</div>
+					<div class="invalid-feedback">Please enter Newsletter's date.</div> -->
+
+					<label for="newsletterDate">Date *</label>
+					<input
+						class="form-control form-control-sm"
+						placeholder="dd-mm-yyyy"
+						name="dp"
+						id="newsletterDate"
+						ngbDatepicker
+						#d="ngbDatepicker"
+						formControlName="dateObj"
+						[ngClass]="{
+							'is-invalid': !!submitted && newsletterForm.get('newsletterForm.dateObj').errors?.required
+						}"
+					/>
+					<div class="input-group-append">
+						<button class="btn btn-sm btn-outline-info calendar" (click)="d.toggle()" type="button">
+							<i class="far fa-calendar-alt"></i>
+						</button>
+					</div>
+					<div class="invalid-feedback">Please choose date.</div>
 				</div>
 
 				<div class="form-group col-12" *ngIf="newsletter && newsletter.file !==''">
