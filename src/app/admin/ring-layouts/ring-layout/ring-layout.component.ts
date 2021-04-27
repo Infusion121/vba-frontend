@@ -14,7 +14,7 @@ import { RingLayout } from '@app/model/ringLayout.model';
 @Component({
   selector: 'app-ring-layout',
   templateUrl: './ring-layout.component.html',
-  styleUrls: ['./ring-layout.component.scss']
+  styleUrls: ['./ring-layout.component.scss'],
 })
 export class RingLayoutComponent implements OnInit, OnDestroy {
   rootUrl = 'http://localhost:3600';
@@ -71,6 +71,7 @@ export class RingLayoutComponent implements OnInit, OnDestroy {
           this.titleService.setTitle('Ring Layout - ' + state.item.venue);
           this.populateForm(state.item);
           if (state.update.item === null) {
+            // this is note updating item
           } else {
             this.store.dispatch(new RingLayoutsActions.ResetRingLayoutCurrentState());
             this.router.navigateByUrl('/admin/ring-layouts');
@@ -92,7 +93,7 @@ export class RingLayoutComponent implements OnInit, OnDestroy {
         if (state.item !== null && state.loading === false && state.error === null) {
           this.ringLayoutForm.patchValue({
             layout: state.item.path,
-            layoutObj: null
+            layoutObj: null,
           });
 
           // save the rest of the form
@@ -100,6 +101,22 @@ export class RingLayoutComponent implements OnInit, OnDestroy {
         }
       });
 
+    // subscribe to ringlayout state and wait for data to populate in the form
+    this.store
+      .select('ringLayouts', 'ringLayoutNew')
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((state) => {
+        if (!!state.loading) {
+          this.loading = true;
+        } else {
+          this.loading = false;
+        }
+
+        if (state.item !== null && state.loading === false && state.error === null) {
+          this.store.dispatch(new RingLayoutsActions.ResetPostRingLayoutState());
+          this.router.navigateByUrl('/admin/ring-layouts');
+        }
+      });
   }
 
   populateForm(ringLayout: RingLayout) {
@@ -144,9 +161,9 @@ export class RingLayoutComponent implements OnInit, OnDestroy {
 
   onFileChange(event: any) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.ringLayoutForm.patchValue({ 
+    this.ringLayoutForm.patchValue({
       layout: this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(file)),
-      layoutObj: file
+      layoutObj: file,
     });
 
     this.ringLayoutForm.get('layoutObj').markAsDirty();
@@ -167,7 +184,7 @@ export class RingLayoutComponent implements OnInit, OnDestroy {
         venue: '',
         layout: '',
         layoutObj: null,
-        isActive: '',
+        isActive: true,
         blockIt: '',
       });
     }
@@ -177,5 +194,4 @@ export class RingLayoutComponent implements OnInit, OnDestroy {
     this.componentDestroyed$.next(true);
     this.componentDestroyed$.complete();
   }
-
 }
