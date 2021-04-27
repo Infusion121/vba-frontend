@@ -39,7 +39,7 @@
 						#d="ngbDatepicker"
 						formControlName="dateObj"
 						[ngClass]="{
-							'is-invalid': !!submitted && newsletterForm.get('newsletterForm.dateObj').errors?.required
+							'is-invalid': !!submitted && newsletterForm.get('dateObj').errors?.required
 						}"
 					/>
 					<div class="input-group-append">
@@ -47,7 +47,7 @@
 							<i class="far fa-calendar-alt"></i>
 						</button>
 					</div>
-					<div class="invalid-feedback">Please choose date.</div>
+					<div class="invalid-feedback">Please enter Newsletter's date.</div>
 				</div>
 
 				<div class="form-group col-12" *ngIf="newsletter && newsletter.file !==''">

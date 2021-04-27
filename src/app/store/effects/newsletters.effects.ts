@@ -108,7 +108,7 @@ export class NewslettersEffects {
       const formData = new FormData();
 			formData.append('photo', uploadNewsletterFileAction.file);
 
-      return this.http.post(this.rootUrl + '/upload/upload-newsletter-file', formData, { headers }).pipe(
+      return this.http.post('http://localhost:3600/api/upload/upload-newsletter-file', formData, { headers }).pipe(
         map((response) => {
           return new NewslettersActions.UploadNewsletterFileSuccess(response);
         }),

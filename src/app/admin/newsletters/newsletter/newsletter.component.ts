@@ -48,6 +48,8 @@ export class NewsletterComponent implements OnInit, OnDestroy {
       blockIt: ['', [this.validatorHoneyPot]],
     });
 
+    this.onDateChange();
+
     // get the newsletter id from router url
     this.currentRoute.params.subscribe((params) => {
       if (params.nid !== undefined) {
@@ -94,7 +96,7 @@ export class NewsletterComponent implements OnInit, OnDestroy {
         if (state.item !== null && state.loading === false && state.error === null) {
           this.newsletterForm.patchValue({
             file: state.item.path,
-            fileObj: null
+            fileObj: null,
           });
 
           // save the rest of the form
@@ -107,6 +109,7 @@ export class NewsletterComponent implements OnInit, OnDestroy {
     this.newsletterForm.patchValue({
       description: newsletter.description,
       date: newsletter.date,
+      dateObj: this.convertDateToDateObj(newsletter.date), 
       file: newsletter.file,
       isActive: newsletter.isActive,
     });
@@ -122,7 +125,8 @@ export class NewsletterComponent implements OnInit, OnDestroy {
       if (postObj.fileObj !== null) {
         // upload the file
         this.store.dispatch(new NewslettersActions.UploadNewsletterFileStart(postObj.fileObj));
-        // after uploaded the file, listen to it from store state and trigger the onsubmit again with image file data updated in the form data.
+        // after uploaded the file, listen to it from store state
+        // and trigger the onsubmit again with image file data updated in the form data.
       } else {
         // updating newsletter
         if (this.newsletter !== null) {
@@ -149,12 +153,24 @@ export class NewsletterComponent implements OnInit, OnDestroy {
     this.newsletterForm.patchValue({ fileObj: file });
   }
 
+  onDateChange() {
+    // whenever date change
+    this.newsletterForm.get('dateObj').valueChanges.subscribe((newDateObj) => {
+      const dateObj = this.newsletterForm.get('dateObj').value;
+      if (dateObj !== null) {
+        const date = Math.floor(new Date(newDateObj.year, newDateObj.month - 1, newDateObj.day).getTime()) / 1000;
+        this.newsletterForm.patchValue({date});
+      }
+    });
+  }
+
   resetForm() {
     this.submitted = false;
     if (this.newsletterId !== null && this.newsletter !== null) {
       this.newsletterForm.patchValue({
         description: this.newsletter.description,
         date: this.newsletter.date,
+        dateObj: this.convertDateToDateObj(this.newsletter.date),
         file: this.newsletter.file,
         fileObj: null,
         isActive: this.newsletter.isActive,
@@ -164,12 +180,23 @@ export class NewsletterComponent implements OnInit, OnDestroy {
       this.newsletterForm.patchValue({
         description: '',
         date: '',
+        dateObj: null,
         file: '',
         fileObj: null,
         isActive: '',
         blockIt: '',
       });
     }
+  }
+
+  convertDateToDateObj(date: any) {
+    const miliSeconds = date * 1000;
+    const dateObject = new Date(miliSeconds);
+    return {
+      year: dateObject.getFullYear(),
+      month: dateObject.getMonth() + 1,
+      day: dateObject.getDate()
+    };
   }
 
   ngOnDestroy() {
