@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MemberInfo } from '@app/model/memberInfo.model';
 import { Store } from '@ngrx/store';
@@ -13,7 +13,7 @@ import * as MemberInfosActions from '../../store/actions/memberInfos.actions';
   templateUrl: './members-info.component.html',
   styleUrls: ['./members-info.component.scss'],
 })
-export class MembersInfoComponent implements OnInit {
+export class MembersInfoComponent implements OnInit, OnDestroy {
   componentDestroyed$: Subject<boolean> = new Subject();
 
   memberInfosObject: { [key: string]: MemberInfo } = null;
@@ -28,7 +28,7 @@ export class MembersInfoComponent implements OnInit {
     // dispatch action to get all members
     this.store.dispatch(new MemberInfosActions.GetMemberInfosStart());
 
-    // subscribe to member-info state and wait for data to populate in job table
+    // subscribe to member-info state and wait for data to populate in table
     this.store
       .select('members', 'memberInfosList')
       .pipe(takeUntil(this.componentDestroyed$))
@@ -50,5 +50,10 @@ export class MembersInfoComponent implements OnInit {
 
   asIsOrder(a: any, b: any) {
     return 1;
+  }
+
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true);
+    this.componentDestroyed$.complete();
   }
 }

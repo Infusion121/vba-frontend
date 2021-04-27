@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Bookmaker } from '@app/model/bookmaker.model';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './bookmakers.component.html',
   styleUrls: ['./bookmakers.component.scss'],
 })
-export class BookmakersComponent implements OnInit {
+export class BookmakersComponent implements OnInit, OnDestroy {
   componentDestroyed$: Subject<boolean> = new Subject();
 
   bookmakersObject: { [key: string]: Bookmaker } = null;
@@ -53,5 +53,10 @@ export class BookmakersComponent implements OnInit {
 
   asIsOrder(a: any, b: any) {
     return 1;
+  }
+
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true);
+    this.componentDestroyed$.complete();
   }
 }
