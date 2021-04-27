@@ -3,8 +3,10 @@ import { Router } from '@angular/router';
 import { MemberInfo } from '@app/model/memberInfo.model';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import * as fromApp from '../../store/app.reducer';
+import * as MemberInfosActions from '../../store/actions/memberInfos.actions';
 
 @Component({
   selector: 'app-members-info',
@@ -14,7 +16,7 @@ import * as fromApp from '../../store/app.reducer';
 export class MembersInfoComponent implements OnInit {
   componentDestroyed$: Subject<boolean> = new Subject();
 
-  memberInfosObject: { [key: string]: MemberInfo} = null;
+  memberInfosObject: { [key: string]: MemberInfo } = null;
   memberInfosCount: number = null;
   loading = true;
   rootUrl = 'http://localhost:3600/';
@@ -22,5 +24,31 @@ export class MembersInfoComponent implements OnInit {
 
   constructor(private store: Store<fromApp.AppState>, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // dispatch action to get all members
+    this.store.dispatch(new MemberInfosActions.GetMemberInfosStart());
+
+    // subscribe to member-info state and wait for data to populate in job table
+    this.store
+      .select('members', 'memberInfosList')
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((state) => {
+        this.loading = state.loading;
+
+        if (state.error !== null) {
+          console.log(state.error);
+        } else if (state.itemsObject !== null && state.loading === false && state.error === null) {
+          this.memberInfosObject = state.itemsObject;
+          this.memberInfosCount = state.itemsCount;
+        }
+      });
+  }
+
+  editItemPage(memberId: any) {
+    this.router.navigateByUrl('/admin/members-info/' + memberId);
+  }
+
+  asIsOrder(a: any, b: any) {
+    return 1;
+  }
 }
