@@ -24,11 +24,11 @@ export const DELETE_BOOKMAKER_BY_ID_SUCCESS = 'DELETE_BOOKMAKER_BY_ID_SUCCESS';
 export const DELETE_BOOKMAKER_BY_ID_FAIL = 'DELETE_BOOKMAKER_BY_ID_FAIL';
 export const RESET_DELETE_BOOKMAKER_STATE = 'RESET_DELETE_BOOKMAKER_STATE';
 
-export const UPLOAD_PHOTOS_START = 'UPLOAD_PHOTOS_START';
-export const UPLOAD_PHOTOS_SUCCESS = 'UPLOAD_PHOTOS_SUCCESS';
-export const UPLOAD_PHOTOS_FAIL = 'UPLOAD_PHOTOS_FAIL';
+export const UPLOAD_PHOTO_START = 'UPLOAD_PHOTO_START';
+export const UPLOAD_PHOTO_SUCCESS = 'UPLOAD_PHOTO_SUCCESS';
+export const UPLOAD_PHOTO_FAIL = 'UPLOAD_PHOTO_FAIL';
 
-export const RESET_UPLOAD_PHOTOS_STATE = 'RESET_UPLOAD_PHOTOS_STATE';
+export const RESET_UPLOAD_PHOTO_STATE = 'RESET_UPLOAD_PHOTO_STATE';
 
 // create new bookmaker
 export class PostBookmakerStart implements Action {
@@ -125,23 +125,23 @@ export class ResetDeleteBookmakerByIdState implements Action {
   constructor() {}
 }
 
-export class UploadPhotosStart implements Action {
-  readonly type = UPLOAD_PHOTOS_START;
-  constructor(public files: File[]) {}
+export class UploadPhotoStart implements Action {
+  readonly type = UPLOAD_PHOTO_START;
+  constructor(public file: File) {}
 }
 
-export class UploadPhotosSuccess implements Action {
-  readonly type = UPLOAD_PHOTOS_SUCCESS;
+export class UploadPhotoSuccess implements Action {
+  readonly type = UPLOAD_PHOTO_SUCCESS;
   constructor(public payload: any) {}
 }
 
-export class UploadPhotosFail implements Action {
-  readonly type = UPLOAD_PHOTOS_FAIL;
+export class UploadPhotoFail implements Action {
+  readonly type = UPLOAD_PHOTO_FAIL;
   constructor(public payload: any) {}
 }
 
-export class ResetUploadPhotosState implements Action {
-  readonly type = RESET_UPLOAD_PHOTOS_STATE;
+export class ResetUploadPhotoState implements Action {
+  readonly type = RESET_UPLOAD_PHOTO_STATE;
   constructor() {}
 }
 
@@ -165,7 +165,7 @@ export type BookmakersActions =
   | DeleteBookmakerByIdSuccess
   | DeleteBookmakerByIdFail
   | ResetDeleteBookmakerByIdState
-  | UploadPhotosStart
-  | UploadPhotosSuccess
-  | UploadPhotosFail
-  | ResetUploadPhotosState;
+  | UploadPhotoStart
+  | UploadPhotoSuccess
+  | UploadPhotoFail
+  | ResetUploadPhotoState;

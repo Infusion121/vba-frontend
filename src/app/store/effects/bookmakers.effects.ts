@@ -97,24 +97,22 @@ export class BookmakersEffects {
     })
   );
 
-  // upload photo files
+  // upload photo file
   @Effect()
-  uploadPhotoFiles = this.actions$.pipe(
-    ofType(BookmakersActions.UPLOAD_PHOTOS_START),
-    switchMap((uploadPhotoFilesAction: BookmakersActions.UploadPhotosStart) => {
+  uploadPhotoFile = this.actions$.pipe(
+    ofType(BookmakersActions.UPLOAD_PHOTO_START),
+    switchMap((uploadPhotoFilesAction: BookmakersActions.UploadPhotoStart) => {
       const headers = new HttpHeaders();
       headers.append('Content-Type', 'multipart/form-data');
       const formData = new FormData();
-      _.each(uploadPhotoFilesAction.files, (file) => {
-        formData.append('photo', file);
-      });
+      formData.append('photo', uploadPhotoFilesAction.file);
 
-      return this.http.post(this.rootUrl + '/upload/upload-bookmaker-photos', formData, { headers }).pipe(
+      return this.http.post('http://localhost:3600/api/upload/upload-bookmaker-photo', formData, { headers }).pipe(
         map((response) => {
-          return new BookmakersActions.UploadPhotosSuccess(response);
+          return new BookmakersActions.UploadPhotoSuccess(response);
         }),
         catchError((error) => {
-          return of(new BookmakersActions.UploadPhotosFail(error));
+          return of(new BookmakersActions.UploadPhotoFail(error));
         })
       );
     })

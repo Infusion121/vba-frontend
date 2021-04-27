@@ -29,10 +29,9 @@ export interface State {
     loading: boolean;
     error: any;
   };
-
-  uploadBookmakerPhotoFiles: {
-    files: File[];
-    items: any;
+  uploadBookmakerPhotoFile: {
+    file: File;
+    item: any;
     loading: boolean;
     error: any;
   };
@@ -66,9 +65,9 @@ const initialState: State = {
     loading: false,
     error: null,
   },
-  uploadBookmakerPhotoFiles: {
-    files: null,
-    items: null,
+  uploadBookmakerPhotoFile: {
+    file: null,
+    item: null,
     loading: false,
     error: null,
   },
@@ -277,47 +276,46 @@ export function bookmakersReducer(state: State = initialState, action: Bookmaker
       };
 
     // upload photo files
-    case BookmakersActions.UPLOAD_PHOTOS_START:
+    case BookmakersActions.UPLOAD_PHOTO_START:
       return {
         ...state,
-        uploadBookmakerPhotoFiles: {
-          ...state.uploadBookmakerPhotoFiles,
-          files: action.files,
-          items: null as null,
+        uploadBookmakerPhotoFile: {
+          ...state.uploadBookmakerPhotoFile,
+          file: action.file,
+          item: null as null,
           loading: true,
           error: null as null,
         },
       };
 
-    case BookmakersActions.UPLOAD_PHOTOS_SUCCESS:
+    case BookmakersActions.UPLOAD_PHOTO_SUCCESS:
       return {
         ...state,
-        uploadBookmakerPhotoFiles: {
-          ...state.uploadBookmakerPhotoFiles,
-          files: null as null,
+        uploadBookmakerPhotoFile: {
+          ...state.uploadBookmakerPhotoFile,
+          file: null as null,
           loading: false,
-          items: action.payload.images,
+          item: action.payload.image,
           error: null as null,
         },
       };
 
-    case BookmakersActions.UPLOAD_PHOTOS_FAIL:
+    case BookmakersActions.UPLOAD_PHOTO_FAIL:
       return {
         ...state,
-        uploadBookmakerPhotoFiles: {
-          ...state.uploadBookmakerPhotoFiles,
-          jobId: null as null,
-          files: null as null,
+        uploadBookmakerPhotoFile: {
+          ...state.uploadBookmakerPhotoFile,
+          file: null as null,
           loading: false,
           item: null as null,
           error: action.payload,
         },
       };
-    case BookmakersActions.RESET_UPLOAD_PHOTOS_STATE:
+    case BookmakersActions.RESET_UPLOAD_PHOTO_STATE:
       return {
         ...state,
-        uploadBookmakerPhotoFiles: {
-          ...initialState.uploadBookmakerPhotoFiles,
+        uploadBookmakerPhotoFile: {
+          ...initialState.uploadBookmakerPhotoFile,
         },
       };
 
