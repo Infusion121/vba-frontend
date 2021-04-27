@@ -1,1 +1,72 @@
-<p>info-sheet works!</p>
+<form [formGroup]="infoSheetForm" (ngSubmit)="onSubmit()">
+	<div class="card">
+		<div class="card-body">
+			<div class="row">
+				<div class="form-group col-12">
+					<label for="infoSheetDescription">Description *</label>
+					<input
+						type="text"
+						class="form-control"
+						formControlName="description"
+						id="infoSheetDescription"
+						[ngClass]="{
+							'is-invalid': !!submitted && infoSheetForm.get('description').errors?.required
+						}"
+					/>
+					<div class="invalid-feedback">Please enter Info Sheet's description.</div>
+				</div>
+
+				<div class="form-group col-12">
+					<label for="infoSheetSubject">Subject</label>
+					<input
+						type="text"
+						class="form-control"
+						formControlName="subject"
+						id="infoSheetSubject"
+					/>
+				</div>
+
+				<div class="form-group col-12" *ngIf="infoSheet && infoSheet.file !==''">
+					<label>Current info sheet file</label>
+					<a class="btn btn-primary" target="_blank" [href]="rootUrl + infoSheet.file">View</a>
+				</div>
+
+				<div class="form-group col-12">
+          <label *ngIf="infoSheet && infoSheet.file !== ''">Update info sheet file</label>
+					<label *ngIf="!infoSheet || infoSheet.file === ''">Upload info sheet file</label>
+          <input
+            type="file"
+            accept="application/pdf"
+            (change)="onFileChange($event)"
+          />
+        </div>
+
+
+				<div class="form-group col-12">
+					<label for="isActive">Active</label>  
+					<input type="checkbox" formControlName="isActive" id="isActive" />
+				</div>
+
+
+
+				<!-- actions -->
+				<div class="form-group col-12">
+					<!-- Save actions -->
+					<div class="save-actions text-right">
+						<button type="submit" class="btn btn-outline-success waves-effect waves-light">Save</button>
+						<button
+							type="button"
+							class="btn btn-outline-danger waves-effect waves-light"
+							(click)="resetForm()"
+							[disabled]="!infoSheetForm.dirty"
+						>
+							Clear
+						</button>
+					</div>
+					<!-- end save actions -->
+				</div>
+			</div>
+		</div>
+	</div>
+  
+</form>

@@ -108,7 +108,7 @@ export class InfoSheetsEffects {
       const formData = new FormData();
 			formData.append('photo', uploadInfoSheetFileAction.file);
 
-      return this.http.post(this.rootUrl + '/upload/upload-rvl-info-sheet-file', formData, { headers }).pipe(
+      return this.http.post('http://localhost:3600/api/upload/upload-rvl-info-sheet-file', formData, { headers }).pipe(
         map((response) => {
           return new InfoSheetsActions.UploadInfoSheetFileSuccess(response);
         }),

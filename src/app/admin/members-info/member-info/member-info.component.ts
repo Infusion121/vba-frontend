@@ -54,7 +54,7 @@ export class MemberInfoComponent implements OnInit, OnDestroy {
       }
     });
 
-    // subscribe to member state and wait for data to populate in the bookmaker form
+    // subscribe to member state and wait for data to populate in the form
     this.store
       .select('members', 'memberInfoCurrent')
       .pipe(takeUntil(this.componentDestroyed$))

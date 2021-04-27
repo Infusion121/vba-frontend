@@ -23,7 +23,7 @@ const routes: Routes = [
       canActivate: [AuthenticationGuard],
     },
     {
-      path: 'admin/info-sheets/:nid',
+      path: 'admin/info-sheets/:sid',
       component: InfoSheetComponent,
       data: { title: extract('Dashboard') },
       canActivate: [AuthenticationGuard],

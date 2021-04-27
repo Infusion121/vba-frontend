@@ -45,7 +45,7 @@ export class InfoSheetsComponent implements OnInit, OnDestroy {
   }
 
   editItemPage(memberId: any) {
-    this.router.navigateByUrl('/admin/members-info/' + memberId);
+    this.router.navigateByUrl('/admin/info-sheets/' + memberId);
   }
 
   asIsOrder(a: any, b: any) {

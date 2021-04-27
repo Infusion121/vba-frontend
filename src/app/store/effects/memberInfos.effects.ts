@@ -108,11 +108,8 @@ export class MemberInfosEffects {
       const formData = new FormData();
 			formData.append('file', uploadMemberInfoFileAction.file);
 
-      console.log(formData);
-
       return this.http.post('http://localhost:3600/api/upload/upload-member-file', formData, { headers }).pipe(
         map((response) => {
-          console.log(response);
           return new MemberInfosActions.UploadMemberInfoFileSuccess(response);
         }),
         catchError((error) => {
