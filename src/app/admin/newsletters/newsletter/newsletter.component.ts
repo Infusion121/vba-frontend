@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MemberInfo } from '@app/model/memberInfo.model';
 import { Store } from '@ngrx/store';
@@ -34,7 +34,8 @@ export class NewsletterComponent implements OnInit, OnDestroy {
     private _fb: FormBuilder,
     private currentRoute: ActivatedRoute,
     private store: Store<fromApp.AppState>,
-    private titleService: Title
+    private titleService: Title,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +43,7 @@ export class NewsletterComponent implements OnInit, OnDestroy {
       description: ['', [Validators.required]],
       date: ['', [Validators.required]],
       dateObj: [null, [Validators.required]],
-      file: [''],
+      file: ['', [Validators.required]],
       fileObj: [null],
       isActive: [true, [Validators.required]],
       blockIt: ['', [this.validatorHoneyPot]],
@@ -74,11 +75,11 @@ export class NewsletterComponent implements OnInit, OnDestroy {
           this.newsletter = state.item;
           this.titleService.setTitle('Newsletter - ' + state.item.description);
           this.populateForm(state.item);
-          if (state.update.item === null) {
-          } else {
+          // updating newsletter
+          if (state.update.item !== null) {
             this.store.dispatch(new NewslettersActions.ResetNewsletterCurrentState());
+            this.router.navigateByUrl('/admin/newsletters');
           }
-          this.router.navigateByUrl('/admin/newsletters');
         }
       });
 
@@ -103,13 +104,30 @@ export class NewsletterComponent implements OnInit, OnDestroy {
           this.onSubmit();
         }
       });
+
+    // after creating new newsletter
+    this.store
+      .select('newsletters', 'newsletterNew')
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((state) => {
+        if (!!state.loading) {
+          this.loading = true;
+        } else {
+          this.loading = false;
+        }
+
+        if (state.item !== null && state.loading === false && state.error === null) {
+          this.store.dispatch(new NewslettersActions.ResetPostNewsletterState());
+          this.router.navigateByUrl('/admin/newsletters');
+        }
+      });
   }
 
   populateForm(newsletter: Newsletter) {
     this.newsletterForm.patchValue({
       description: newsletter.description,
       date: newsletter.date,
-      dateObj: this.convertDateToDateObj(newsletter.date), 
+      dateObj: this.convertDateToDateObj(newsletter.date),
       file: newsletter.file,
       isActive: newsletter.isActive,
     });
@@ -150,7 +168,11 @@ export class NewsletterComponent implements OnInit, OnDestroy {
 
   onFileChange(event: any) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.newsletterForm.patchValue({ fileObj: file });
+    this.newsletterForm.patchValue({ 
+      file: this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(file)),
+      fileObj: file
+    });
+    this.newsletterForm.get('fileObj').markAsDirty();
   }
 
   onDateChange() {
@@ -159,7 +181,7 @@ export class NewsletterComponent implements OnInit, OnDestroy {
       const dateObj = this.newsletterForm.get('dateObj').value;
       if (dateObj !== null) {
         const date = Math.floor(new Date(newDateObj.year, newDateObj.month - 1, newDateObj.day).getTime()) / 1000;
-        this.newsletterForm.patchValue({date});
+        this.newsletterForm.patchValue({ date });
       }
     });
   }
@@ -195,7 +217,7 @@ export class NewsletterComponent implements OnInit, OnDestroy {
     return {
       year: dateObject.getFullYear(),
       month: dateObject.getMonth() + 1,
-      day: dateObject.getDate()
+      day: dateObject.getDate(),
     };
   }
 

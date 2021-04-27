@@ -70,9 +70,8 @@ export class RingLayoutComponent implements OnInit, OnDestroy {
           this.ringLayout = state.item;
           this.titleService.setTitle('Ring Layout - ' + state.item.venue);
           this.populateForm(state.item);
-          if (state.update.item === null) {
-            // this is note updating item
-          } else {
+          // updating ring layout
+          if (state.update.item !== null) {
             this.store.dispatch(new RingLayoutsActions.ResetRingLayoutCurrentState());
             this.router.navigateByUrl('/admin/ring-layouts');
           }
@@ -101,7 +100,7 @@ export class RingLayoutComponent implements OnInit, OnDestroy {
         }
       });
 
-    // subscribe to ringlayout state and wait for data to populate in the form
+    // after creating new ring layout
     this.store
       .select('ringLayouts', 'ringLayoutNew')
       .pipe(takeUntil(this.componentDestroyed$))
