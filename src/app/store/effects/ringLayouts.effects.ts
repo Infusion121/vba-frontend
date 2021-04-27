@@ -108,7 +108,7 @@ export class RingLayoutsEffects {
       const formData = new FormData();
 			formData.append('photo', uploadRingLayoutFileAction.file);
 
-      return this.http.post(this.rootUrl + '/upload/upload-ring-layout-file', formData, { headers }).pipe(
+      return this.http.post('http://localhost:3600/api/upload/upload-ring-layout-file', formData, { headers }).pipe(
         map((response) => {
           return new RingLayoutsActions.UploadRingLayoutFileSuccess(response);
         }),

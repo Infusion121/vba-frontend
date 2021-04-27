@@ -23,7 +23,7 @@ const routes: Routes = [
       canActivate: [AuthenticationGuard],
     },
     {
-      path: 'admin/ring-layouts/:lid',
+      path: 'admin/ring-layouts/:rid',
       component: RingLayoutComponent,
       data: { title: extract('Dashboard') },
       canActivate: [AuthenticationGuard],

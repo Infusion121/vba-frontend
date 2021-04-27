@@ -1,1 +1,72 @@
-<p>ring-layout works!</p>
+<form [formGroup]="ringLayoutForm" (ngSubmit)="onSubmit()">
+	<div class="card">
+		<div class="card-body">
+			<div class="row">
+				<div class="form-group col-12">
+					<label for="ringLayoutVenue">Venue *</label>
+					<input
+						type="text"
+						class="form-control"
+						formControlName="venue"
+						id="ringLayoutVenue"
+						[ngClass]="{
+							'is-invalid': !!submitted && ringLayoutForm.get('venue').errors?.required
+						}"
+					/>
+					<div class="invalid-feedback">Please enter Ring Layout's venue.</div>
+				</div>
+
+				<div class="form-group col-12" *ngIf="ringLayout && ringLayout.layout !==''">
+					<label>Current ring layout</label>
+					<a class="btn btn-primary" target="_blank" [href]="rootUrl + ringLayout.layout">View</a>
+				</div>
+
+				<div class="form-group col-12">
+          <label *ngIf="ringLayout && ringLayout.layout !== ''">Update ring layout</label>
+					<label *ngIf="!ringLayout || ringLayout.layout === ''">Upload ring layout</label>
+          <input
+            type="file"
+            accept="image/jpeg, image/jpg, image/png"
+            (change)="onFileChange($event)"
+          />
+        </div>
+
+				<div class="form-group col-12 col-md-6">
+					<label>Layout</label>
+					<img
+						[src]="rootUrl + '/' + ringLayout.layout"
+						*ngIf="ringLayout && ringLayoutForm.get('layoutObj').value === null"
+					/>
+					<img
+						[src]="ringLayoutForm.get('layout').value"
+						*ngIf="ringLayoutForm.get('layoutObj').value !== null"
+					/>
+				</div>
+
+
+				<div class="form-group col-12">
+					<label for="isActive">Active</label>  
+					<input type="checkbox" formControlName="isActive" id="isActive" />
+				</div>
+
+				<!-- actions -->
+				<div class="form-group col-12">
+					<!-- Save actions -->
+					<div class="save-actions text-right">
+						<button type="submit" class="btn btn-outline-success waves-effect waves-light">Save</button>
+						<button
+							type="button"
+							class="btn btn-outline-danger waves-effect waves-light"
+							(click)="resetForm()"
+							[disabled]="!ringLayoutForm.dirty"
+						>
+							Clear
+						</button>
+					</div>
+					<!-- end save actions -->
+				</div>
+			</div>
+		</div>
+	</div>
+  
+</form>

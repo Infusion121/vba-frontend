@@ -46,7 +46,7 @@ export class RingLayoutsComponent implements OnInit, OnDestroy {
   }
 
   editItemPage(infoSheetId: any) {
-    this.router.navigateByUrl('/admin/info-sheets/' + infoSheetId);
+    this.router.navigateByUrl('/admin/ring-layouts/' + infoSheetId);
   }
 
   asIsOrder(a: any, b: any) {
