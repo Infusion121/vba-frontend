@@ -40,7 +40,7 @@ export class RingLayoutComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.ringLayoutForm = this._fb.group({
       venue: ['', [Validators.required]],
-      layout: [''],
+      layout: ['', [Validators.required]],
       layoutObj: [null],
       isActive: [true, [Validators.required]],
       blockIt: ['', [this.validatorHoneyPot]],
@@ -73,8 +73,8 @@ export class RingLayoutComponent implements OnInit, OnDestroy {
           if (state.update.item === null) {
           } else {
             this.store.dispatch(new RingLayoutsActions.ResetRingLayoutCurrentState());
+            this.router.navigateByUrl('/admin/ring-layouts');
           }
-          this.router.navigateByUrl('/admin/ring-layouts');
         }
       });
 

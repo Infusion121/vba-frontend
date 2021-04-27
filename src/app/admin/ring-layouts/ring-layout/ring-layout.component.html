@@ -28,10 +28,19 @@
             type="file"
             accept="image/jpeg, image/jpg, image/png"
             (change)="onFileChange($event)"
+						[ngClass]="{
+							'is-invalid': !!submitted && ringLayoutForm.get('layout').errors?.required
+						}"
           />
+					<div
+						class="invalid-feedback"
+						*ngIf="!!submitted && ringLayoutForm.get('layout').errors?.required"
+					>
+						Please upload ring layout.
+					</div>
         </div>
 
-				<div class="form-group col-12 col-md-6">
+				<div class="form-group col-12 col-md-6" *ngIf="(ringLayout && ringLayoutForm.get('layoutObj').value === null) || (ringLayoutForm.get('layoutObj').value !== null)">
 					<label>Layout</label>
 					<img
 						[src]="rootUrl + '/' + ringLayout.layout"
