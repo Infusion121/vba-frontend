@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,6 +18,8 @@ import { Newsletter } from '@app/model/newsletter.model';
   styleUrls: ['./newsletter.component.scss'],
 })
 export class NewsletterComponent implements OnInit, OnDestroy {
+  @ViewChild('fileInputRef') fileInputRef: ElementRef;
+
   rootUrl = 'http://localhost:3600/';
   // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com';
   componentDestroyed$: Subject<boolean> = new Subject();
@@ -209,6 +211,9 @@ export class NewsletterComponent implements OnInit, OnDestroy {
         blockIt: '',
       });
     }
+
+    this.fileInputRef.nativeElement.value = '';
+
   }
 
   convertDateToDateObj(date: any) {

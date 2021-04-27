@@ -64,6 +64,7 @@
             type="file"
             accept="application/pdf"
             (change)="onFileChange($event)"
+						#fileInputRef
 						[ngClass]="{
 							'is-invalid': !!submitted && newsletterForm.get('file').errors?.required
 						}"

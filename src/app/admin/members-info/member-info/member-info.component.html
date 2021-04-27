@@ -30,7 +30,17 @@
             type="file"
             accept="application/pdf"
             (change)="onFileChange($event)"
+						#fileInputRef
+						[ngClass]="{
+							'is-invalid': !!submitted && memberForm.get('file').errors?.required
+						}"
           />
+					<div
+						class="invalid-feedback"
+						*ngIf="!!submitted && memberForm.get('file').errors?.required"
+					>
+						Please upload member info file.
+					</div>
         </div>
 
 

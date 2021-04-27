@@ -30,6 +30,7 @@
             type="file"
             accept="image/jpeg, image/jpg, image/png"
             (change)="onFileChange($event)"
+						#fileInputRef
 						[ngClass]="{
 							'is-invalid': !!submitted && ringLayoutForm.get('layout').errors?.required
 						}"

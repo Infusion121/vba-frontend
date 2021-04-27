@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,6 +17,8 @@ import { RingLayout } from '@app/model/ringLayout.model';
   styleUrls: ['./ring-layout.component.scss'],
 })
 export class RingLayoutComponent implements OnInit, OnDestroy {
+  @ViewChild('fileInputRef') fileInputRef: ElementRef;
+
   rootUrl = 'http://localhost:3600';
   // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com';
   componentDestroyed$: Subject<boolean> = new Subject();
@@ -187,6 +189,9 @@ export class RingLayoutComponent implements OnInit, OnDestroy {
         blockIt: '',
       });
     }
+
+    this.fileInputRef.nativeElement.value = '';
+
   }
 
   ngOnDestroy() {

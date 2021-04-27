@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MemberInfo } from '@app/model/memberInfo.model';
 import { Store } from '@ngrx/store';
@@ -17,6 +17,8 @@ import * as MemberInfosActions from '../../../store/actions/memberInfos.actions'
   styleUrls: ['./member-info.component.scss'],
 })
 export class MemberInfoComponent implements OnInit, OnDestroy {
+  @ViewChild('fileInputRef') fileInputRef: ElementRef;
+
   rootUrl = 'http://localhost:3600/';
   // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com';
   componentDestroyed$: Subject<boolean> = new Subject();
@@ -33,13 +35,14 @@ export class MemberInfoComponent implements OnInit, OnDestroy {
     private _fb: FormBuilder,
     private currentRoute: ActivatedRoute,
     private store: Store<fromApp.AppState>,
-    private titleService: Title
+    private titleService: Title,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
     this.memberForm = this._fb.group({
       description: ['', [Validators.required]],
-      file: [''],
+      file: ['', [Validators.required]],
       fileObj: [null],
       isActive: [true, [Validators.required]],
       blockIt: ['', [this.validatorHoneyPot]],
@@ -158,7 +161,12 @@ export class MemberInfoComponent implements OnInit, OnDestroy {
 
   onFileChange(event: any) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.memberForm.patchValue({ fileObj: file });
+    this.memberForm.patchValue({ 
+      file: this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(file)),
+      fileObj: file
+    });
+
+    this.memberForm.get('fileObj').markAsDirty();
   }
 
   resetForm() {
@@ -180,6 +188,9 @@ export class MemberInfoComponent implements OnInit, OnDestroy {
         blockIt: '',
       });
     }
+
+    this.fileInputRef.nativeElement.value = '';
+
   }
 
   ngOnDestroy() {

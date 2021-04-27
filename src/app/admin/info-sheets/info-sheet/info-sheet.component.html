@@ -41,6 +41,7 @@
             type="file"
             accept="application/pdf"
             (change)="onFileChange($event)"
+						#fileInputRef
 						[ngClass]="{
 							'is-invalid': !!submitted && infoSheetForm.get('file').errors?.required
 						}"
