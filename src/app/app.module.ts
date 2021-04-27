@@ -33,6 +33,7 @@ import { NewslettersEffects } from './store/effects/newsletters.effects';
 import { InfoSheetsEffects } from './store/effects/infoSheets.effects';
 import { RingLayoutsEffects } from './store/effects/ringLayouts.effects';
 import { BookmakerNewModule } from './bookmaker-new/bookmaker-new.module';
+import { NewslettersModule } from './admin/newsletters/newsletters.module';
 
 /* Use username: development@infusion121.com  password:test123456 */
 var firebaseConfig = {
@@ -63,6 +64,7 @@ var firebaseConfig = {
     DashboardModule,
     BookmakersModule,
     MembersInfoModule,
+    NewslettersModule,
     AuthModule,
     BookmakerNewModule,
     //Store Modules Import
