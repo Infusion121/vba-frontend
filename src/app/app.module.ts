@@ -22,9 +22,6 @@ import { DataService } from './services/data.service';
 import { DashboardModule } from './admin/dashboard/dashboard.module';
 import { BookmakersModule } from './admin/bookmakers/bookmakers.module';
 import { MembersInfoModule } from './admin/members-info/members-info.module';
-import { RingLayoutModule } from './admin/ring-layout/ring-layout.module';
-import { RVLInfoModule } from './admin/rvl-info-sheet/rvl-info.module';
-import { VBANewsletterModule } from './admin/vba-newsletter/vba-newsletter.module';
 import { StoreModule } from '@ngrx/store';
 import * as fromApp from './store/app.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -66,9 +63,6 @@ var firebaseConfig = {
     DashboardModule,
     BookmakersModule,
     MembersInfoModule,
-    RingLayoutModule,
-    RVLInfoModule,
-    VBANewsletterModule,
     AuthModule,
     BookmakerNewModule,
     //Store Modules Import
