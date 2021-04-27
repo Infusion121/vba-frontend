@@ -33,7 +33,7 @@
               <tbody>
                 <tr role="row" class="itemRowList" *ngFor="let newsletter of newslettersObject | keyvalue: asIsOrder">
                   <td class="">{{ newsletter.value.description }}</td>
-									<td class="">{{ newsletter.value.date }}</td>
+									<td class="">{{ convertDateToDateString(newsletter.value.date) }}</td>
                   <td class="">
                     {{ newsletter.value.file }}
                     <a target="_blank" [href]="rootUrl + newsletter.value.file" class="btn btn-primary">View</a>

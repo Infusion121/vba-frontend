@@ -45,6 +45,12 @@ export class NewslettersComponent implements OnInit, OnDestroy {
       });
   }
 
+  convertDateToDateString(date: any) {
+    const miliSeconds = date * 1000;
+    const dateObject = new Date(miliSeconds);
+    return dateObject.toLocaleDateString();
+  }
+
   editItemPage(memberId: any) {
     this.router.navigateByUrl('/admin/newsletters/' + memberId);
   }
