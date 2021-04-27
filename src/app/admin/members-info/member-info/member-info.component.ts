@@ -89,7 +89,6 @@ export class MemberInfoComponent implements OnInit, OnDestroy {
         }
 
         if (state.item !== null && state.loading === false && state.error === null) {
-          const imageUrl = state.item.path;
           this.memberForm.patchValue({
             file: state.item.path,
             fileObj: null

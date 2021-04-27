@@ -1,1 +1,58 @@
-<p>newsletters works!</p>
+<ol class="breadcrumb mb-4">
+  <li class="breadcrumb-item"><a routerLink="/admin/newsletters">Newsletters</a></li>
+</ol>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <div class="table-responsive">
+      <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+        <div class="row pt-2 pb-4"></div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <table
+              class="table table-bordered dataTable"
+              id="dataTable"
+              width="100%"
+              cellspacing="0"
+              role="grid"
+              aria-describedby="dataTable_info"
+              style="width: 100%"
+            >
+              <thead>
+                <tr role="row">
+                  <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                    Description
+                  </th>
+									<th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Date</th>
+                  <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">File</th>
+                  <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Status</th>
+                  <th class="sorting text-right" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr role="row" class="itemRowList" *ngFor="let newsletter of newslettersObject | keyvalue: asIsOrder">
+                  <td class="">{{ newsletter.value.description }}</td>
+									<td class="">{{ newsletter.value.date }}</td>
+                  <td class="">
+                    {{ newsletter.value.file }}
+                    <a target="_blank" [href]="rootUrl + newsletter.value.file" class="btn btn-primary">View</a>
+                  </td>
+                  <td class="">
+                    <span class="badge badge-danger" *ngIf="!newsletter.value.isActive">Inactive</span>
+                    <span class="badge badge-success" *ngIf="!!newsletter.value.isActive">Active</span>
+                  </td>
+                  <td class="text-right">
+                    <a href="javascript:void(0)" class="btn btn-dark btn-sm" (click)="editItemPage(newsletter.value._id)"
+                      ><i class="fas fa-edit"></i> Edit</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
