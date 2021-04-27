@@ -277,6 +277,7 @@ export function memberInfosReducer(state: State = initialState, action: MemberIn
 
     // upload member info file
     case MemberInfosActions.UPLOAD_MEMBERINFO_FILE_START:
+      console.log(action);
       return {
         ...state,
         uploadMemberInfoFile: {

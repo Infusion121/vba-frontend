@@ -1,1 +1,62 @@
-<p>member-info works!</p>
+<form [formGroup]="memberForm" (ngSubmit)="onSubmit()">
+	<div class="card">
+		<div class="card-body">
+			<div class="row">
+				<div class="form-group col-12">
+					<label for="memberDescription">Description *</label>
+					<input
+						type="text"
+						class="form-control"
+						formControlName="description"
+						id="memberDescription"
+						[ngClass]="{
+							'is-invalid': !!submitted && memberForm.get('description').errors?.required
+						}"
+					/>
+					<div class="invalid-feedback">Please enter Member's description.</div>
+				</div>
+
+				<div class="form-group col-12" *ngIf="member && member.file !==''">
+					<label>Current member file</label>
+					<a class="btn btn-primary" target="_blank" [href]="rootUrl + member.file">View</a>
+				</div>
+
+				<div class="form-group col-12">
+          <label *ngIf="member && member.file !== ''">Update member file</label>
+					<label *ngIf="!member || member.file === ''">Upload member file</label>
+          <input
+            type="file"
+            accept="application/msword, application/pdf"
+            (change)="onFileChange($event)"
+          />
+        </div>
+
+
+				<div class="form-group col-12">
+					<label for="isActive">Active</label>  
+					<input type="checkbox" formControlName="isActive" id="isActive" />
+				</div>
+
+
+
+				<!-- actions -->
+				<div class="form-group col-12">
+					<!-- Save actions -->
+					<div class="save-actions text-right">
+						<button type="submit" class="btn btn-outline-success waves-effect waves-light">Save</button>
+						<button
+							type="button"
+							class="btn btn-outline-danger waves-effect waves-light"
+							(click)="resetForm()"
+							[disabled]="!memberForm.dirty"
+						>
+							Clear
+						</button>
+					</div>
+					<!-- end save actions -->
+				</div>
+			</div>
+		</div>
+	</div>
+  
+</form>

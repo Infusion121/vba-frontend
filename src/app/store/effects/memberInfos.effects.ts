@@ -98,7 +98,7 @@ export class MemberInfosEffects {
     })
   );
 
-  // upload photo file
+  // upload member info file
   @Effect()
   uploadMemberInfoFile = this.actions$.pipe(
     ofType(MemberInfosActions.UPLOAD_MEMBERINFO_FILE_START),
@@ -106,10 +106,13 @@ export class MemberInfosEffects {
       const headers = new HttpHeaders();
       headers.append('Content-Type', 'multipart/form-data');
       const formData = new FormData();
-			formData.append('photo', uploadMemberInfoFileAction.file);
+			formData.append('file', uploadMemberInfoFileAction.file);
 
-      return this.http.post(this.rootUrl + '/upload/upload-member-file', formData, { headers }).pipe(
+      console.log(formData);
+
+      return this.http.post('http://localhost:3600/api/upload/upload-member-file', formData, { headers }).pipe(
         map((response) => {
+          console.log(response);
           return new MemberInfosActions.UploadMemberInfoFileSuccess(response);
         }),
         catchError((error) => {

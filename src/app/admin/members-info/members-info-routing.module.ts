@@ -6,6 +6,7 @@ import { Shell } from '@app/shell/shell.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationGuard } from '@app/auth';
 import { MembersInfoComponent } from './members-info.component';
+import { MemberInfoComponent } from './member-info/member-info.component';
 
 const routes: Routes = [
   Shell.childRoutes([
@@ -17,13 +18,13 @@ const routes: Routes = [
     },
     {
       path: 'admin/members-info/new',
-      component: MembersInfoComponent,
+      component: MemberInfoComponent,
       data: { title: extract('Dashboard') },
       canActivate: [AuthenticationGuard],
     },
     {
       path: 'admin/members-info/:mid',
-      component: MembersInfoComponent,
+      component: MemberInfoComponent,
       data: { title: extract('Dashboard') },
       canActivate: [AuthenticationGuard],
     },
