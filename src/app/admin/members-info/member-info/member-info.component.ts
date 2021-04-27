@@ -72,8 +72,8 @@ export class MemberInfoComponent implements OnInit, OnDestroy {
           if (state.update.item === null) {
           } else {
             this.store.dispatch(new MemberInfosActions.ResetMemberInfoCurrentState());
-            this.router.navigateByUrl('/admin/members-info');
           }
+          this.router.navigateByUrl('/admin/members-info');
         }
       });
 

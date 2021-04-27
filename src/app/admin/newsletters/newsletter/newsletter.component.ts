@@ -77,8 +77,8 @@ export class NewsletterComponent implements OnInit, OnDestroy {
           if (state.update.item === null) {
           } else {
             this.store.dispatch(new NewslettersActions.ResetNewsletterCurrentState());
-            this.router.navigateByUrl('/admin/newsletters');
           }
+          this.router.navigateByUrl('/admin/newsletters');
         }
       });
 

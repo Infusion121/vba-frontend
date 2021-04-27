@@ -73,8 +73,8 @@ export class RingLayoutComponent implements OnInit, OnDestroy {
           if (state.update.item === null) {
           } else {
             this.store.dispatch(new RingLayoutsActions.ResetRingLayoutCurrentState());
-            this.router.navigateByUrl('/admin/members-info');
           }
+          this.router.navigateByUrl('/admin/ring-layouts');
         }
       });
 

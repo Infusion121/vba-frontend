@@ -73,8 +73,8 @@ export class InfoSheetComponent implements OnInit, OnDestroy {
           if (state.update.item === null) {
           } else {
             this.store.dispatch(new InfoSheetsActions.ResetInfoSheetCurrentState());
-            this.router.navigateByUrl('/admin/info-sheets');
           }
+          this.router.navigateByUrl('/admin/info-sheets');
         }
       });
 
