@@ -140,7 +140,7 @@ export class NewsletterComponent implements OnInit, OnDestroy {
     if (this.newsletterForm.invalid) {
       return;
     } else {
-      const postObj = this.newsletterForm.value;
+      const postObj = { ...this.newsletterForm.value };
 
       if (postObj.fileObj !== null) {
         // upload the file
@@ -155,6 +155,7 @@ export class NewsletterComponent implements OnInit, OnDestroy {
           }
         } else {
           // creating newsletter
+          postObj.createdOn = new Date().getTime();
           this.store.dispatch(new NewslettersActions.PostNewsletterStart(postObj));
         }
       }
@@ -170,9 +171,9 @@ export class NewsletterComponent implements OnInit, OnDestroy {
 
   onFileChange(event: any) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.newsletterForm.patchValue({ 
+    this.newsletterForm.patchValue({
       file: this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(file)),
-      fileObj: file
+      fileObj: file,
     });
     this.newsletterForm.get('fileObj').markAsDirty();
   }
@@ -213,7 +214,6 @@ export class NewsletterComponent implements OnInit, OnDestroy {
     }
 
     this.fileInputRef.nativeElement.value = '';
-
   }
 
   convertDateToDateObj(date: any) {
@@ -230,12 +230,12 @@ export class NewsletterComponent implements OnInit, OnDestroy {
     if (!!this.isEditMode) {
       this.newsletterForm.patchValue({
         file: this.newsletter.file,
-        fileObj: null
+        fileObj: null,
       });
     } else {
       this.newsletterForm.patchValue({
         file: '',
-        fileObj: null
+        fileObj: null,
       });
     }
 

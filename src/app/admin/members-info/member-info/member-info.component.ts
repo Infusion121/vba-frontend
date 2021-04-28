@@ -93,7 +93,7 @@ export class MemberInfoComponent implements OnInit, OnDestroy {
         if (state.item !== null && state.loading === false && state.error === null) {
           this.memberForm.patchValue({
             file: state.item.path,
-            fileObj: null
+            fileObj: null,
           });
 
           // save the rest of the form
@@ -132,7 +132,7 @@ export class MemberInfoComponent implements OnInit, OnDestroy {
     if (this.memberForm.invalid) {
       return;
     } else {
-      const postObj = this.memberForm.value;
+      const postObj = { ...this.memberForm.value };
 
       if (postObj.fileObj !== null) {
         // upload the file
@@ -146,6 +146,7 @@ export class MemberInfoComponent implements OnInit, OnDestroy {
           }
         } else {
           // creating member
+          postObj.createdOn = new Date().getTime();
           this.store.dispatch(new MemberInfosActions.PostMemberInfoStart(postObj));
         }
       }
@@ -161,9 +162,9 @@ export class MemberInfoComponent implements OnInit, OnDestroy {
 
   onFileChange(event: any) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.memberForm.patchValue({ 
+    this.memberForm.patchValue({
       file: this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(file)),
-      fileObj: file
+      fileObj: file,
     });
 
     this.memberForm.get('fileObj').markAsDirty();
@@ -196,12 +197,12 @@ export class MemberInfoComponent implements OnInit, OnDestroy {
     if (!!this.isEditMode) {
       this.memberForm.patchValue({
         file: this.member.file,
-        fileObj: null
+        fileObj: null,
       });
     } else {
       this.memberForm.patchValue({
         file: '',
-        fileObj: null
+        fileObj: null,
       });
     }
 

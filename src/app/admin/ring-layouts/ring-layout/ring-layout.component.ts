@@ -133,7 +133,7 @@ export class RingLayoutComponent implements OnInit, OnDestroy {
     if (this.ringLayoutForm.invalid) {
       return;
     } else {
-      const postObj = this.ringLayoutForm.value;
+      const postObj = { ...this.ringLayoutForm.value };
 
       if (postObj.layoutObj !== null) {
         // upload the file
@@ -147,6 +147,7 @@ export class RingLayoutComponent implements OnInit, OnDestroy {
           }
         } else {
           // creating ring layout
+          postObj.createdOn = new Date().getTime();
           this.store.dispatch(new RingLayoutsActions.PostRingLayoutStart(postObj));
         }
       }
@@ -197,12 +198,12 @@ export class RingLayoutComponent implements OnInit, OnDestroy {
     if (!!this.isEditMode) {
       this.ringLayoutForm.patchValue({
         layout: this.ringLayout.layout,
-        layoutObj: null
+        layoutObj: null,
       });
     } else {
       this.ringLayoutForm.patchValue({
         layout: '',
-        layoutObj: null
+        layoutObj: null,
       });
     }
 

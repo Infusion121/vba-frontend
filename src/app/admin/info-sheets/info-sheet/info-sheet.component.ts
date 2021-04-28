@@ -14,7 +14,7 @@ import { InfoSheet } from '@app/model/infoSheet.model';
 @Component({
   selector: 'app-info-sheet',
   templateUrl: './info-sheet.component.html',
-  styleUrls: ['./info-sheet.component.scss']
+  styleUrls: ['./info-sheet.component.scss'],
 })
 export class InfoSheetComponent implements OnInit, OnDestroy {
   @ViewChild('fileInputRef') fileInputRef: ElementRef;
@@ -37,7 +37,7 @@ export class InfoSheetComponent implements OnInit, OnDestroy {
     private store: Store<fromApp.AppState>,
     private titleService: Title,
     private sanitizer: DomSanitizer
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.infoSheetForm = this._fb.group({
@@ -95,7 +95,7 @@ export class InfoSheetComponent implements OnInit, OnDestroy {
           const imageUrl = state.item.path;
           this.infoSheetForm.patchValue({
             file: state.item.path,
-            fileObj: null
+            fileObj: null,
           });
 
           // save the rest of the form
@@ -119,7 +119,6 @@ export class InfoSheetComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl('/admin/info-sheets');
         }
       });
-
   }
 
   populateForm(infoSheet: InfoSheet) {
@@ -136,7 +135,7 @@ export class InfoSheetComponent implements OnInit, OnDestroy {
     if (this.infoSheetForm.invalid) {
       return;
     } else {
-      const postObj = this.infoSheetForm.value;
+      const postObj = { ...this.infoSheetForm.value };
 
       if (postObj.fileObj !== null) {
         // upload the file
@@ -150,6 +149,7 @@ export class InfoSheetComponent implements OnInit, OnDestroy {
           }
         } else {
           // creating info sheet
+          postObj.createdOn = new Date().getTime();
           this.store.dispatch(new InfoSheetsActions.PostInfoSheetStart(postObj));
         }
       }
@@ -167,7 +167,7 @@ export class InfoSheetComponent implements OnInit, OnDestroy {
     const file = (event.target as HTMLInputElement).files[0];
     this.infoSheetForm.patchValue({
       file: this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(file)),
-      fileObj: file
+      fileObj: file,
     });
 
     this.infoSheetForm.get('fileObj').markAsDirty();
@@ -196,19 +196,18 @@ export class InfoSheetComponent implements OnInit, OnDestroy {
     }
 
     this.fileInputRef.nativeElement.value = '';
-
   }
 
   removeFile() {
     if (!!this.isEditMode) {
       this.infoSheetForm.patchValue({
         file: this.infoSheet.file,
-        fileObj: null
+        fileObj: null,
       });
     } else {
       this.infoSheetForm.patchValue({
         file: '',
-        fileObj: null
+        fileObj: null,
       });
     }
 
