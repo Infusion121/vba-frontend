@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, Sanitizer, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Bookmaker } from '@app/model/bookmaker.model';
@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 
 import * as fromApp from '../../../store/app.reducer';
 import * as BookmakersActions from '../../../store/actions/bookmakers.actions';
-import { Title } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -17,6 +17,9 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./bookmaker.component.scss'],
 })
 export class BookmakerComponent implements OnInit, OnDestroy {
+  @ViewChild('fileInputRef') fileInputRef: ElementRef;
+  rootUrl = 'http://localhost:3600';
+
   componentDestroyed$: Subject<boolean> = new Subject();
 
   bookmakerId: string = null;
@@ -30,12 +33,16 @@ export class BookmakerComponent implements OnInit, OnDestroy {
   serviceOptions = ['Internet', 'Phone', 'On Course'];
   betOptions = ['Sports', 'Thoroughbred', 'Harness', 'Greyhounds', 'Futures'];
 
+  fileUploadError = false;
+  fileUploadErrorMessage = '';
+
   constructor(
     private currentRoute: ActivatedRoute,
     private store: Store<fromApp.AppState>,
     private router: Router,
     private _fb: FormBuilder,
-    private titleService: Title
+    private titleService: Title,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -50,11 +57,12 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       websiteAddress: [''],
       licenseNumber: ['', [Validators.required]],
       yearEstablished: [''],
-      profilePicCompanyLogo: [''],
+      profilePicCompanyLogo: ['', Validators.required],
+      profilePicCompanyLogoObj: [null],
       telephoneBetting: this._fb.array([]),
-      isApproved: [ false, Validators.required],
-      isFeatured: [ false, Validators.required],
-      isActive: [ true, Validators.required],
+      isApproved: [false, Validators.required],
+      isFeatured: [false, Validators.required],
+      isActive: [true, Validators.required],
       blockIt: ['', [this.validatorHoneyPot]],
     });
 
@@ -80,14 +88,34 @@ export class BookmakerComponent implements OnInit, OnDestroy {
           this.titleService.setTitle('Bookmaker - ' + state.item.bookmakingEntityName);
           this.populateForm(state.item);
           if (state.update.item === null) {
-            
           } else {
-            
             this.store.dispatch(new BookmakersActions.ResetBookmakerCurrentState());
             this.router.navigateByUrl('/admin/bookmakers');
-            
+
             // this.store.dispatch(new BookmakersActions.GetBookmakerByIdStart(this.bookmakerId));
           }
+        }
+      });
+
+    // subscribe to upload profile logo file state to be ready for saving / updating
+    this.store
+      .select('bookmakers', 'uploadBookmakerPhotoFile')
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((state) => {
+        if (!!state.loading) {
+          this.loading = true;
+        } else {
+          this.loading = false;
+        }
+
+        if (state.item !== null && state.loading === false && state.error === null) {
+          this.bookmakerForm.patchValue({
+            profilePicCompanyLogo: state.item.path,
+            profilePicCompanyLogoObj: null,
+          });
+
+          // save the rest of the form
+          this.onSubmit();
         }
       });
   }
@@ -112,6 +140,7 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       licenseNumber: bookmaker.licenseNumber,
       yearEstablished: bookmaker.yearEstablished,
       profilePicCompanyLogo: bookmaker.profilePicCompanyLogo,
+      profilePicCompanyLogoObj: null,
       isApproved: bookmaker.isApproved,
       isFeatured: bookmaker.isFeatured,
       isActive: bookmaker.isActive,
@@ -120,15 +149,50 @@ export class BookmakerComponent implements OnInit, OnDestroy {
     // loop through telephonebetting and patchvalue
     const control = this.bookmakerForm.get('telephoneBetting') as FormArray;
     if (bookmaker.telephoneBetting && bookmaker.telephoneBetting.length > 0) {
-      _.each(bookmaker.telephoneBetting, telephoneBetting => {
+      _.each(bookmaker.telephoneBetting, (telephoneBetting) => {
         control.push(
           this._fb.group({
             telephone: telephoneBetting.telephone,
           })
-        );  
-      })
+        );
+      });
     }
+  }
 
+  onFileChange(event: any) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.bookmakerForm.patchValue({
+      profilePicCompanyLogo: this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(file)),
+      profilePicCompanyLogoObj: file,
+    });
+
+    this.bookmakerForm.get('profilePicCompanyLogoObj').markAsDirty();
+
+    // validate
+    const fileExtension = file.name.split('.').pop().toLocaleLowerCase();
+    // console.log('File Size ' + file.size);
+    if (
+      (fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png' || fileExtension === 'gif') &&
+      file.size <= 5000000
+    ) {
+      this.fileUploadError = false;
+      this.fileUploadErrorMessage = '';
+    } else {
+      this.fileUploadError = true;
+      if (file.size > 5000000) {
+        this.fileUploadErrorMessage = 'File size must be 5MB or less.';
+      } else {
+        this.fileUploadErrorMessage = 'Invalid file selected. Please select a valid file.';
+      }
+    }
+  }
+
+  cancelFile() {
+    this.bookmakerForm.patchValue({
+      profilePicCompanyLogoObj: null,
+    });
+
+    this.fileInputRef.nativeElement.value = '';
   }
 
   addBettingPhone() {
@@ -139,7 +203,7 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       })
     );
   }
-  
+
   removeBettingPhone(index: number) {
     const control = this.bookmakerForm.get('telephoneBetting') as FormArray;
     control.removeAt(index);
@@ -152,8 +216,15 @@ export class BookmakerComponent implements OnInit, OnDestroy {
     } else {
       const postObj = this.bookmakerForm.value;
 
-      if (!_.isEmpty(postObj)) {
-        this.store.dispatch(new BookmakersActions.PutBookmakerByIdStart(postObj, this.bookmaker._id));
+      if (postObj.profilePicCompanyLogoObj !== null) {
+        // upload the file
+        this.store.dispatch(new BookmakersActions.UploadPhotoStart(postObj.profilePicCompanyLogoObj));
+        // after uploaded the file, listen to it from store state and trigger the onsubmit again with image file data updated in the form data.
+      } else {
+        // updating bookmaker
+        if (!_.isEmpty(postObj)) {
+          this.store.dispatch(new BookmakersActions.PutBookmakerByIdStart(postObj, this.bookmaker._id));
+        }
       }
     }
   }
@@ -207,7 +278,11 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       licenseNumber: this.bookmaker.licenseNumber,
       yearEstablished: this.bookmaker.yearEstablished,
       profilePicCompanyLogo: this.bookmaker.profilePicCompanyLogo,
+      profilePicCompanyLogoObj: null,
       telephoneBetting: this.bookmaker.telephoneBetting,
+      isApproved: this.bookmaker.isApproved,
+      isFeatured: this.bookmaker.isFeatured,
+      isActive: this.bookmaker.isActive
     });
   }
 

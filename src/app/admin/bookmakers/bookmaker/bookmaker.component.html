@@ -131,18 +131,6 @@
               />
             </div>
 
-            <!-- still missing profile company logo upload -->
-            <!-- TODO: work on this please -->
-
-            <!-- <div class="form-group col-6 col-lg-3 col-xl-2">
-              <label for="telephoneBetting">Betting Phone Line</label>
-              <input
-                id="telephoneBetting"
-                class="form-control form-control-sm"
-                placeholder="Betting Phone Line"
-                formControlName="telephoneBetting"
-              />
-            </div> -->
             <div class="form-group" formArrayName="telephoneBetting">
               <label for="telephoneBetting">Approved RVL Telephone Number</label>
   
@@ -186,6 +174,44 @@
                 Additional Telephone Number
               </button>
             </div>
+
+            <div class="form-group">
+              <label for="telephoneBetting">Profile Photo / Bookmaker Logo *</label>
+              <span class="smallTxt">(Allowed Filetypes: jpg, jpeg, png, gif. Max file size : 5MB)</span>
+              <input
+                type="file"
+                (change)="onFileChange($event)"
+                accept="image/gif, image/jpeg, image/jpg, image/png"
+                #fileInputRef
+                [ngClass]="{
+                  'is-invalid': fileUploadError
+                }"
+              />
+              <div class="invalid-feedback" *ngIf="fileUploadError">{{ fileUploadErrorMessage }}</div>
+            </div>
+
+            <div class="form-group col-12 col-md-6" *ngIf="(bookmaker && bookmakerForm.get('profilePicCompanyLogoObj').value === null) || (bookmakerForm.get('profilePicCompanyLogoObj').value !== null)">
+              <label>Logo</label>
+              <img
+                [src]="rootUrl + '/' + bookmaker.profilePicCompanyLogo"
+                *ngIf="bookmaker && bookmakerForm.get('profilePicCompanyLogoObj').value === null"
+              />
+
+
+              <button
+                type="button"
+                class="btn btn-outline-danger waves-effect waves-light removeBtn removeImage"
+                (click)="cancelFile()"
+                *ngIf="bookmakerForm.get('profilePicCompanyLogoObj').value !== null"
+              >
+                Cancel
+              </button>
+              <img
+                [src]="bookmakerForm.get('profilePicCompanyLogo').value"
+                *ngIf="bookmakerForm.get('profilePicCompanyLogoObj').value !== null"
+              />
+            </div>
+
 
             <div class="form-group col-6 col-lg-3 col-xl-2">
               <label for="isApproved">Approved</label>  
