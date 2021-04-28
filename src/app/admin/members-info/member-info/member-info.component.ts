@@ -190,7 +190,22 @@ export class MemberInfoComponent implements OnInit, OnDestroy {
     }
 
     this.fileInputRef.nativeElement.value = '';
+  }
 
+  removeFile() {
+    if (!!this.isEditMode) {
+      this.memberForm.patchValue({
+        file: this.member.file,
+        fileObj: null
+      });
+    } else {
+      this.memberForm.patchValue({
+        file: '',
+        fileObj: null
+      });
+    }
+
+    this.fileInputRef.nativeElement.value = '';
   }
 
   ngOnDestroy() {

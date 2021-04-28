@@ -226,6 +226,22 @@ export class NewsletterComponent implements OnInit, OnDestroy {
     };
   }
 
+  removeFile() {
+    if (!!this.isEditMode) {
+      this.newsletterForm.patchValue({
+        file: this.newsletter.file,
+        fileObj: null
+      });
+    } else {
+      this.newsletterForm.patchValue({
+        file: '',
+        fileObj: null
+      });
+    }
+
+    this.fileInputRef.nativeElement.value = '';
+  }
+
   ngOnDestroy() {
     this.store.dispatch(new NewslettersActions.ResetNewsletterCurrentState());
     this.componentDestroyed$.next(true);

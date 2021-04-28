@@ -191,7 +191,22 @@ export class RingLayoutComponent implements OnInit, OnDestroy {
     }
 
     this.fileInputRef.nativeElement.value = '';
+  }
 
+  removeFile() {
+    if (!!this.isEditMode) {
+      this.ringLayoutForm.patchValue({
+        layout: this.ringLayout.layout,
+        layoutObj: null
+      });
+    } else {
+      this.ringLayoutForm.patchValue({
+        layout: '',
+        layoutObj: null
+      });
+    }
+
+    this.fileInputRef.nativeElement.value = '';
   }
 
   ngOnDestroy() {

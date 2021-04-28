@@ -43,6 +43,16 @@
 					</div>
         </div>
 
+				<div class="form-group" *ngIf="memberForm.get('fileObj').value !== null">
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            (click)="removeFile()"
+          >
+            Cancel file
+          </button>
+        </div>
+
 
 				<div class="form-group col-12">
 					<label for="isActive">Active</label>  

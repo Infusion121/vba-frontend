@@ -199,6 +199,22 @@ export class InfoSheetComponent implements OnInit, OnDestroy {
 
   }
 
+  removeFile() {
+    if (!!this.isEditMode) {
+      this.infoSheetForm.patchValue({
+        file: this.infoSheet.file,
+        fileObj: null
+      });
+    } else {
+      this.infoSheetForm.patchValue({
+        file: '',
+        fileObj: null
+      });
+    }
+
+    this.fileInputRef.nativeElement.value = '';
+  }
+
   ngOnDestroy() {
     this.store.dispatch(new InfoSheetsActions.ResetInfoSheetCurrentState());
     this.componentDestroyed$.next(true);
