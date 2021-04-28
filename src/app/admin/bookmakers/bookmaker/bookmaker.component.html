@@ -1,3 +1,5 @@
+<a routerLink="/admin/bookmakers" class="btn btn-success">Back to listing</a>
+
 <form *ngIf="bookmaker && bookmaker !== null" [formGroup]="bookmakerForm" (ngSubmit)="onSubmit()">
   {{ bookmaker.bookmakingEntityName }}
   <div class="row">
