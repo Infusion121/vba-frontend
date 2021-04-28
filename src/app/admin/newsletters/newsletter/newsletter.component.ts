@@ -227,6 +227,7 @@ export class NewsletterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.store.dispatch(new NewslettersActions.ResetNewsletterCurrentState());
     this.componentDestroyed$.next(true);
     this.componentDestroyed$.complete();
   }

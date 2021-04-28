@@ -195,6 +195,7 @@ export class RingLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.store.dispatch(new RingLayoutsActions.ResetRingLayoutCurrentState());
     this.componentDestroyed$.next(true);
     this.componentDestroyed$.complete();
   }

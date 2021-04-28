@@ -194,6 +194,7 @@ export class MemberInfoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.store.dispatch(new MemberInfosActions.ResetMemberInfoCurrentState());
     this.componentDestroyed$.next(true);
     this.componentDestroyed$.complete();
   }

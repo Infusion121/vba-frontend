@@ -119,6 +119,7 @@ export class InfoSheetComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl('/admin/info-sheets');
         }
       });
+
   }
 
   populateForm(infoSheet: InfoSheet) {
@@ -199,6 +200,7 @@ export class InfoSheetComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.store.dispatch(new InfoSheetsActions.ResetInfoSheetCurrentState());
     this.componentDestroyed$.next(true);
     this.componentDestroyed$.complete();
   }
