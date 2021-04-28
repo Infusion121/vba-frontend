@@ -162,15 +162,14 @@
             />
           </div>
 
-          <!-- still missing profile company logo upload -->
-          <!-- TODO: work on this please -->
           <div class="form-group">
             <label for="telephoneBetting">Profile Photo / Bookmaker Logo *</label>
             <span class="smallTxt">(Allowed Filetypes: jpg, jpeg, png, gif. Max file size : 5MB)</span>
             <input
               type="file"
-              (change)="onFilesChange($event)"
+              (change)="onFileChange($event)"
               accept="image/gif, image/jpeg, image/jpg, image/png"
+              #fileInputRef
               [ngClass]="{
                 'is-invalid': fileUploadError
               }"
@@ -180,19 +179,18 @@
 
           <div
             class="form-group addImage"
-            *ngFor="let item of bookmakerNewForm.get('profilePicCompanyLogo')['controls']; let i = index"
+            *ngIf="bookmakerNewForm.get('profilePicCompanyLogoObj').value !== null"
           >
             <button
               type="button"
               class="btn btn-outline-danger waves-effect waves-light removeBtn removeImage"
-              (click)="removeFile(i)"
+              (click)="removeFile()"
             >
               Remove Image
             </button>
             <img
-              id="{{ 'photo' + (i + 1) + 'ImageUrl' }}"
-              [src]="item.value.url"
-              *ngIf="item.value.url !== '' && item.value.file !== null"
+              [src]="bookmakerNewForm.get('profilePicCompanyLogo').value"
+              *ngIf="bookmakerNewForm.get('profilePicCompanyLogoObj').value !== null"
             />
           </div>
 

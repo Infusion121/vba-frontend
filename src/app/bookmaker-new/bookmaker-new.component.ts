@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Bookmaker } from '@app/model/bookmaker.model';
@@ -18,6 +18,8 @@ import { NgBlockUI, BlockUI } from 'ng-block-ui';
   styleUrls: ['./bookmaker-new.component.scss'],
 })
 export class BookmakerNewComponent implements OnInit, OnDestroy {
+  @ViewChild('fileInputRef') fileInputRef: ElementRef;
+
   componentDestroyed$: Subject<boolean> = new Subject();
   bookmakerNewForm: FormGroup;
   submitted = false;
@@ -27,9 +29,9 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
   serviceOptions = ['Internet', 'Phone', 'On Course'];
   betOptions = ['Sports', 'Thoroughbred', 'Harness', 'Greyhounds', 'Futures'];
 
-  showThankyouMessage: boolean = false;
+  showThankyouMessage = false;
   bookmakingEntityName: string;
-  remainingText: number = 250;
+  remainingText = 250;
   fileUploadError = false;
   fileUploadErrorMessage = '';
 
@@ -45,53 +47,31 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.populateForm();
 
-    // this.store
-    //   .select('auth', 'currentUser', 'item')
-    //   .pipe(takeUntil(this.componentDestroyed$))
-    //   .subscribe((state) => {
-    //     if (state && state !== null) {
-    //       this.currentUser = state;
-    //     }
-    //   });
-
     this.store
       .select('bookmakers', 'bookmakerNew')
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe((state) => {
-        // if (state.error !== null) {
-        //   this.messageService.showError(state.error);
-        // }
-
         if (state.item !== null && state.loading === false && state.error === null) {
-          // this.messageService.showSuccess('', 'User has been created');
           this.showThankyouMessage = true;
           this.store.dispatch(new BookmakersActions.ResetPostBookmakerState());
           this.blockUI.stop();
-          //this.router.navigateByUrl('/users/list');
         }
       });
 
     this.store
-      .select('bookmakers', 'uploadBookmakerPhotoFiles')
+      .select('bookmakers', 'uploadBookmakerPhotoFile')
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe((state) => {
-        if (state.items !== null && state.loading === false && state.error === null) {
-          const formValues = { ...this.bookmakerNewForm.value };
-
-          _.each(state.items, (stateItem) => {
-            _.each(formValues.profilePicCompanyLogo, (formItem) => {
-              // TODO: Nice to have - find another way to add url
-              // because might be chances that images with same name can be uploaded.
-              if (stateItem.originalname === formItem.name) {
-                formItem.url = stateItem.path;
-              }
-            });
+        if (state.item !== null && state.loading === false && state.error === null) {
+          this.bookmakerNewForm.patchValue({
+            profilePicCompanyLogo: state.item.path,
+            profilePicCompanyLogoObj: null,
           });
 
-          const postObj = formValues;
+          const postObj = { ...this.bookmakerNewForm.value };
           postObj.createdOn = new Date().getTime();
           postObj.isApproved = false;
-          console.log(postObj);
+
           this.store.dispatch(new BookmakersActions.PostBookmakerStart(postObj));
         }
       });
@@ -109,7 +89,8 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
       websiteAddress: [''],
       licenseNumber: ['', [Validators.required]],
       yearEstablished: [''],
-      profilePicCompanyLogo: this._fb.array([]),
+      profilePicCompanyLogo: ['', Validators.required],
+      profilePicCompanyLogoObj: [null],
       telephoneBetting: this._fb.array([
         this._fb.group({
           telephone: '',
@@ -132,60 +113,63 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.submitted = true;
-    console.log(this.bookmakerNewForm);
     const photoControl = this.bookmakerNewForm.get('profilePicCompanyLogo') as FormArray;
     if (this.bookmakerNewForm.invalid || this.fileUploadError || photoControl.length == 0) {
-      if (photoControl.length == 0) {
+      if (photoControl.length === 0) {
         this.fileUploadError = true;
         this.fileUploadErrorMessage = 'Please select a file.';
       }
       return;
     } else {
       this.blockUI.start();
-      this.bookmakingEntityName = this.bookmakerNewForm.value.bookmakingEntityName;
-      const postObj: any[] = [];
-      _.each(this.bookmakerNewForm.value.profilePicCompanyLogo, (item) => {
-        postObj.push(item.file);
-      });
+      // this.bookmakingEntityName = this.bookmakerNewForm.value.bookmakingEntityName;
+      // const postObj: any[] = [];
+      // _.each(this.bookmakerNewForm.value.profilePicCompanyLogo, (item) => {
+      //   postObj.push(item.file);
+      // });
 
-      //upload the images first
-      this.store.dispatch(new BookmakersActions.UploadPhotosStart(postObj));
+      // upload the image first
+      this.store.dispatch(new BookmakersActions.UploadPhotoStart(this.bookmakerNewForm.value.profilePicCompanyLogoObj));
     }
   }
 
-  onFilesChange(event: any) {
-    const files = (event.target as HTMLInputElement).files;
-    const control = this.bookmakerNewForm.get('profilePicCompanyLogo') as FormArray;
-    _.each(files, (file) => {
-      let fileExtension = file.name.split('.').pop().toLocaleLowerCase();
-      console.log('File Size ' + file.size);
-      if (
-        (fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png' || fileExtension === 'gif') &&
-        file.size <= 5000000
-      ) {
-        this.fileUploadError = false;
-        this.fileUploadErrorMessage = '';
-        control.push(
-          this._fb.group({
-            name: [file.name, Validators.required],
-            url: [this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(file))],
-            file: [file],
-          })
-        );
-      } else {
-        this.fileUploadError = true;
-        if (file.size > 5000000) {
-          this.fileUploadErrorMessage = 'File size must be 5MB or less.';
-        } else {
-          this.fileUploadErrorMessage = 'Invalid file selected. Please select a valid file.';
-        }
-      }
+  onFileChange(event: any) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.bookmakerNewForm.patchValue({
+      profilePicCompanyLogo: this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(file)),
+      profilePicCompanyLogoObj: file,
     });
+
+    this.bookmakerNewForm.get('profilePicCompanyLogoObj').markAsDirty();
+
+    // validate
+    const fileExtension = file.name.split('.').pop().toLocaleLowerCase();
+    // console.log('File Size ' + file.size);
+    if (
+      (fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png' || fileExtension === 'gif') &&
+      file.size <= 5000000
+    ) {
+      this.fileUploadError = false;
+      this.fileUploadErrorMessage = '';
+    } else {
+      this.fileUploadError = true;
+      if (file.size > 5000000) {
+        this.fileUploadErrorMessage = 'File size must be 5MB or less.';
+      } else {
+        this.fileUploadErrorMessage = 'Invalid file selected. Please select a valid file.';
+      }
+    }
   }
 
-  removeFile(index: number) {
-    const control = this.bookmakerNewForm.get('profilePicCompanyLogo') as FormArray;
-    control.removeAt(index);
+  removeFile() {
+    // const control = this.bookmakerNewForm.get('profilePicCompanyLogo') as FormArray;
+    // control.removeAt(index);
+    this.bookmakerNewForm.patchValue({
+      profilePicCompanyLogo: '',
+      profilePicCompanyLogoObj: null
+    });
+
+    this.fileInputRef.nativeElement.value = '';
   }
 
   addBettingPhone() {
@@ -241,6 +225,8 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
     this.submitted = false;
     this.bookmakerNewForm.reset();
     this.populateForm();
+
+    this.fileInputRef.nativeElement.value = '';
   }
 
   ngOnDestroy() {
