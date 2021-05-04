@@ -114,8 +114,13 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.submitted = true;
     const photoControl = this.bookmakerNewForm.get('profilePicCompanyLogo') as FormArray;
-    if (this.bookmakerNewForm.invalid || this.fileUploadError || photoControl.length == 0) {
-      if (photoControl.length === 0) {
+
+    if (
+      this.bookmakerNewForm.invalid ||
+      this.fileUploadError ||
+      this.bookmakerNewForm.value.profilePicCompanyLogoObj === null
+    ) {
+      if (this.bookmakerNewForm.value.profilePicCompanyLogoObj === null) {
         this.fileUploadError = true;
         this.fileUploadErrorMessage = 'Please select a file.';
       }
@@ -166,7 +171,7 @@ export class BookmakerNewComponent implements OnInit, OnDestroy {
     // control.removeAt(index);
     this.bookmakerNewForm.patchValue({
       profilePicCompanyLogo: '',
-      profilePicCompanyLogoObj: null
+      profilePicCompanyLogoObj: null,
     });
 
     this.fileInputRef.nativeElement.value = '';
