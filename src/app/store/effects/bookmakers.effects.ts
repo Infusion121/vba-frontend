@@ -10,8 +10,10 @@ import { Bookmaker } from '@app/model/bookmaker.model';
 
 @Injectable()
 export class BookmakersEffects {
-  rootUrl = 'http://localhost:3600/api/bookmakers';
-  // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/bookmakers';
+  // rootUrl = 'http://localhost:3600/api/bookmakers';
+  // rootUrlPhotoUpload = 'http://localhost:3600/api/upload/';
+  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/bookmakers';
+  rootUrlPhotoUpload = 'https://api-registration.vicbookmakers.infusion121.com/api/upload';
 
   // get all jobs
   @Effect()
@@ -107,7 +109,7 @@ export class BookmakersEffects {
       const formData = new FormData();
       formData.append('photo', uploadPhotoFilesAction.file);
 
-      return this.http.post('http://localhost:3600/api/upload/upload-bookmaker-photo', formData, { headers }).pipe(
+      return this.http.post(this.rootUrlPhotoUpload + '/upload-bookmaker-photo', formData, { headers }).pipe(
         map((response) => {
           return new BookmakersActions.UploadPhotoSuccess(response);
         }),
