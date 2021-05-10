@@ -19,8 +19,8 @@ import { InfoSheet } from '@app/model/infoSheet.model';
 export class InfoSheetComponent implements OnInit, OnDestroy {
   @ViewChild('fileInputRef') fileInputRef: ElementRef;
 
-  rootUrl = 'http://localhost:3600/';
-  // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com';
+  // rootUrl = 'http://localhost:3600/';
+  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/';
   componentDestroyed$: Subject<boolean> = new Subject();
 
   infoSheetId: any = null;

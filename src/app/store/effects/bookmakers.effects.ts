@@ -13,7 +13,7 @@ export class BookmakersEffects {
   // rootUrl = 'http://localhost:3600/api/bookmakers';
   // rootUrlPhotoUpload = 'http://localhost:3600/api/upload/';
   rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/bookmakers';
-  rootUrlPhotoUpload = 'https://api-registration.vicbookmakers.infusion121.com/api/upload';
+  rootUrlPhotoUpload = 'https://api-registration.vicbookmakers.infusion121.com/api/upload/';
 
   // get all jobs
   @Effect()

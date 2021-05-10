@@ -20,8 +20,8 @@ import { Newsletter } from '@app/model/newsletter.model';
 export class NewsletterComponent implements OnInit, OnDestroy {
   @ViewChild('fileInputRef') fileInputRef: ElementRef;
 
-  rootUrl = 'http://localhost:3600/';
-  // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com';
+  // rootUrl = 'http://localhost:3600/';
+  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/';
   componentDestroyed$: Subject<boolean> = new Subject();
 
   newsletterId: any = null;

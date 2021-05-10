@@ -18,7 +18,8 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class BookmakerComponent implements OnInit, OnDestroy {
   @ViewChild('fileInputRef') fileInputRef: ElementRef;
-  rootUrl = 'http://localhost:3600';
+  //rootUrl = 'http://localhost:3600';
+  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com';
 
   componentDestroyed$: Subject<boolean> = new Subject();
 
@@ -282,7 +283,7 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       telephoneBetting: this.bookmaker.telephoneBetting,
       isApproved: this.bookmaker.isApproved,
       isFeatured: this.bookmaker.isFeatured,
-      isActive: this.bookmaker.isActive
+      isActive: this.bookmaker.isActive,
     });
   }
 

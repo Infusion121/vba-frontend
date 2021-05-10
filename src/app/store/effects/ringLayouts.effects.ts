@@ -8,11 +8,10 @@ import * as RingLayoutsActions from '../actions/ringLayouts.actions';
 import * as _ from 'lodash';
 import { RingLayout } from '@app/model/ringLayout.model';
 
-
 @Injectable()
 export class RingLayoutsEffects {
-  rootUrl = 'http://localhost:3600/api/ring-layouts';
-  // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/bookmakers';
+  // rootUrl = 'http://localhost:3600/api/ring-layouts';
+  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/ring-layouts';
 
   // get all ring layout
   @Effect()
@@ -106,16 +105,20 @@ export class RingLayoutsEffects {
       const headers = new HttpHeaders();
       headers.append('Content-Type', 'multipart/form-data');
       const formData = new FormData();
-			formData.append('photo', uploadRingLayoutFileAction.file);
+      formData.append('photo', uploadRingLayoutFileAction.file);
 
-      return this.http.post('http://localhost:3600/api/upload/upload-ring-layout-file', formData, { headers }).pipe(
-        map((response) => {
-          return new RingLayoutsActions.UploadRingLayoutFileSuccess(response);
-        }),
-        catchError((error) => {
-          return of(new RingLayoutsActions.UploadRingLayoutFileFail(error));
+      return this.http
+        .post('https://api-registration.vicbookmakers.infusion121.com/api/upload/upload-ring-layout-file', formData, {
+          headers,
         })
-      );
+        .pipe(
+          map((response) => {
+            return new RingLayoutsActions.UploadRingLayoutFileSuccess(response);
+          }),
+          catchError((error) => {
+            return of(new RingLayoutsActions.UploadRingLayoutFileFail(error));
+          })
+        );
     })
   );
 

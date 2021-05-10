@@ -18,8 +18,8 @@ export class BookmakersComponent implements OnInit, OnDestroy {
   bookmakersObject: { [key: string]: Bookmaker } = null;
   bookmakersCount: number = null;
   loading = true;
-  rootUrl = 'http://localhost:3600/';
-  // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com';
+  // rootUrl = 'http://localhost:3600/';
+  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/';
 
   constructor(private store: Store<fromApp.AppState>, private router: Router) {}
 

@@ -12,7 +12,7 @@ import { RingLayout } from '@app/model/ringLayout.model';
 @Component({
   selector: 'app-ring-layouts',
   templateUrl: './ring-layouts.component.html',
-  styleUrls: ['./ring-layouts.component.scss']
+  styleUrls: ['./ring-layouts.component.scss'],
 })
 export class RingLayoutsComponent implements OnInit, OnDestroy {
   componentDestroyed$: Subject<boolean> = new Subject();
@@ -20,8 +20,8 @@ export class RingLayoutsComponent implements OnInit, OnDestroy {
   ringLayoutsObject: { [key: string]: RingLayout } = null;
   ringLayoutsCount: number = null;
   loading = true;
-  rootUrl = 'http://localhost:3600/';
-  // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com';
+  // rootUrl = 'http://localhost:3600/';
+  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/';
 
   constructor(private store: Store<fromApp.AppState>, private router: Router) {}
 

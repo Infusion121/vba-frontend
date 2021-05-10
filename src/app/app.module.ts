@@ -40,7 +40,7 @@ import { RingLayoutsModule } from './admin/ring-layouts/ring-layouts.module';
 import { InfoSheetsModule } from './admin/info-sheets/info-sheets.module';
 
 import { CustomDateParserFormatter } from './services/date.service';
-
+import { ShellAdminModule } from './admin/shell-admin/shell-admin.module';
 
 /* Use username: development@infusion121.com  password:test123456 */
 var firebaseConfig = {
@@ -76,6 +76,7 @@ var firebaseConfig = {
     InfoSheetsModule,
     AuthModule,
     BookmakerNewModule,
+    ShellAdminModule,
     //Store Modules Import
     StoreModule.forRoot(fromApp.appReducer),
     StoreDevtoolsModule.instrument({
@@ -93,10 +94,7 @@ var firebaseConfig = {
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],
-  providers: [
-    DataService,
-    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter },
-  ],
+  providers: [DataService, { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

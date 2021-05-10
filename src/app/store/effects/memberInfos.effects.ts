@@ -8,11 +8,10 @@ import * as MemberInfosActions from '../actions/memberInfos.actions';
 import * as _ from 'lodash';
 import { MemberInfo } from '@app/model/memberInfo.model';
 
-
 @Injectable()
 export class MemberInfosEffects {
-  rootUrl = 'http://localhost:3600/api/members';
-  // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/bookmakers';
+  // rootUrl = 'http://localhost:3600/api/members';
+  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/members';
 
   // get all member info
   @Effect()
@@ -106,16 +105,20 @@ export class MemberInfosEffects {
       const headers = new HttpHeaders();
       headers.append('Content-Type', 'multipart/form-data');
       const formData = new FormData();
-			formData.append('file', uploadMemberInfoFileAction.file);
+      formData.append('file', uploadMemberInfoFileAction.file);
 
-      return this.http.post('http://localhost:3600/api/upload/upload-member-file', formData, { headers }).pipe(
-        map((response) => {
-          return new MemberInfosActions.UploadMemberInfoFileSuccess(response);
-        }),
-        catchError((error) => {
-          return of(new MemberInfosActions.UploadMemberInfoFileFail(error));
+      return this.http
+        .post('https://api-registration.vicbookmakers.infusion121.com/api/upload/upload-member-file', formData, {
+          headers,
         })
-      );
+        .pipe(
+          map((response) => {
+            return new MemberInfosActions.UploadMemberInfoFileSuccess(response);
+          }),
+          catchError((error) => {
+            return of(new MemberInfosActions.UploadMemberInfoFileFail(error));
+          })
+        );
     })
   );
 

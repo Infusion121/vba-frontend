@@ -1,0 +1,88 @@
+<section class="sb-nav-fixed">
+  <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <div class="navbar-brand logoInfusion">
+      <img src="https://infusion121.com/Infusion121_logos/infusion-121_no_tag.svg" />
+    </div>
+    <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
+      <i class="fas fa-bars"></i>
+    </button>
+    <!-- Navbar-->
+    <ul class="d-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" style="list-style: none">
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          style="color: #fff"
+          id="userDropdown"
+          href="#"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+          ><i class="fas fa-user fa-fw"></i
+        ></a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+          <a class="dropdown-item" href="" (click)="logOutUser()">Logout</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+  <div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+      <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+          <div class="nav">
+            <div class="clientLogo">
+              <img src="../../../assets/powerplants-logo-white.svg" />
+            </div>
+
+            <a class="nav-link" routerLink="/admin/dashboard" routerLinkActive="is-active">
+              <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+              Dashboard
+            </a>
+            <div class="sb-sidenav-menu-heading">CMS</div>
+
+            <a class="nav-link" routerLink="/admin/bookmakers" routerLinkActive="is-active">
+              <div class="sb-nav-link-icon"><i class="fas fa-newspaper"></i></div>
+              Bookmakers
+            </a>
+
+            <a class="nav-link" routerLink="/admin/members-info" routerLinkActive="is-active">
+              <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div>
+              Members Info
+            </a>
+
+            <a class="nav-link" routerLink="/admin/info-sheets" routerLinkActive="is-active">
+              <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div>
+              Info Sheets
+            </a>
+
+            <a class="nav-link" routerLink="/admin/ring-layouts" routerLinkActive="is-active">
+              <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div>
+              Ring Layouts
+            </a>
+
+            <a class="nav-link" routerLink="/admin/newsletters" routerLinkActive="is-active">
+              <div class="sb-nav-link-icon"><i class="fas fa-product-hunt"></i></div>
+              Newsletters
+            </a>
+          </div>
+        </div>
+        <div class="sb-sidenav-footer" style="display: none">
+          <div class="small">Logged in as:</div>
+          Admin
+        </div>
+      </nav>
+    </div>
+    <div id="layoutSidenav_content">
+      <main>
+        <div class="adminSection container-fluid">
+          <!--Dynamic content on route change-->
+          <router-outlet></router-outlet>
+        </div>
+      </main>
+      <footer class="py-4 bg-light mt-auto">
+        <app-admin-footer></app-admin-footer>
+      </footer>
+    </div>
+  </div>
+</section>

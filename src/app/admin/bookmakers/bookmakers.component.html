@@ -37,7 +37,9 @@
                     Profile Photo/Company Logo
                   </th>
                   <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Status</th>
-                  <th class="sorting text-right" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Edit</th>
+                  <th class="sorting text-right" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                    Edit
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -53,15 +55,13 @@
                       [src]="rootUrl + bookmaker.value.profilePicCompanyLogo"
                       style="width: 20%"
                     />
-                    <span
-                      *ngIf=" bookmaker.value.profilePicCompanyLogo === ''"
-                    >
-                      No logo
-                    </span>
+                    <span *ngIf="bookmaker.value.profilePicCompanyLogo === ''"> No logo </span>
                   </td>
                   <td class="">
-                    <span class="badge badge-danger" *ngIf="!bookmaker.value.isActive">Inactive</span>
+                    <span class="badge badge-danger" *ngIf="!bookmaker.value.isActive">InActive</span>
                     <span class="badge badge-success" *ngIf="!!bookmaker.value.isActive">Active</span>
+                    <span class="badge badge-danger" *ngIf="!bookmaker.value.isApproved">Pending</span>
+                    <span class="badge badge-success" *ngIf="!!bookmaker.value.isApproved">Approved</span>
                   </td>
                   <td class="text-right">
                     <a href="javascript:void(0)" class="btn btn-dark btn-sm" (click)="editItemPage(bookmaker.value._id)"

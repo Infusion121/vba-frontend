@@ -11,7 +11,7 @@ import * as InfoSheetsActions from '../../store/actions/infoSheets.actions';
 @Component({
   selector: 'app-info-sheets',
   templateUrl: './info-sheets.component.html',
-  styleUrls: ['./info-sheets.component.scss']
+  styleUrls: ['./info-sheets.component.scss'],
 })
 export class InfoSheetsComponent implements OnInit, OnDestroy {
   componentDestroyed$: Subject<boolean> = new Subject();
@@ -19,10 +19,10 @@ export class InfoSheetsComponent implements OnInit, OnDestroy {
   infoSheetsObject: { [key: string]: MemberInfo } = null;
   infoSheetsCount: number = null;
   loading = true;
-  rootUrl = 'http://localhost:3600/';
-  // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com';
+  // rootUrl = 'http://localhost:3600/';
+  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/';
 
-  constructor(private store: Store<fromApp.AppState>, private router: Router) { }
+  constructor(private store: Store<fromApp.AppState>, private router: Router) {}
 
   ngOnInit(): void {
     // dispatch action to get all info sheets

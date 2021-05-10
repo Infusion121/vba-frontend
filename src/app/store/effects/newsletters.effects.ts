@@ -8,11 +8,10 @@ import * as NewslettersActions from '../actions/newsletters.actions';
 import * as _ from 'lodash';
 import { Newsletter } from '@app/model/newsletter.model';
 
-
 @Injectable()
 export class NewslettersEffects {
-  rootUrl = 'http://localhost:3600/api/newsletters';
-  // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/bookmakers';
+  // rootUrl = 'http://localhost:3600/api/newsletters';
+  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/newsletters';
 
   // get all newsletter
   @Effect()
@@ -106,16 +105,20 @@ export class NewslettersEffects {
       const headers = new HttpHeaders();
       headers.append('Content-Type', 'multipart/form-data');
       const formData = new FormData();
-			formData.append('photo', uploadNewsletterFileAction.file);
+      formData.append('photo', uploadNewsletterFileAction.file);
 
-      return this.http.post('http://localhost:3600/api/upload/upload-newsletter-file', formData, { headers }).pipe(
-        map((response) => {
-          return new NewslettersActions.UploadNewsletterFileSuccess(response);
-        }),
-        catchError((error) => {
-          return of(new NewslettersActions.UploadNewsletterFileFail(error));
+      return this.http
+        .post('https://api-registration.vicbookmakers.infusion121.com/api/upload/upload-newsletter-file', formData, {
+          headers,
         })
-      );
+        .pipe(
+          map((response) => {
+            return new NewslettersActions.UploadNewsletterFileSuccess(response);
+          }),
+          catchError((error) => {
+            return of(new NewslettersActions.UploadNewsletterFileFail(error));
+          })
+        );
     })
   );
 

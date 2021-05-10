@@ -12,7 +12,7 @@ import { Newsletter } from '@app/model/newsletter.model';
 @Component({
   selector: 'app-newsletters',
   templateUrl: './newsletters.component.html',
-  styleUrls: ['./newsletters.component.scss']
+  styleUrls: ['./newsletters.component.scss'],
 })
 export class NewslettersComponent implements OnInit, OnDestroy {
   componentDestroyed$: Subject<boolean> = new Subject();
@@ -20,10 +20,10 @@ export class NewslettersComponent implements OnInit, OnDestroy {
   newslettersObject: { [key: string]: Newsletter } = null;
   newslettersCount: number = null;
   loading = true;
-  rootUrl = 'http://localhost:3600/';
-  // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com';
+  // rootUrl = 'http://localhost:3600/';
+  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/';
 
-  constructor(private store: Store<fromApp.AppState>, private router: Router) { }
+  constructor(private store: Store<fromApp.AppState>, private router: Router) {}
 
   ngOnInit(): void {
     // dispatch action to get all newsletters

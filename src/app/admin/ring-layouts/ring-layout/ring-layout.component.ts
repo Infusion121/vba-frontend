@@ -19,8 +19,8 @@ import { RingLayout } from '@app/model/ringLayout.model';
 export class RingLayoutComponent implements OnInit, OnDestroy {
   @ViewChild('fileInputRef') fileInputRef: ElementRef;
 
-  rootUrl = 'http://localhost:3600';
-  // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com';
+  //  rootUrl = 'http://localhost:3600';
+  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/';
   componentDestroyed$: Subject<boolean> = new Subject();
 
   ringLayoutId: any = null;

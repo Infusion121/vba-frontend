@@ -8,11 +8,10 @@ import * as InfoSheetsActions from '../actions/infoSheets.actions';
 import * as _ from 'lodash';
 import { InfoSheet } from '@app/model/infoSheet.model';
 
-
 @Injectable()
 export class InfoSheetsEffects {
-  rootUrl = 'http://localhost:3600/api/rvl-info-sheets';
-  // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/bookmakers';
+  // rootUrl = 'http://localhost:3600/api/rvl-info-sheets';
+  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/rvl-info-sheets';
 
   // get all info sheet
   @Effect()
@@ -106,16 +105,22 @@ export class InfoSheetsEffects {
       const headers = new HttpHeaders();
       headers.append('Content-Type', 'multipart/form-data');
       const formData = new FormData();
-			formData.append('photo', uploadInfoSheetFileAction.file);
+      formData.append('photo', uploadInfoSheetFileAction.file);
 
-      return this.http.post('http://localhost:3600/api/upload/upload-rvl-info-sheet-file', formData, { headers }).pipe(
-        map((response) => {
-          return new InfoSheetsActions.UploadInfoSheetFileSuccess(response);
-        }),
-        catchError((error) => {
-          return of(new InfoSheetsActions.UploadInfoSheetFileFail(error));
-        })
-      );
+      return this.http
+        .post(
+          'https://api-registration.vicbookmakers.infusion121.com/api/upload/upload-rvl-info-sheet-file',
+          formData,
+          { headers }
+        )
+        .pipe(
+          map((response) => {
+            return new InfoSheetsActions.UploadInfoSheetFileSuccess(response);
+          }),
+          catchError((error) => {
+            return of(new InfoSheetsActions.UploadInfoSheetFileFail(error));
+          })
+        );
     })
   );
 
