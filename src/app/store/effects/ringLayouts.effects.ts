@@ -19,7 +19,7 @@ export class RingLayoutsEffects {
   getRingLayoutsStart = this.actions$.pipe(
     ofType(RingLayoutsActions.GET_RINGLAYOUTS_START),
     switchMap((getRingLayoutsAction: RingLayoutsActions.GetRingLayoutsStart) => {
-      return this.http.get(this.rootUrl + '/all').pipe(
+      return this.http.get(this.rootUrl + '/admin/all').pipe(
         map((response: RingLayout[]) => {
           const itemsObject = {};
           _.each(response, (item: RingLayout) => {

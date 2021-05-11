@@ -18,7 +18,7 @@ export class BookmakersEffects {
   getJobsStart = this.actions$.pipe(
     ofType(BookmakersActions.GET_BOOKMAKERS_START),
     switchMap((getJobsAction: BookmakersActions.GetBookmakersStart) => {
-      return this.http.get(this.rootUrl + '/all').pipe(
+      return this.http.get(this.rootUrl + '/admin/all').pipe(
         map((response: Bookmaker[]) => {
           const itemsObject = {};
           _.each(response, (item: Bookmaker) => {

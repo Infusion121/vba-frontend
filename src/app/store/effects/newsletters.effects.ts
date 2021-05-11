@@ -19,7 +19,7 @@ export class NewslettersEffects {
   getNewslettersStart = this.actions$.pipe(
     ofType(NewslettersActions.GET_NEWSLETTERS_START),
     switchMap((getNewslettersAction: NewslettersActions.GetNewslettersStart) => {
-      return this.http.get(this.rootUrl + '/all').pipe(
+      return this.http.get(this.rootUrl + '/admin/all').pipe(
         map((response: Newsletter[]) => {
           const itemsObject = {};
           _.each(response, (item: Newsletter) => {

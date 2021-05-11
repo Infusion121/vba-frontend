@@ -19,7 +19,7 @@ export class InfoSheetsEffects {
   getInfoSheetsStart = this.actions$.pipe(
     ofType(InfoSheetsActions.GET_INFOSHEETS_START),
     switchMap((getInfoSheetsAction: InfoSheetsActions.GetInfoSheetsStart) => {
-      return this.http.get(this.rootUrl + '/all').pipe(
+      return this.http.get(this.rootUrl + '/admin/all').pipe(
         map((response: InfoSheet[]) => {
           const itemsObject = {};
           _.each(response, (item: InfoSheet) => {

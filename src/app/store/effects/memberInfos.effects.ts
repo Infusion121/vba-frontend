@@ -19,7 +19,7 @@ export class MemberInfosEffects {
   getMemberInfosStart = this.actions$.pipe(
     ofType(MemberInfosActions.GET_MEMBERINFOS_START),
     switchMap((getMemberInfosAction: MemberInfosActions.GetMemberInfosStart) => {
-      return this.http.get(this.rootUrl + '/all').pipe(
+      return this.http.get(this.rootUrl + '/admin/all').pipe(
         map((response: MemberInfo[]) => {
           const itemsObject = {};
           _.each(response, (item: MemberInfo) => {
