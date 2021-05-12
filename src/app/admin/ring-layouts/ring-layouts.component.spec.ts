@@ -8,9 +8,8 @@ describe('RingLayoutsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RingLayoutsComponent ]
-    })
-    .compileComponents();
+      declarations: [RingLayoutsComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -46,10 +46,11 @@ form,
   border-radius: 10px;
   -webkit-border-radius: 10;
   -moz-border-radius: 10;
-  border: 2px solid #c6c6c6;
+  border: 1px solid #c6c6c6;
   background: #fff;
   padding: 20px;
 }
+
 form label {
   margin: 0 0 5px;
   display: block;
@@ -101,13 +102,15 @@ form .addPhoneLine {
   border: 1px solid #00326d;
 }
 .save-actions {
-  border-top: 2px solid #c6c6c6;
+  border-top: 1px solid #c6c6c6;
   padding: 20px 0 0;
   margin-top: 40px;
 }
 .save-actions button {
-  display: block;
-  width: 100%;
+}
+
+.form-group.editMemberfield input {
+  max-width: 600px;
 }
 
 footer div,

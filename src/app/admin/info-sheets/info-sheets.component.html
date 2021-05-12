@@ -1,9 +1,10 @@
-<ol class="breadcrumb mb-4">
-  <li class="breadcrumb-item"><a routerLink="/admin/info-sheets">RVL Info Sheets</a></li>
+<ol class="breadcrumb my-4">
+  <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+  <li class="breadcrumb-item active">RVL Info Sheets</li>
 </ol>
 
-<a routerLink="/admin/info-sheets/new" class="btn btn-success">Create</a>
-<a routerLink="/admin/dashboard" class="btn btn-default">Dashboard</a>
+<a routerLink="/admin/info-sheets/new" class="btn btn-lg btn-success float-right px-5">Create</a>
+<h1 class="my-4 pb-3" style="border-bottom: 1px solid #dfdfdf">RVL Info Sheets</h1>
 
 <div class="card mb-4">
   <div class="card-body">
@@ -27,19 +28,23 @@
                   <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
                     Description
                   </th>
-									<th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Subject</th>
+                  <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Subject</th>
                   <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">File</th>
                   <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Status</th>
-                  <th class="sorting text-right" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Edit</th>
+                  <th class="sorting text-right" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                    Edit
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 <tr role="row" class="itemRowList" *ngFor="let infoSheet of infoSheetsObject | keyvalue: asIsOrder">
                   <td class="">{{ infoSheet.value.description }}</td>
-									<td class="">{{ infoSheet.value.subject }}</td>
+                  <td class="">{{ infoSheet.value.subject }}</td>
                   <td class="">
                     {{ infoSheet.value.file }}
-                    <a target="_blank" [href]="rootUrl + infoSheet.value.file" class="btn btn-primary">View</a>
+                    <a target="_blank" [href]="rootUrl + infoSheet.value.file" class="btn btn-sm ml-3 btn-primary"
+                      >View</a
+                    >
                   </td>
                   <td class="">
                     <span class="badge badge-danger" *ngIf="!infoSheet.value.isActive">Inactive</span>

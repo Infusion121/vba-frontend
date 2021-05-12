@@ -1,9 +1,10 @@
-<ol class="breadcrumb mb-4">
-  <li class="breadcrumb-item"><a routerLink="/admin/ring-layouts">Ring Layouts</a></li>
+<ol class="breadcrumb my-4">
+  <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+  <li class="breadcrumb-item active">Ring Layouts</li>
 </ol>
 
-<a routerLink="/admin/ring-layouts/new" class="btn btn-success">Create</a>
-<a routerLink="/admin/dashboard" class="btn btn-default">Dashboard</a>
+<a routerLink="/admin/ring-layouts/new" class="btn btn-lg btn-success float-right px-5">Create</a>
+<h1 class="my-4 pb-3" style="border-bottom: 1px solid #dfdfdf">Ring Layouts</h1>
 
 <div class="card mb-4">
   <div class="card-body">
@@ -24,12 +25,12 @@
             >
               <thead>
                 <tr role="row">
-                  <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
-                    Venue
-                  </th>
+                  <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Venue</th>
                   <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Layout</th>
                   <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Status</th>
-                  <th class="sorting text-right" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Edit</th>
+                  <th class="sorting text-right" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                    Edit
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -37,14 +38,19 @@
                   <td class="">{{ ringLayout.value.venue }}</td>
                   <td class="">
                     {{ ringLayout.value.layout }}
-                    <a target="_blank" [href]="rootUrl + ringLayout.value.layout" class="btn btn-primary">View</a>
+                    <a target="_blank" [href]="rootUrl + ringLayout.value.layout" class="btn btn-sm ml-3 btn-primary"
+                      >View</a
+                    >
                   </td>
                   <td class="">
                     <span class="badge badge-danger" *ngIf="!ringLayout.value.isActive">Inactive</span>
                     <span class="badge badge-success" *ngIf="!!ringLayout.value.isActive">Active</span>
                   </td>
                   <td class="text-right">
-                    <a href="javascript:void(0)" class="btn btn-dark btn-sm" (click)="editItemPage(ringLayout.value._id)"
+                    <a
+                      href="javascript:void(0)"
+                      class="btn btn-dark btn-sm"
+                      (click)="editItemPage(ringLayout.value._id)"
                       ><i class="fas fa-edit"></i> Edit</a
                     >
                   </td>

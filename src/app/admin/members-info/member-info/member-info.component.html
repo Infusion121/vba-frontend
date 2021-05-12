@@ -1,84 +1,74 @@
-<a routerLink="/admin/members-info" class="btn btn-success">Back to listing</a>
+<ol class="breadcrumb my-4">
+  <li class="breadcrumb-item">
+    <a routerLink="/admin/members-info" class="font-weight-bold"
+      ><i class="fas fa-chevron-left"></i> Back to Members listing</a
+    >
+  </li>
+</ol>
+
+<h1 class="my-4 pb-3" style="border-bottom: 1px solid #dfdfdf">New Member</h1>
 
 <form [formGroup]="memberForm" (ngSubmit)="onSubmit()">
-	<div class="card">
-		<div class="card-body">
-			<div class="row">
-				<div class="form-group col-12">
-					<label for="memberDescription">Description *</label>
-					<input
-						type="text"
-						class="form-control"
-						formControlName="description"
-						id="memberDescription"
-						[ngClass]="{
-							'is-invalid': !!submitted && memberForm.get('description').errors?.required
-						}"
-					/>
-					<div class="invalid-feedback">Please enter Member's description.</div>
-				</div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="form-group col-12">
+          <label for="memberDescription">Description *</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="description"
+            id="memberDescription"
+            [ngClass]="{
+              'is-invalid': !!submitted && memberForm.get('description').errors?.required
+            }"
+          />
+          <div class="invalid-feedback">Please enter Member's description.</div>
+        </div>
 
-				<div class="form-group col-12" *ngIf="member && member.file !==''">
-					<label>Current member file</label>
-					<a class="btn btn-primary" target="_blank" [href]="rootUrl + member.file">View</a>
-				</div>
+        <div class="form-group col-12" *ngIf="member && member.file !== ''">
+          <label>Current member file</label>
+          <a class="btn btn-primary" target="_blank" [href]="rootUrl + member.file">View</a>
+        </div>
 
-				<div class="form-group col-12">
+        <div class="form-group col-12">
           <label *ngIf="member && member.file !== ''">Update member file</label>
-					<label *ngIf="!member || member.file === ''">Upload member file</label>
+          <label *ngIf="!member || member.file === ''">Upload member file</label>
           <input
             type="file"
             accept="application/pdf"
             (change)="onFileChange($event)"
-						#fileInputRef
-						[ngClass]="{
-							'is-invalid': !!submitted && memberForm.get('file').errors?.required
-						}"
+            #fileInputRef
+            [ngClass]="{
+              'is-invalid': !!submitted && memberForm.get('file').errors?.required
+            }"
           />
-					<div
-						class="invalid-feedback"
-						*ngIf="!!submitted && memberForm.get('file').errors?.required"
-					>
-						Please upload member info file.
-					</div>
+          <div class="invalid-feedback" *ngIf="!!submitted && memberForm.get('file').errors?.required">
+            Please upload member info file.
+          </div>
         </div>
 
-				<div class="form-group" *ngIf="memberForm.get('fileObj').value !== null">
-          <button
-            type="button"
-            class="btn btn-outline-danger"
-            (click)="removeFile()"
-          >
-            Cancel file
-          </button>
+        <div class="form-group" *ngIf="memberForm.get('fileObj').value !== null">
+          <button type="button" class="btn btn-outline-danger" (click)="removeFile()">Cancel file</button>
         </div>
 
+        <div class="form-group col-12">
+          <label for="isActive">Active</label>
+          <input type="checkbox" formControlName="isActive" id="isActive" />
+        </div>
 
-				<div class="form-group col-12">
-					<label for="isActive">Active</label>  
-					<input type="checkbox" formControlName="isActive" id="isActive" />
-				</div>
-
-
-
-				<!-- actions -->
-				<div class="form-group col-12">
-					<!-- Save actions -->
-					<div class="save-actions text-right">
-						<button type="submit" class="btn btn-outline-success waves-effect waves-light">Save</button>
-						<button
-							type="button"
-							class="btn btn-outline-danger waves-effect waves-light"
-							(click)="resetForm()"
-							[disabled]="!memberForm.dirty"
-						>
-							Clear
-						</button>
-					</div>
-					<!-- end save actions -->
-				</div>
-			</div>
-		</div>
-	</div>
-  
+        <!-- actions -->
+        <div class="form-group col-12">
+          <!-- Save actions -->
+          <div class="save-actions text-left">
+            <button type="submit" class="btn btn-lg btn-success px-5">Save</button>
+            <button type="button" class="btn btn-secondary btn-lg" (click)="resetForm()" [disabled]="!memberForm.dirty">
+              Clear
+            </button>
+          </div>
+          <!-- end save actions -->
+        </div>
+      </div>
+    </div>
+  </div>
 </form>

@@ -1,13 +1,19 @@
-<a routerLink="/admin/bookmakers" class="btn btn-success">Back to listing</a>
+<ol class="breadcrumb my-4">
+  <li class="breadcrumb-item">
+    <a routerLink="/admin/bookmakers" class="font-weight-bold"
+      ><i class="fas fa-chevron-left"></i> Back to Bookmakers listing</a
+    >
+  </li>
+</ol>
 
 <form *ngIf="bookmaker && bookmaker !== null" [formGroup]="bookmakerForm" (ngSubmit)="onSubmit()">
-  {{ bookmaker.bookmakingEntityName }}
+  <h1 class="mt-2 mb-4" style="font-weight: bold">{{ bookmaker.bookmakingEntityName }}</h1>
   <div class="row">
     <div class="col-12">
       <div class="card">
         <div class="card-body">
           <div class="form-row">
-            <div class="form-group col-6 col-lg-3 col-xl-2">
+            <div class="form-group col-12 editMemberfield">
               <label for="bookmakingEntityName">Entity Name *</label>
               <input
                 id="bookmakingEntityName"
@@ -20,11 +26,11 @@
               />
               <div class="invalid-feedback">Please enter Entity Name.</div>
             </div>
-            <div class="form-group col-6 col-lg-3 col-xl-2">
+            <div class="form-group col-12 editMemberfield">
               <label for="aboutUs">About</label>
               <input id="aboutUs" class="form-control form-control-sm" placeholder="About" formControlName="aboutUs" />
             </div>
-            <div class="form-group col-6 col-lg-3 col-xl-2">
+            <div class="form-group col-6 col-lg-3">
               <label for="contactName">Contact Name *</label>
               <input
                 id="contactName"
@@ -37,7 +43,7 @@
               />
               <div class="invalid-feedback">Please enter Contact Name.</div>
             </div>
-            <div class="form-group col-6 col-lg-3 col-xl-2">
+            <div class="form-group col-12 editMemberfield">
               <label for="contactEmail">Contact Email *</label>
               <input
                 id="contactEmail"
@@ -53,7 +59,7 @@
               />
               <div class="invalid-feedback">Please enter valid email.</div>
             </div>
-            <div class="form-group col-6 col-lg-3 col-xl-2">
+            <div class="form-group col-12 editMemberfield">
               <label for="contactNumber">Contact Number</label>
               <input
                 id="contactNumber"
@@ -63,7 +69,7 @@
               />
             </div>
 
-            <div class="form-group col-6 col-lg-3 col-xl-2">
+            <div class="form-group col-12 editMemberfield">
               <label for="bookmakingServices">Service Types</label>
               <div *ngFor="let option of serviceOptions; let i = index" class="d-inline-block mr-5">
                 <input
@@ -84,7 +90,7 @@
               </div>
             </div>
 
-            <div class="form-group col-6 col-lg-3 col-xl-2">
+            <div class="form-group col-12 editMemberfield">
               <label for="betTypes">Bet Types</label>
               <div *ngFor="let option of betOptions; let i = index" class="d-inline-block mr-5">
                 <input
@@ -101,7 +107,7 @@
                 <label for="{{ 'bet' + i }}">{{ option }}</label>
               </div>
             </div>
-            <div class="form-group col-6 col-lg-3 col-xl-2">
+            <div class="form-group col-12 editMemberfield">
               <label for="websiteAddress">Website</label>
               <input
                 id="websiteAddress"
@@ -110,7 +116,7 @@
                 formControlName="websiteAddress"
               />
             </div>
-            <div class="form-group col-6 col-lg-3 col-xl-2">
+            <div class="form-group col-12 editMemberfield">
               <label for="licenseNumber">License Number *</label>
               <input
                 id="licenseNumber"
@@ -123,7 +129,7 @@
               />
               <div class="invalid-feedback">Please Enter License Number.</div>
             </div>
-            <div class="form-group col-6 col-lg-3 col-xl-2">
+            <div class="form-group col-12 editMemberfield">
               <label for="yearEstablished">Year Established</label>
               <input
                 id="yearEstablished"
@@ -133,9 +139,9 @@
               />
             </div>
 
-            <div class="form-group" formArrayName="telephoneBetting">
+            <div class="form-group col-12 editMemberfield" formArrayName="telephoneBetting">
               <label for="telephoneBetting">Approved RVL Telephone Number</label>
-  
+
               <div
                 class="input-group mb-3"
                 *ngFor="let item of bookmakerForm.get('telephoneBetting')['controls']; let i = index"
@@ -163,7 +169,7 @@
                   >
                     Remove
                   </button>
-  
+
                   <div class="invalid-feedback">Please enter a 4 digit number</div>
                 </div>
               </div>
@@ -177,7 +183,7 @@
               </button>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-12 editMemberfield pt-3" style="border-top: 1px solid #dfdfdf">
               <label for="telephoneBetting">Profile Photo / Bookmaker Logo *</label>
               <span class="smallTxt">(Allowed Filetypes: jpg, jpeg, png, gif. Max file size : 5MB)</span>
               <input
@@ -192,13 +198,20 @@
               <div class="invalid-feedback" *ngIf="fileUploadError">{{ fileUploadErrorMessage }}</div>
             </div>
 
-            <div class="form-group col-12 col-md-6" *ngIf="(bookmaker && bookmakerForm.get('profilePicCompanyLogoObj').value === null) || (bookmakerForm.get('profilePicCompanyLogoObj').value !== null)">
+            <div
+              style="border-bottom: 1px solid #dfdfdf"
+              class="form-group col-12 editMemberfield pb-4"
+              *ngIf="
+                (bookmaker && bookmakerForm.get('profilePicCompanyLogoObj').value === null) ||
+                bookmakerForm.get('profilePicCompanyLogoObj').value !== null
+              "
+            >
               <label>Logo</label>
               <img
+                style="max-width: 600px; width: auto; max-height: 400px; height: auto"
                 [src]="rootUrl + '/' + bookmaker.profilePicCompanyLogo"
                 *ngIf="bookmaker && bookmakerForm.get('profilePicCompanyLogoObj').value === null"
               />
-
 
               <button
                 type="button"
@@ -214,25 +227,27 @@
               />
             </div>
 
-
-            <div class="form-group col-6 col-lg-3 col-xl-2">
-              <label for="isApproved">Approved</label>  
-              <div class="d-inline-block mr-5">
-                <input type="checkbox" formControlName="isApproved" id="isApproved" />
-              </div>
-            </div>
-
-            <div class="form-group col-6 col-lg-3 col-xl-2">
-              <label for="isFeatured">Featured</label>  
-              <div class="d-inline-block mr-5">
-                <input type="checkbox" formControlName="isFeatured" id="isFeatured"/>
-              </div>
-            </div>
-
-            <div class="form-group col-6 col-lg-3 col-xl-2">
-              <label for="isActive">Active</label>  
-              <div class="d-inline-block mr-5">
-                <input type="checkbox" formControlName="isActive" id="isActive" />
+            <div class="form-group col-12 editMemberfield" style=" ;">
+              <div class="row" style="max-width: 400px">
+                <div class="col-12"><h4 style="font-weight: bold">Status</h4></div>
+                <div class="col-4">
+                  <label for="isApproved">Approved</label>
+                  <div class="d-inline-block mr-5">
+                    <input type="checkbox" formControlName="isApproved" id="isApproved" />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <label for="isFeatured">Featured</label>
+                  <div class="d-inline-block mr-5">
+                    <input type="checkbox" formControlName="isFeatured" id="isFeatured" />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <label for="isActive">Active</label>
+                  <div class="d-inline-block mr-5">
+                    <input type="checkbox" formControlName="isActive" id="isActive" />
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -242,11 +257,11 @@
             <!-- actions -->
             <div class="form-group col-12">
               <!-- Save actions -->
-              <div class="save-actions text-right">
-                <button type="submit" class="btn btn-outline-success waves-effect waves-light">Save</button>
+              <div class="save-actions text-left">
+                <button type="submit" class="btn btn-success btn-lg px-5">Save</button>
                 <button
                   type="button"
-                  class="btn btn-outline-danger waves-effect waves-light"
+                  class="btn btn-secondary btn-lg"
                   (click)="resetForm()"
                   [disabled]="!bookmakerForm.dirty"
                 >

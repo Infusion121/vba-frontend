@@ -1,4 +1,12 @@
-<a routerLink="/admin/info-sheets" class="btn btn-success">Back to listing</a>
+<ol class="breadcrumb my-4">
+  <li class="breadcrumb-item">
+    <a routerLink="/admin/info-sheets" class="font-weight-bold"
+      ><i class="fas fa-chevron-left"></i> Back to Info Sheets listing</a
+    >
+  </li>
+</ol>
+
+<h1 class="my-4 pb-3" style="border-bottom: 1px solid #dfdfdf">New RVL Info Sheet</h1>
 
 <form [formGroup]="infoSheetForm" (ngSubmit)="onSubmit()">
   <div class="card">
@@ -46,13 +54,7 @@
         </div>
 
         <div class="form-group" *ngIf="infoSheetForm.get('fileObj').value !== null">
-          <button
-            type="button"
-            class="btn btn-outline-danger"
-            (click)="removeFile()"
-          >
-            Cancel file
-          </button>
+          <button type="button" class="btn btn-outline-danger" (click)="removeFile()">Cancel file</button>
         </div>
 
         <div class="form-group col-12">
@@ -63,11 +65,11 @@
         <!-- actions -->
         <div class="form-group col-12">
           <!-- Save actions -->
-          <div class="save-actions text-right">
-            <button type="submit" class="btn btn-outline-success waves-effect waves-light">Save</button>
+          <div class="save-actions text-left">
+            <button type="submit" class="btn btn-success btn-lg px-5">Save</button>
             <button
               type="button"
-              class="btn btn-outline-danger waves-effect waves-light"
+              class="btn btn-secondary btn-lg"
               (click)="resetForm()"
               [disabled]="!infoSheetForm.dirty"
             >

@@ -1,9 +1,10 @@
-<ol class="breadcrumb mb-4">
-  <li class="breadcrumb-item"><a routerLink="/admin/newsletters">Newsletters</a></li>
+<ol class="breadcrumb my-4">
+  <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+  <li class="breadcrumb-item active">Newsletters</li>
 </ol>
 
-<a routerLink="/admin/newsletters/new" class="btn btn-success">Create</a>
-<a routerLink="/admin/dashboard" class="btn btn-default">Dashboard</a>
+<a routerLink="/admin/newsletters/new" class="btn btn-lg btn-success float-right px-5">Create</a>
+<h1 class="my-4 pb-3" style="border-bottom: 1px solid #dfdfdf">Newsletters</h1>
 
 <div class="card mb-4">
   <div class="card-body">
@@ -27,26 +28,33 @@
                   <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
                     Description
                   </th>
-									<th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Date</th>
+                  <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Date</th>
                   <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">File</th>
                   <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Status</th>
-                  <th class="sorting text-right" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Edit</th>
+                  <th class="sorting text-right" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                    Edit
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 <tr role="row" class="itemRowList" *ngFor="let newsletter of newslettersObject | keyvalue: asIsOrder">
                   <td class="">{{ newsletter.value.description }}</td>
-									<td class="">{{ convertDateToDateString(newsletter.value.date) }}</td>
+                  <td class="">{{ convertDateToDateString(newsletter.value.date) }}</td>
                   <td class="">
                     {{ newsletter.value.file }}
-                    <a target="_blank" [href]="rootUrl + newsletter.value.file" class="btn btn-primary">View</a>
+                    <a target="_blank" [href]="rootUrl + newsletter.value.file" class="btn btn-sm ml-3 btn-primary"
+                      >View</a
+                    >
                   </td>
                   <td class="">
                     <span class="badge badge-danger" *ngIf="!newsletter.value.isActive">Inactive</span>
                     <span class="badge badge-success" *ngIf="!!newsletter.value.isActive">Active</span>
                   </td>
                   <td class="text-right">
-                    <a href="javascript:void(0)" class="btn btn-dark btn-sm" (click)="editItemPage(newsletter.value._id)"
+                    <a
+                      href="javascript:void(0)"
+                      class="btn btn-dark btn-sm"
+                      (click)="editItemPage(newsletter.value._id)"
                       ><i class="fas fa-edit"></i> Edit</a
                     >
                   </td>

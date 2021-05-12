@@ -1,25 +1,33 @@
-<a routerLink="/admin/newsletters" class="btn btn-success">Back to listing</a>
+<ol class="breadcrumb my-4">
+  <li class="breadcrumb-item">
+    <a routerLink="/admin/newsletters" class="font-weight-bold"
+      ><i class="fas fa-chevron-left"></i> Back to Newsletter Listing</a
+    >
+  </li>
+</ol>
+
+<h1 class="my-4 pb-3" style="border-bottom: 1px solid #dfdfdf">New Newsletter</h1>
 
 <form [formGroup]="newsletterForm" (ngSubmit)="onSubmit()">
-	<div class="card">
-		<div class="card-body">
-			<div class="row">
-				<div class="form-group col-12">
-					<label for="newsletterDescription">Description *</label>
-					<input
-						type="text"
-						class="form-control"
-						formControlName="description"
-						id="newsletterDescription"
-						[ngClass]="{
-							'is-invalid': !!submitted && newsletterForm.get('description').errors?.required
-						}"
-					/>
-					<div class="invalid-feedback">Please enter Newsletter's description.</div>
-				</div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="form-group col-12">
+          <label for="newsletterDescription">Description *</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="description"
+            id="newsletterDescription"
+            [ngClass]="{
+              'is-invalid': !!submitted && newsletterForm.get('description').errors?.required
+            }"
+          />
+          <div class="invalid-feedback">Please enter Newsletter's description.</div>
+        </div>
 
-				<div class="form-group col-12">
-					<!-- <label for="newsletterDate">Date</label>
+        <div class="form-group col-12">
+          <!-- <label for="newsletterDate">Date</label>
 					<input
 						type="text"
 						class="form-control"
@@ -31,88 +39,76 @@
 					/>
 					<div class="invalid-feedback">Please enter Newsletter's date.</div> -->
 
-					<label for="newsletterDate">Date *</label>
-					<input
-						class="form-control form-control-sm"
-						placeholder="dd-mm-yyyy"
-						name="dp"
-						id="newsletterDate"
-						ngbDatepicker
-						#d="ngbDatepicker"
-						formControlName="dateObj"
-						[ngClass]="{
-							'is-invalid': !!submitted && newsletterForm.get('dateObj').errors?.required
-						}"
-					/>
-					<div class="input-group-append">
-						<button class="btn btn-sm btn-outline-info calendar" (click)="d.toggle()" type="button">
-							<i class="far fa-calendar-alt"></i>
-						</button>
-					</div>
-					<div class="invalid-feedback">Please enter Newsletter's date.</div>
-				</div>
+          <label for="newsletterDate">Date *</label>
+          <input
+            class="form-control form-control-sm"
+            placeholder="dd-mm-yyyy"
+            name="dp"
+            style="width: auto; display: inline-block"
+            id="newsletterDate"
+            ngbDatepicker
+            #d="ngbDatepicker"
+            formControlName="dateObj"
+            [ngClass]="{
+              'is-invalid': !!submitted && newsletterForm.get('dateObj').errors?.required
+            }"
+          />
+          <div style="display: inline-block">
+            <button class="btn btn-sm btn-outline-info calendar" (click)="d.toggle()" type="button">
+              <i class="far fa-calendar-alt"></i>
+            </button>
+          </div>
+          <div class="invalid-feedback">Please enter Newsletter's date.</div>
+        </div>
 
-				<div class="form-group col-12" *ngIf="newsletter && newsletter.file !==''">
-					<label>Current newsletter file</label>
-					<a class="btn btn-primary" target="_blank" [href]="rootUrl + newsletter.file">View</a>
-				</div>
+        <div class="form-group col-12" *ngIf="newsletter && newsletter.file !== ''">
+          <label>Current newsletter file</label>
+          <a class="btn btn-primary" target="_blank" [href]="rootUrl + newsletter.file">View</a>
+        </div>
 
-				<div class="form-group col-12">
+        <div class="form-group col-12">
           <label *ngIf="newsletter && newsletter.file !== ''">Update newsletter file</label>
-					<label *ngIf="!newsletter || newsletter.file === ''">Upload newsletter file</label>
+          <label *ngIf="!newsletter || newsletter.file === ''">Upload newsletter file</label>
           <input
             type="file"
             accept="application/pdf"
             (change)="onFileChange($event)"
-						#fileInputRef
-						[ngClass]="{
-							'is-invalid': !!submitted && newsletterForm.get('file').errors?.required
-						}"
+            #fileInputRef
+            [ngClass]="{
+              'is-invalid': !!submitted && newsletterForm.get('file').errors?.required
+            }"
           />
-					<div
-						class="invalid-feedback"
-						*ngIf="!!submitted && newsletterForm.get('file').errors?.required"
-					>
-						Please upload newsletter.
-					</div>
+          <div class="invalid-feedback" *ngIf="!!submitted && newsletterForm.get('file').errors?.required">
+            Please upload newsletter.
+          </div>
         </div>
 
-				<div class="form-group" *ngIf="newsletterForm.get('fileObj').value !== null">
-          <button
-            type="button"
-            class="btn btn-outline-danger"
-            (click)="removeFile()"
-          >
-            Cancel file
-          </button>
+        <div class="form-group" *ngIf="newsletterForm.get('fileObj').value !== null">
+          <button type="button" class="btn btn-outline-danger" (click)="removeFile()">Cancel file</button>
         </div>
 
+        <div class="form-group col-12">
+          <label for="isActive">Active</label>
+          <input type="checkbox" formControlName="isActive" id="isActive" />
+        </div>
 
-				<div class="form-group col-12">
-					<label for="isActive">Active</label>  
-					<input type="checkbox" formControlName="isActive" id="isActive" />
-				</div>
-
-
-
-				<!-- actions -->
-				<div class="form-group col-12">
-					<!-- Save actions -->
-					<div class="save-actions text-right">
-						<button type="submit" class="btn btn-outline-success waves-effect waves-light">Save</button>
-						<button
-							type="button"
-							class="btn btn-outline-danger waves-effect waves-light"
-							(click)="resetForm()"
-							[disabled]="!newsletterForm.dirty"
-						>
-							Clear
-						</button>
-					</div>
-					<!-- end save actions -->
-				</div>
-			</div>
-		</div>
-	</div>
-  
+        <!-- actions -->
+        <div class="form-group col-12">
+          <!-- Save actions -->
+          <div class="save-actions text-left">
+            <button type="submit" class="btn btn-success btn-lg px-5">Save</button>
+            <button
+              type="button"
+              class="btn btn-secondary btn-lg"
+              (click)="resetForm()"
+              [disabled]="!newsletterForm.dirty"
+            >
+              Clear
+            </button>
+          </div>
+          <!-- end save actions -->
+        </div>
+      </div>
+    </div>
+  </div>
 </form>

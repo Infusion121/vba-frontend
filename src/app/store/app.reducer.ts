@@ -22,5 +22,5 @@ export const appReducer: ActionReducerMap<AppState> = {
   members: fromMemberInfos.memberInfosReducer,
   newsletters: fromNewsletters.newslettersReducer,
   ringLayouts: fromRingLayouts.ringLayoutsReducer,
-  infoSheets: fromInfoSheets.infoSheetsReducer
+  infoSheets: fromInfoSheets.infoSheetsReducer,
 };

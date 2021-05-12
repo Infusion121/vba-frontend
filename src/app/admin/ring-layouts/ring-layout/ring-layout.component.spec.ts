@@ -8,9 +8,8 @@ describe('RingLayoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RingLayoutComponent ]
-    })
-    .compileComponents();
+      declarations: [RingLayoutComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

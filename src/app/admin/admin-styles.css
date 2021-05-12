@@ -4607,6 +4607,11 @@ input[type='button'].btn-block {
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
+  transition: all 0.3s;
+}
+.card:hover {
+  top: -5px;
+  box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 20%);
 }
 .card > hr {
   margin-right: 0;
@@ -10497,7 +10502,9 @@ body {
   padding-left: 0;
   height: 56px;
   z-index: 1039;
+  background-color: #022147 !important;
 }
+
 .sb-topnav .navbar-brand {
   width: 225px;
   padding-left: 1rem;
@@ -10516,6 +10523,7 @@ body {
   flex-direction: column;
   height: 100%;
   flex-wrap: nowrap;
+  background: #00326d !important;
 }
 .sb-sidenav .sb-sidenav-menu {
   flex-grow: 1;
@@ -10652,7 +10660,7 @@ nav .logoInfusion span {
   display: block;
   padding: 10px 10px 0px;
   width: 100%;
-  max-width: 130px;
+  max-width: 100%;
   margin: 15px auto;
 }
 
