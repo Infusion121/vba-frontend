@@ -17,6 +17,12 @@ const routes: Routes = [
       canActivate: [AuthenticationGuard],
     },
     {
+      path: 'admin/bookmakers/add',
+      component: BookmakerComponent,
+      data: { title: extract('Bookmaker') },
+      canActivate: [AuthenticationGuard],
+    },
+    {
       path: 'admin/bookmakers/:bid',
       component: BookmakerComponent,
       data: { title: extract('Bookmaker') },

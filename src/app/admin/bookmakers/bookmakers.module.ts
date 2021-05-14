@@ -8,9 +8,18 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { BookmakersRoutingModule } from './bookmakers-routing.module';
 import { BookmakersComponent } from './bookmakers.component';
 import { BookmakerComponent } from './bookmaker/bookmaker.component';
+import { PhoneMaskDirectiveModule } from '@app/phone-mask.directive';
 
 @NgModule({
-  imports: [CommonModule, TranslateModule, CoreModule, SharedModule, BookmakersRoutingModule, SlickCarouselModule],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    CoreModule,
+    SharedModule,
+    BookmakersRoutingModule,
+    SlickCarouselModule,
+    PhoneMaskDirectiveModule,
+  ],
   declarations: [BookmakersComponent, BookmakerComponent],
 })
 export class BookmakersModule {}

@@ -37,6 +37,8 @@ export class BookmakerComponent implements OnInit, OnDestroy {
   fileUploadError = false;
   fileUploadErrorMessage = '';
 
+  remainingText = 250;
+
   constructor(
     private currentRoute: ActivatedRoute,
     private store: Store<fromApp.AppState>,
@@ -52,7 +54,7 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       aboutUs: [''],
       contactName: ['', [Validators.required]],
       contactEmail: ['', [Validators.required, Validators.email]],
-      contactNumber: [''],
+      contactNumber: ['', [Validators.pattern(/^\(\d{4}\)\s\d{3}-\d{3}$/), Validators.required]],
       bookmakingServices: [[]],
       betTypes: [[]],
       websiteAddress: [''],
@@ -69,8 +71,10 @@ export class BookmakerComponent implements OnInit, OnDestroy {
 
     // get the bookmaker id from router url
     this.currentRoute.params.subscribe((params) => {
-      this.bookmakerId = params.bid;
-      this.store.dispatch(new BookmakersActions.GetBookmakerByIdStart(this.bookmakerId));
+      if (params.bid !== undefined) {
+        this.bookmakerId = params.bid;
+        this.store.dispatch(new BookmakersActions.GetBookmakerByIdStart(this.bookmakerId));
+      }
     });
 
     // subscribe to bookmaker state and wait for data to populate in the bookmaker form
@@ -90,11 +94,27 @@ export class BookmakerComponent implements OnInit, OnDestroy {
           this.populateForm(state.item);
           if (state.update.item === null) {
           } else {
+            console.log('I am here');
             this.store.dispatch(new BookmakersActions.ResetBookmakerCurrentState());
             this.router.navigateByUrl('/admin/bookmakers');
 
             // this.store.dispatch(new BookmakersActions.GetBookmakerByIdStart(this.bookmakerId));
           }
+        }
+      });
+
+    //Subscribe for adding new bookmaker via admin portal
+    this.store
+      .select('bookmakers', 'bookmakerNew')
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((state) => {
+        if (state.item !== null && state.loading === false && state.error === null) {
+          console.log('I am here new');
+          this.submitted = false;
+          this.loading = false;
+          this.store.dispatch(new BookmakersActions.ResetBookmakerCurrentState());
+          this.store.dispatch(new BookmakersActions.ResetPostBookmakerState());
+          this.router.navigateByUrl('/admin/bookmakers');
         }
       });
 
@@ -119,6 +139,12 @@ export class BookmakerComponent implements OnInit, OnDestroy {
           this.onSubmit();
         }
       });
+
+    this.bookmakerForm.get('aboutUs').valueChanges.subscribe((x) => {
+      this.remainingText = 250 - x.length;
+    });
+
+    console.log('SUbmitted ' + this.submitted);
   }
 
   validatorHoneyPot(control: FormControl): { [s: string]: boolean } {
@@ -211,8 +237,17 @@ export class BookmakerComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    console.log('I am getting submitted');
     this.submitted = true;
+
     if (this.bookmakerForm.invalid) {
+      if (this.bookmakerForm.value.profilePicCompanyLogo === '') {
+        this.fileUploadError = true;
+        this.fileUploadErrorMessage = 'Please select a file.';
+      } else {
+        this.fileUploadError = false;
+        this.fileUploadErrorMessage = '';
+      }
       return;
     } else {
       const postObj = this.bookmakerForm.value;
@@ -223,8 +258,14 @@ export class BookmakerComponent implements OnInit, OnDestroy {
         // after uploaded the file, listen to it from store state and trigger the onsubmit again with image file data updated in the form data.
       } else {
         // updating bookmaker
-        if (!_.isEmpty(postObj)) {
-          this.store.dispatch(new BookmakersActions.PutBookmakerByIdStart(postObj, this.bookmaker._id));
+        if (this.bookmaker !== null) {
+          if (!_.isEmpty(postObj)) {
+            this.store.dispatch(new BookmakersActions.PutBookmakerByIdStart(postObj, this.bookmaker._id));
+          }
+        } else {
+          // creating new bookmaker
+          postObj.createdOn = new Date().getTime();
+          this.store.dispatch(new BookmakersActions.PostBookmakerStart(postObj));
         }
       }
     }
@@ -288,6 +329,8 @@ export class BookmakerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.store.dispatch(new BookmakersActions.ResetBookmakerCurrentState());
+    this.store.dispatch(new BookmakersActions.ResetUploadPhotoState());
     this.componentDestroyed$.next(true);
     this.componentDestroyed$.complete();
   }

@@ -7,7 +7,7 @@ import { SharedModule } from '@shared';
 import { BookmakerNewRoutingModule } from './bookmaker-new-routing.module';
 import { BookmakerNewComponent } from './bookmaker-new.component';
 import { BlockUIModule } from 'ng-block-ui';
-import { PhoneMaskDirective } from '../phone-mask.directive';
+import { PhoneMaskDirectiveModule } from '@app/phone-mask.directive';
 
 @NgModule({
   imports: [
@@ -16,8 +16,9 @@ import { PhoneMaskDirective } from '../phone-mask.directive';
     CoreModule,
     SharedModule,
     BookmakerNewRoutingModule,
+    PhoneMaskDirectiveModule,
     BlockUIModule.forRoot(),
   ],
-  declarations: [BookmakerNewComponent, PhoneMaskDirective],
+  declarations: [BookmakerNewComponent],
 })
 export class BookmakerNewModule {}

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, OnDestroy, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnDestroy, Renderer2, NgModule } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
 
 @Directive({
@@ -119,3 +119,9 @@ export class PhoneMaskDirective implements OnInit, OnDestroy {
     });
   }
 }
+
+@NgModule({
+  declarations: [PhoneMaskDirective],
+  exports: [PhoneMaskDirective],
+})
+export class PhoneMaskDirectiveModule {}

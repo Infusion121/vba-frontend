@@ -112,6 +112,10 @@ form .addPhoneLine {
 .form-group.editMemberfield input {
   max-width: 600px;
 }
+.form-group.editMemberfield textarea {
+  max-width: 600px;
+  height: 150px;
+}
 
 footer div,
 footer p {
