@@ -21,11 +21,12 @@ export class HomeComponent implements OnInit {
 
   slideConfig = { slidesToShow: 4, slidesToScroll: 4 };
 
-  constructor(private dataservice: DataService, private router: Router) {}
+  constructor(private dataservice: DataService, private router: Router) {
+    this.router.navigateByUrl('/admin/dashboard');
+  }
 
   ngOnInit() {
     //Redirect to the registration page
-    this.router.navigateByUrl('/register');
   }
 
   gotoItemPage(pageUrl: string) {
