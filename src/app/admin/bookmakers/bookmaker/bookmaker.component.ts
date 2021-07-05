@@ -96,9 +96,9 @@ export class BookmakerComponent implements OnInit, OnDestroy {
           this.bookmaker = state.item;
           this.titleService.setTitle('Bookmaker - ' + state.item.bookmakingEntityName);
           this.populateForm(state.item);
+
           if (state.update.item === null) {
           } else {
-            console.log('I am here');
             this.store.dispatch(new BookmakersActions.ResetBookmakerCurrentState());
             this.router.navigateByUrl('/admin/bookmakers');
 
@@ -113,7 +113,6 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe((state) => {
         if (state.item !== null && state.loading === false && state.error === null) {
-          console.log('I am here new');
           this.submitted = false;
           this.loading = false;
           this.store.dispatch(new BookmakersActions.ResetBookmakerCurrentState());
@@ -148,7 +147,7 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       this.remainingText = 250 - x.length;
     });
 
-    console.log('SUbmitted ' + this.submitted);
+    // console.log('SUbmitted ' + this.submitted);
   }
 
   validatorHoneyPot(control: FormControl): { [s: string]: boolean } {
@@ -174,10 +173,10 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       profilePicCompanyLogoObj: null,
       isApproved: bookmaker.isApproved,
       // isFeatured: bookmaker.isFeatured,
-      isOnlineFeatured: bookmaker.isOnlineFeatured,
-      isTelephoneFeatured: bookmaker.isTelephoneFeatured,
-      isOnCourseFeatured: bookmaker.isOnCourseFeatured,
-      isSportsFeatured: bookmaker.isSportsFeatured,
+      isOnlineFeatured: bookmaker.isOnlineFeatured || false,
+      isTelephoneFeatured: bookmaker.isTelephoneFeatured || false,
+      isOnCourseFeatured: bookmaker.isOnCourseFeatured || false,
+      isSportsFeatured: bookmaker.isSportsFeatured || false,
       isActive: bookmaker.isActive,
     });
 
@@ -245,9 +244,9 @@ export class BookmakerComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log('I am getting submitted');
+    // console.log('I am getting submitted');
     this.submitted = true;
-
+    // console.log(this.bookmakerForm.value);
     if (this.bookmakerForm.invalid) {
       if (this.bookmakerForm.value.profilePicCompanyLogo === '') {
         this.fileUploadError = true;
@@ -332,10 +331,10 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       telephoneBetting: this.bookmaker.telephoneBetting,
       isApproved: this.bookmaker.isApproved,
       // isFeatured: this.bookmaker.isFeatured,
-      isOnlineFeatured: this.bookmaker.isOnlineFeatured,
-      isTelephoneFeatured: this.bookmaker.isTelephoneFeatured,
-      isOnCourseFeatured: this.bookmaker.isOnCourseFeatured,
-      isSportsFeatured: this.bookmaker.isSportsFeatured,
+      isOnlineFeatured: this.bookmaker.isOnlineFeatured || false,
+      isTelephoneFeatured: this.bookmaker.isTelephoneFeatured || false,
+      isOnCourseFeatured: this.bookmaker.isOnCourseFeatured || false,
+      isSportsFeatured: this.bookmaker.isSportsFeatured || false,
       isActive: this.bookmaker.isActive,
     });
   }
