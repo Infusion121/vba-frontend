@@ -64,7 +64,11 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       profilePicCompanyLogoObj: [null],
       telephoneBetting: this._fb.array([]),
       isApproved: [false, Validators.required],
-      isFeatured: [false, Validators.required],
+      // isFeatured: [false, Validators.required],
+      isOnlineFeatured: [false, Validators.required],
+      isTelephoneFeatured: [false, Validators.required],
+      isOnCourseFeatured: [false, Validators.required],
+      isSportsFeatured: [false, Validators.required],
       isActive: [true, Validators.required],
       blockIt: ['', [this.validatorHoneyPot]],
     });
@@ -169,7 +173,11 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       profilePicCompanyLogo: bookmaker.profilePicCompanyLogo,
       profilePicCompanyLogoObj: null,
       isApproved: bookmaker.isApproved,
-      isFeatured: bookmaker.isFeatured,
+      // isFeatured: bookmaker.isFeatured,
+      isOnlineFeatured: bookmaker.isOnlineFeatured,
+      isTelephoneFeatured: bookmaker.isTelephoneFeatured,
+      isOnCourseFeatured: bookmaker.isOnCourseFeatured,
+      isSportsFeatured: bookmaker.isSportsFeatured,
       isActive: bookmaker.isActive,
     });
 
@@ -323,7 +331,11 @@ export class BookmakerComponent implements OnInit, OnDestroy {
       profilePicCompanyLogoObj: null,
       telephoneBetting: this.bookmaker.telephoneBetting,
       isApproved: this.bookmaker.isApproved,
-      isFeatured: this.bookmaker.isFeatured,
+      // isFeatured: this.bookmaker.isFeatured,
+      isOnlineFeatured: this.bookmaker.isOnlineFeatured,
+      isTelephoneFeatured: this.bookmaker.isTelephoneFeatured,
+      isOnCourseFeatured: this.bookmaker.isOnCourseFeatured,
+      isSportsFeatured: this.bookmaker.isSportsFeatured,
       isActive: this.bookmaker.isActive,
     });
   }
