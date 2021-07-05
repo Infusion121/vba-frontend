@@ -14,7 +14,9 @@ export class Bookmaker {
     public profilePicCompanyLogo: string,
     public telephoneBetting: [{_id: string, telephone: string}],
     public isApproved: boolean,
-    public isFeatured: boolean,
+    // public isFeatured: boolean,
+    public isOnlineFeatured: boolean,
+    public isTelephoneFeatured: boolean,
     public isActive: boolean,
     public createdOn: string
   ) {}
