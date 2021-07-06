@@ -11,7 +11,8 @@ import { RingLayout } from '@app/model/ringLayout.model';
 @Injectable()
 export class RingLayoutsEffects {
   // rootUrl = 'http://localhost:3600/api/ring-layouts';
-  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/ring-layouts';
+  // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/ring-layouts';
+  rootUrl = 'http://api-production.vicbookmakers.com.au/api/ring-layouts';
 
   // get all ring layout
   @Effect()
