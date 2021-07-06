@@ -12,8 +12,11 @@ import { Bookmaker } from '@app/model/bookmaker.model';
 export class BookmakersEffects {
   // rootUrl = 'http://localhost:3600/api/bookmakers';
   // rootUrlPhotoUpload = 'http://localhost:3600/api/upload/';
-  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/bookmakers';
-  rootUrlPhotoUpload = 'https://api-registration.vicbookmakers.infusion121.com/api/upload/';
+  // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/bookmakers';
+  // rootUrlPhotoUpload = 'https://api-registration.vicbookmakers.infusion121.com/api/upload/';
+
+  rootUrl = 'http://api-production.vicbookmakers.com.au/api/bookmakers';
+  rootUrlPhotoUpload = 'http://api-production.vicbookmakers.com.au/api/upload/';
 
   // get all jobs
   @Effect()
