@@ -15,15 +15,15 @@ export class BookmakersEffects {
   rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/bookmakers';
   rootUrlPhotoUpload = 'https://api-registration.vicbookmakers.infusion121.com/api/upload/';
 
-  //rootUrl = 'https://api-production.vicbookmakers.com.au/api/bookmakers';
-  //rootUrlPhotoUpload = 'https://api-production.vicbookmakers.com.au/api/upload/';
+  // rootUrl = 'https://api-production.vicbookmakers.com.au/api/bookmakers';
+  // rootUrlPhotoUpload = 'https://api-production.vicbookmakers.com.au/api/upload/';
 
   // get all jobs
   @Effect()
   getJobsStart = this.actions$.pipe(
     ofType(BookmakersActions.GET_BOOKMAKERS_START),
     switchMap((getJobsAction: BookmakersActions.GetBookmakersStart) => {
-      return this.http.get(this.rootUrl + '/all').pipe(
+      return this.http.get(this.rootUrl + '/admin/all').pipe(
         map((response: Bookmaker[]) => {
           const itemsObject = {};
           _.each(response, (item: Bookmaker) => {

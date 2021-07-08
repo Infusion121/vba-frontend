@@ -21,7 +21,7 @@ export class MembersInfoComponent implements OnInit, OnDestroy {
   loading = true;
   // rootUrl = 'http://localhost:3600/';
   rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/';
-  //rootUrl = 'https://api-production.vicbookmakers.com.au/';
+  // rootUrl = 'https://api-production.vicbookmakers.com.au/';
 
   constructor(private store: Store<fromApp.AppState>, private router: Router) {}
 
