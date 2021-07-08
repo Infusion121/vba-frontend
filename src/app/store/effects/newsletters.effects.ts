@@ -11,9 +11,9 @@ import { Newsletter } from '@app/model/newsletter.model';
 @Injectable()
 export class NewslettersEffects {
   // rootUrl = 'http://localhost:3600/api/newsletters';
-  // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/newsletters';
+  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/newsletters';
 
-  rootUrl = 'http://api-production.vicbookmakers.com.au/api/newsletters';
+  //rootUrl = 'https://api-production.vicbookmakers.com.au/api/newsletters';
 
   // get all newsletter
   @Effect()
