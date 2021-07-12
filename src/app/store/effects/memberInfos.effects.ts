@@ -11,8 +11,8 @@ import { MemberInfo } from '@app/model/memberInfo.model';
 @Injectable()
 export class MemberInfosEffects {
   // rootUrl = 'http://localhost:3600/api/members';
-  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/members';
-  // rootUrl = 'https://api-production.vicbookmakers.com.au/api/members';
+  // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/members';
+  rootUrl = 'https://api-production.vicbookmakers.com.au/api/members';
 
   // get all member info
   @Effect()

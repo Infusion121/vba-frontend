@@ -11,8 +11,8 @@ import { InfoSheet } from '@app/model/infoSheet.model';
 @Injectable()
 export class InfoSheetsEffects {
   // rootUrl = 'http://localhost:3600/api/rvl-info-sheets';
-  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/rvl-info-sheets';
-  // rootUrl = 'https://api-production.vicbookmakers.com.au/api/rvl-info-sheets';
+  //  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/api/rvl-info-sheets';
+  rootUrl = 'https://api-production.vicbookmakers.com.au/api/rvl-info-sheets';
 
   // get all info sheet
   @Effect()

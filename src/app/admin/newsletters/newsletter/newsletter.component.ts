@@ -21,8 +21,8 @@ export class NewsletterComponent implements OnInit, OnDestroy {
   @ViewChild('fileInputRef') fileInputRef: ElementRef;
 
   // rootUrl = 'http://localhost:3600/';
-  rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/';
-  // rootUrl = 'https://api-production.vicbookmakers.com.au/';
+  // rootUrl = 'https://api-registration.vicbookmakers.infusion121.com/';
+  rootUrl = 'https://api-production.vicbookmakers.com.au/';
   componentDestroyed$: Subject<boolean> = new Subject();
 
   newsletterId: any = null;
