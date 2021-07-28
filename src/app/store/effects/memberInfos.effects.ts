@@ -109,7 +109,7 @@ export class MemberInfosEffects {
       formData.append('file', uploadMemberInfoFileAction.file);
 
       return this.http
-        .post('https://api-registration.vicbookmakers.infusion121.com/api/upload/upload-member-file', formData, {
+        .post('https://api-production.vicbookmakers.com.au/api/upload/upload-member-file', formData, {
           headers,
         })
         .pipe(

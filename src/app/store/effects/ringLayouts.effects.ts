@@ -109,7 +109,7 @@ export class RingLayoutsEffects {
       formData.append('photo', uploadRingLayoutFileAction.file);
 
       return this.http
-        .post('https://api-registration.vicbookmakers.infusion121.com/api/upload/upload-ring-layout-file', formData, {
+        .post('https://api-production.vicbookmakers.com.au/api/upload/upload-ring-layout-file', formData, {
           headers,
         })
         .pipe(

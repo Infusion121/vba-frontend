@@ -109,11 +109,9 @@ export class InfoSheetsEffects {
       formData.append('photo', uploadInfoSheetFileAction.file);
 
       return this.http
-        .post(
-          'https://api-registration.vicbookmakers.infusion121.com/api/upload/upload-rvl-info-sheet-file',
-          formData,
-          { headers }
-        )
+        .post('https://api-production.vicbookmakers.com.au/api/upload/upload-rvl-info-sheet-file', formData, {
+          headers,
+        })
         .pipe(
           map((response) => {
             return new InfoSheetsActions.UploadInfoSheetFileSuccess(response);

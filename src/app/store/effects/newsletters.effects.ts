@@ -110,7 +110,7 @@ export class NewslettersEffects {
       formData.append('photo', uploadNewsletterFileAction.file);
 
       return this.http
-        .post('https://api-registration.vicbookmakers.infusion121.com/api/upload/upload-newsletter-file', formData, {
+        .post('https://api-production.vicbookmakers.com.au/api/upload/upload-newsletter-file', formData, {
           headers,
         })
         .pipe(
